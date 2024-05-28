@@ -1,0 +1,3 @@
+https://www.red-gate.com/website/sql-formatter
+https://www.sqlservertutorial.net
+https://docs.dhall-lang.org/tutorials/Getting-started_Generate-JSON-or-YAML.html
