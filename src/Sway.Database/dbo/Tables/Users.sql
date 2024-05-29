@@ -9,6 +9,13 @@
     [DateOfBirth]  DATETIME2 (7) NOT NULL,
     [CreatedAt]    DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
     [ModifiedAt]   DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
-    CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([Id] ASC)
+    CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([Id] ASC), 
+    CONSTRAINT [FK_Users_UserProfiles] FOREIGN KEY ([ProfileId]) REFERENCES [UserProfiles]([Id])
+		ON DELETE CASCADE ON UPDATE CASCADE, 
+    CONSTRAINT [FK_Users_Credentials] FOREIGN KEY ([CredentialId]) REFERENCES [Credentials]([Id])
+        ON DELETE CASCADE ON UPDATE CASCADE, 
+    CONSTRAINT [FK_Users_ShoppingCarts] FOREIGN KEY ([CartId]) REFERENCES [ShoppingCarts]([Id])
+        ON DELETE CASCADE ON UPDATE CASCADE, 
+    CONSTRAINT [CK_Users_DateOfBirth_NotInFuture] CHECK ([DateOfBirth] < GETDATE())
 );
 

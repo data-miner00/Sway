@@ -11,6 +11,6 @@
     [ModifiedAt]        DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
     CONSTRAINT [PK_Orders] PRIMARY KEY CLUSTERED ([Id] ASC), 
     CONSTRAINT [FK_Orders_Users] FOREIGN KEY ([UserId]) REFERENCES [Users]([Id]), 
-    CONSTRAINT [CK_Orders_TotalAmount_Positive] CHECK ([TotalAmount] = 1)
+    CONSTRAINT [CK_Orders_TotalAmount_Positive] CHECK ([TotalAmount] > 0)
 );
 
