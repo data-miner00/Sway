@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[SystemSetting] (
-    [Id]       NVARCHAR (50) NOT NULL,
+    [Id]       UNIQUEIDENTIFIER CONSTRAINT [DF_SystemSetting_Id] DEFAULT NEWSEQUENTIALID() NOT NULL,
     [Currency] NVARCHAR (50) NOT NULL,
+    [ModifiedAt] DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
     CONSTRAINT [PK_SystemSetting] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 

@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[ShoppingCarts] (
-    [Id]         NVARCHAR (50) NOT NULL,
-    [CreatedAt]  DATETIME2 (7) NOT NULL,
-    [ModifiedAt] DATETIME2 (7) NOT NULL,
+    [Id]         UNIQUEIDENTIFIER CONSTRAINT [DF_ShoppingCarts_Id] DEFAULT NEWSEQUENTIALID() NOT NULL,
+    [CreatedAt]  DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
+    [ModifiedAt] DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
     CONSTRAINT [PK_ShoppingCarts] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 

@@ -1,14 +1,14 @@
 ﻿CREATE TABLE [dbo].[Users] (
-    [Id]           NVARCHAR (50) NOT NULL,
-    [Username]     NVARCHAR (50) NOT NULL,
+    [Id]           UNIQUEIDENTIFIER CONSTRAINT [DF_Users_Id] DEFAULT NEWID() NOT NULL,
+    [Username]     NVARCHAR (50) CONSTRAINT [UQ_Users_Username] UNIQUE NOT NULL,
     [Status]       NVARCHAR (50) NOT NULL,
-    [ProfileId]    NVARCHAR (50) NOT NULL,
-    [CredentialId] NVARCHAR (50) NOT NULL,
-    [CartId]       NVARCHAR (50) NULL,
+    [ProfileId]    UNIQUEIDENTIFIER NOT NULL,
+    [CredentialId] UNIQUEIDENTIFIER NOT NULL,
+    [CartId]       UNIQUEIDENTIFIER NULL,
     [Role]         NVARCHAR (50) NOT NULL,
     [DateOfBirth]  DATETIME2 (7) NOT NULL,
-    [CreatedAt]    DATETIME2 (7) NOT NULL,
-    [ModifiedAt]   DATETIME2 (7) NOT NULL,
+    [CreatedAt]    DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
+    [ModifiedAt]   DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
     CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
