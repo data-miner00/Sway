@@ -19,3 +19,7 @@
     CONSTRAINT [CK_Users_DateOfBirth_NotInFuture] CHECK ([DateOfBirth] < GETDATE())
 );
 
+
+GO
+
+CREATE INDEX [IX_Users_Username] ON [dbo].[Users] ([Username]);
