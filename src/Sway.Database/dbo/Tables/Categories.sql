@@ -6,7 +6,6 @@
     [CreatedAt]   DATETIME2 (7)  DEFAULT GETDATE() NOT NULL,
     [ModifiedAt]  DATETIME2 (7)  DEFAULT GETDATE() NOT NULL, 
     CONSTRAINT [PK_Categories] PRIMARY KEY ([Id]), 
-    CONSTRAINT [FK_Categories_Categories] FOREIGN KEY ([ParentId]) REFERENCES [Categories]([Id])
-        ON DELETE SET NULL,
+    CONSTRAINT [FK_Categories_Categories] FOREIGN KEY ([ParentId]) REFERENCES [Categories]([Id]),
 );
 
