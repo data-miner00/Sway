@@ -83,5 +83,8 @@
     <Build Include="dbo\Views\vw_UserCredentials.sql" />
     <Build Include="dbo\Views\vw_CategoryRelationship.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddCredential.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddProfile.sql" />
+    <Build Include="dbo\Views\vw_UserDetails.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CreateNewUser.sql" />
   </ItemGroup>
 </Project>
