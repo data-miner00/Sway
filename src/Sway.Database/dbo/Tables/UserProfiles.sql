@@ -4,7 +4,7 @@
     [Phone]             NVARCHAR (50)  CONSTRAINT [UQ_UserProfiles_Phone] UNIQUE NULL,
     [PhotoUrl]          NVARCHAR (255) NULL,
     [Description]       NVARCHAR (255) NULL,
-    [ShippingAddressId] UNIQUEIDENTIFIER  NOT NULL,
+    [ShippingAddressId] UNIQUEIDENTIFIER  NULL,
     [BillingAddressId]  UNIQUEIDENTIFIER  NULL,
     [CreatedAt]         DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
     [ModifiedAt]        DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
