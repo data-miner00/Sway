@@ -63,6 +63,7 @@
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Views\" />
     <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\Functions\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
@@ -86,5 +87,6 @@
     <Build Include="dbo\Stored Procedures\usp_AddProfile.sql" />
     <Build Include="dbo\Views\vw_UserDetails.sql" />
     <Build Include="dbo\Stored Procedures\usp_CreateNewUser.sql" />
+    <Build Include="dbo\Functions\fn_CalculateAge.sql" />
   </ItemGroup>
 </Project>
