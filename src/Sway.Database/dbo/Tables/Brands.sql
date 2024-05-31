@@ -8,3 +8,19 @@
     CONSTRAINT [PK_Brands] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Brands_OnUpdate]
+	ON [dbo].[Brands]
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		UPDATE [dbo].[Brands]
+		SET [ModifiedAt] = GETDATE()
+		FROM [dbo].[Brands] T
+		INNER JOIN inserted I ON T.ID = I.ID;    
+	END;
+

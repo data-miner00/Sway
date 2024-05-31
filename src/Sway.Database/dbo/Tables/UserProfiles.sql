@@ -13,3 +13,19 @@
     CONSTRAINT [FK_UserProfiles_Addresses_BillingAddress] FOREIGN KEY ([BillingAddressId]) REFERENCES [Addresses]([Id]),
 );
 
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_UserProfiles_OnUpdate]
+	ON [dbo].[UserProfiles]
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		UPDATE [dbo].[UserProfiles]
+		SET [ModifiedAt] = GETDATE()
+		FROM [dbo].[UserProfiles] T
+		INNER JOIN inserted I ON T.ID = I.ID;    
+	END;
+

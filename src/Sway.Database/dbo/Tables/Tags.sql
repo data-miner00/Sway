@@ -6,3 +6,19 @@
     CONSTRAINT [PK_Tags] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Tags_OnUpdate]
+	ON [dbo].[Tags]
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		UPDATE [dbo].[Tags]
+		SET [ModifiedAt] = GETDATE()
+		FROM [dbo].[Tags] T
+		INNER JOIN inserted I ON T.ID = I.ID;    
+	END;
+

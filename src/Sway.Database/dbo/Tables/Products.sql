@@ -16,3 +16,18 @@
     CONSTRAINT [FK_Products_Categories] FOREIGN KEY ([CategoryId]) REFERENCES [Categories]([Id]),
 );
 
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Products_OnUpdate]
+	ON [dbo].[Products]
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		UPDATE [dbo].[Products]
+		SET [ModifiedAt] = GETDATE()
+		FROM [dbo].[Products] T
+		INNER JOIN inserted I ON T.ID = I.ID;    
+	END;

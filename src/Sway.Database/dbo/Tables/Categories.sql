@@ -9,3 +9,20 @@
     CONSTRAINT [FK_Categories_Categories] FOREIGN KEY ([ParentId]) REFERENCES [Categories]([Id]),
 );
 
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Categories_OnUpdate]
+	ON [dbo].[Categories]
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		UPDATE [dbo].[Categories]
+		SET [ModifiedAt] = GETDATE()
+		FROM [dbo].[Categories] T
+		INNER JOIN inserted I ON T.ID = I.ID;    
+	END;
+
+

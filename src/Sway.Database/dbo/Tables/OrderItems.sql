@@ -15,3 +15,18 @@
     CONSTRAINT [CK_OrderItems_TotalPrice_Positive] CHECK ([TotalPrice] > 0),
 );
 
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_OrderItems_OnUpdate]
+	ON [dbo].[OrderItems]
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		UPDATE [dbo].[OrderItems]
+		SET [ModifiedAt] = GETDATE()
+		FROM [dbo].[OrderItems] T
+		INNER JOIN inserted I ON T.ID = I.ID;    
+	END;

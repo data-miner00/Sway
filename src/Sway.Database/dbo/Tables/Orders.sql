@@ -14,3 +14,18 @@
     CONSTRAINT [CK_Orders_TotalAmount_Positive] CHECK ([TotalAmount] > 0)
 );
 
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Orders_OnUpdate]
+	ON [dbo].[Orders]
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		UPDATE [dbo].[Orders]
+		SET [ModifiedAt] = GETDATE()
+		FROM [dbo].[Orders] T
+		INNER JOIN inserted I ON T.ID = I.ID;    
+	END;
+

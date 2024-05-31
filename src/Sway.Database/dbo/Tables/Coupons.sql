@@ -17,3 +17,20 @@
     CONSTRAINT [CK_Coupons_DiscountAmount_Positive] CHECK ([DiscountAmount] > 0)
 );
 
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Coupons_OnUpdate]
+	ON [dbo].[Coupons]
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		UPDATE [dbo].[Coupons]
+		SET [ModifiedAt] = GETDATE()
+		FROM [dbo].[Coupons] T
+		INNER JOIN inserted I ON T.ID = I.ID;    
+	END;
+
+

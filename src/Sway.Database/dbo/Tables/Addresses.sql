@@ -12,3 +12,18 @@
     CONSTRAINT [PK_Addresses] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Addresses_OnUpdate]
+    ON [dbo].[Addresses]
+    AFTER UPDATE
+    AS
+    BEGIN
+        SET NOCOUNT ON;
+
+        UPDATE [dbo].[Addresses]
+        SET [ModifiedAt] = GETDATE()
+        FROM [dbo].[Addresses] T
+        INNER JOIN inserted I ON T.Id = I.Id;
+    END;

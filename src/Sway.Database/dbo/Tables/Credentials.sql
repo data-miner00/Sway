@@ -9,3 +9,18 @@
     CONSTRAINT [PK_Credentials] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Credentials_OnUpdate]
+	ON [dbo].[Credentials]
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		UPDATE [dbo].[Credentials]
+		SET [ModifiedAt] = GETDATE()
+		FROM [dbo].[Credentials] T
+		INNER JOIN Inserted I ON T.ID = I.ID;    
+	END;

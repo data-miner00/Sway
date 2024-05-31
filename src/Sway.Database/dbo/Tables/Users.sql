@@ -23,3 +23,19 @@
 GO
 
 CREATE INDEX [IX_Users_Username] ON [dbo].[Users] ([Username]);
+
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Users_OnUpdate]
+	ON [dbo].[Users]
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		UPDATE [dbo].[Users]
+		SET [ModifiedAt] = GETDATE()
+		FROM [dbo].[Users] T
+		INNER JOIN inserted I ON T.ID = I.ID;    
+	END;

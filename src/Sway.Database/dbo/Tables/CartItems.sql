@@ -9,3 +9,19 @@
     CONSTRAINT [FK_CartItems_ShoppingCarts] FOREIGN KEY ([ShoppingCartId]) REFERENCES [ShoppingCarts]([Id])
 );
 
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_CartItems_OnUpdate]
+	ON [dbo].[CartItems]
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		UPDATE [dbo].[CartItems]
+		SET [ModifiedAt] = GETDATE()
+		FROM [dbo].[CartItems] T
+		INNER JOIN inserted I ON T.ID = I.ID;    
+	END;
+
