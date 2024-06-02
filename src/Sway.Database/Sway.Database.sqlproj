@@ -88,5 +88,8 @@
     <Build Include="dbo\Views\vw_UserDetails.sql" />
     <Build Include="dbo\Stored Procedures\usp_CreateNewUser.sql" />
     <Build Include="dbo\Functions\fn_CalculateAge.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdateAddress.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteAddressById.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddAddress.sql" />
   </ItemGroup>
 </Project>
