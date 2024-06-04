@@ -363,5 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Drawio
-*.drawio.dtmp
-*.drawio.bkp
+*.dtmp
+*.bkp
