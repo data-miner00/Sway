@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sway.Common\Sway.Common.csproj" />
     <ProjectReference Include="..\Sway.Core\Sway.Core.csproj" />
   </ItemGroup>
 
