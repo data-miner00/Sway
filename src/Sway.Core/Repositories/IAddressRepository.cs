@@ -23,7 +23,7 @@ public interface IAddressRepository
     Task<Address> GetByIdAsync(string id, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Created a new address entry.
+    /// Creates a new address entry.
     /// </summary>
     /// <param name="address">The address to be created.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
@@ -39,7 +39,7 @@ public interface IAddressRepository
     Task UpdateAsync(Address address, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Deleted an address by Id.
+    /// Deletes an address by Id.
     /// </summary>
     /// <param name="id">The address ID.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
