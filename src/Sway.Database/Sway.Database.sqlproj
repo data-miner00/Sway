@@ -91,5 +91,8 @@
     <Build Include="dbo\Stored Procedures\usp_UpdateAddress.sql" />
     <Build Include="dbo\Stored Procedures\usp_DeleteAddressById.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddAddress.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdateCategory.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteCategoryById.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddCategory.sql" />
   </ItemGroup>
 </Project>

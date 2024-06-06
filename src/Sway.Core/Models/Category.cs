@@ -8,7 +8,7 @@ public class Category
 
     public string Description { get; set; }
 
-    public string ParentId { get; set; }
+    public string? ParentId { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
