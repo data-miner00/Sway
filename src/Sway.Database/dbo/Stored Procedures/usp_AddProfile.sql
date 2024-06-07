@@ -23,6 +23,7 @@ BEGIN
 			[PhotoUrl],
 			[Description]
 		)
+		OUTPUT inserted.Id INTO @OutputTable
 		VALUES
 		(
 			@Email,
