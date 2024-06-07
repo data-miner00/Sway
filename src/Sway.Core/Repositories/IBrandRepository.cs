@@ -3,45 +3,45 @@
 using Sway.Core.Models;
 
 /// <summary>
-/// The contract for <see cref="Address"/> repository.
+/// The contract for <see cref="Brand"/> repository.
 /// </summary>
-public interface IAddressRepository
+public interface IBrandRepository
 {
     /// <summary>
-    /// Retrieves all addresses.
+    /// Retrieves all brand.
     /// </summary>
     /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>The list of addresses.</returns>
-    Task<IEnumerable<Address>> GetAllAsync(CancellationToken cancellationToken);
+    /// <returns>The list of brands.</returns>
+    Task<IEnumerable<Brand>> GetAllAsync(CancellationToken cancellationToken);
 
     /// <summary>
-    /// Get address by Id.
+    /// Get brand by Id.
     /// </summary>
     /// <param name="id">The ID.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>The found address.</returns>
-    Task<Address> GetByIdAsync(string id, CancellationToken cancellationToken);
+    /// <returns>The found brand.</returns>
+    Task<Brand> GetByIdAsync(string id, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Creates a new address entry.
+    /// Create a new brand entry.
     /// </summary>
-    /// <param name="address">The address to be created.</param>
+    /// <param name="brand">The brand to be created.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The task.</returns>
-    Task CreateAsync(Address address, CancellationToken cancellationToken);
+    Task CreateAsync(Brand brand, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Updates an existing address.
+    /// Updates an existing brand.
     /// </summary>
-    /// <param name="address">The address to be updated.</param>
+    /// <param name="brand">The brand to be updated.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The task.</returns>
-    Task UpdateAsync(Address address, CancellationToken cancellationToken);
+    Task UpdateAsync(Brand brand, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Deletes an address by Id.
+    /// Deletes a brand by Id.
     /// </summary>
-    /// <param name="id">The address ID.</param>
+    /// <param name="id">The brand ID.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The task.</returns>
     Task DeleteByIdAsync(string id, CancellationToken cancellationToken);
