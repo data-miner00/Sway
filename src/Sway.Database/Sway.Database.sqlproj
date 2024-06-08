@@ -64,6 +64,7 @@
     <Folder Include="dbo\Views\" />
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="dbo\Functions\" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
@@ -98,5 +99,9 @@
     <Build Include="dbo\Stored Procedures\usp_UpdateCategory.sql" />
     <Build Include="dbo\Stored Procedures\usp_DeleteCategoryById.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddCategory.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\LastExecutedStatement.sql" />
+    <None Include="Scripts\PreviousExecutedQueries.sql" />
   </ItemGroup>
 </Project>
