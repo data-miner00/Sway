@@ -99,6 +99,10 @@
     <Build Include="dbo\Stored Procedures\usp_UpdateCategory.sql" />
     <Build Include="dbo\Stored Procedures\usp_DeleteCategoryById.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddCategory.sql" />
+    <Build Include="dbo\Functions\fn_EastOrWest.sql" />
+    <Build Include="dbo\Stored Procedures\usp_SearchCategory.sql" />
+    <Build Include="dbo\Stored Procedures\usp_SearchBrands.sql" />
+    <Build Include="dbo\Stored Procedures\usp_SearchAddress.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
