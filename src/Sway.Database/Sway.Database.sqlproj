@@ -65,6 +65,7 @@
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="dbo\Functions\" />
     <Folder Include="Scripts" />
+    <Folder Include="dbo\User Defined Types\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
@@ -103,6 +104,12 @@
     <Build Include="dbo\Stored Procedures\usp_SearchCategory.sql" />
     <Build Include="dbo\Stored Procedures\usp_SearchBrands.sql" />
     <Build Include="dbo\Stored Procedures\usp_SearchAddress.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdateCoupon.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AssignCouponForUser.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ApplyCouponForOrder.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddCouponForUser.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddCoupon.sql" />
+    <Build Include="dbo\User Defined Types\typ_Credentials.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

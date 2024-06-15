@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Coupons] (
     [Id]                 UNIQUEIDENTIFIER CONSTRAINT [DF_Coupons_Id] DEFAULT NEWSEQUENTIALID() NOT NULL,
-    [OwnerId]            UNIQUEIDENTIFIER NOT NULL,
+    [OwnerId]            UNIQUEIDENTIFIER NULL,
     [Code]               NVARCHAR (50) CONSTRAINT [UQ_Coupons_Code] UNIQUE NOT NULL,
     [Description]        NVARCHAR (255) NULL,
     [DiscountAmount]     NUMERIC (18)   NOT NULL,
