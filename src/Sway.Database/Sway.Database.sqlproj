@@ -110,6 +110,10 @@
     <Build Include="dbo\Stored Procedures\usp_AddCouponForUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddCoupon.sql" />
     <Build Include="dbo\User Defined Types\typ_Credentials.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetUsersWithSpecialPhoneFormat.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetUserShoppingCarts.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetSpecificPaymentMethods.sql" />
+    <Build Include="dbo\User Defined Types\typ_PaymentProviders.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
