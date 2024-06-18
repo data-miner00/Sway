@@ -1,3 +1,7 @@
 https://www.red-gate.com/website/sql-formatter
 https://www.sqlservertutorial.net
 https://docs.dhall-lang.org/tutorials/Getting-started_Generate-JSON-or-YAML.html
+https://app.pluralsight.com/library/courses/introduction-sql-server/table-of-contents
+
+[Erik Being Allergic To Slow SQL Server Queries](https://www.youtube.com/watch?v=lLcJo7gVRWA)
+[SQL Server Security Fundamentals](https://app.pluralsight.com/library/courses/sql-server-security-fundamentals/table-of-contents)
