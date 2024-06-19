@@ -114,6 +114,9 @@
     <Build Include="dbo\Stored Procedures\usp_GetUserShoppingCarts.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetSpecificPaymentMethods.sql" />
     <Build Include="dbo\User Defined Types\typ_PaymentProviders.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdateProduct.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteProductById.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddProduct.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
