@@ -120,6 +120,9 @@
     <Build Include="dbo\Stored Procedures\usp_UpdateOrder.sql" />
     <Build Include="dbo\Stored Procedures\usp_DeleteOrderById.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddOrder.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdatePaymentMethod.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeletePaymentMethodById.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddPaymentMethod.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
