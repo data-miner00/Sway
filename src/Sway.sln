@@ -12,7 +12,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3CA23148-E7E9-4FF0-96E0-78F16CA2014D}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
 		Directory.Build.props = Directory.Build.props
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sway.Integrations", "Sway.Integrations\Sway.Integrations.csproj", "{F86D5648-40CD-4300-BFBF-4C13695B2B32}"
@@ -23,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sway.Common.UnitTests", "Sw
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{988783AC-9ED0-4AEF-AFD6-FD4F3E7CA70F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sway.Web.Mvc", "Sway.Web.Mvc\Sway.Web.Mvc.csproj", "{95728D9C-F4BF-4260-B5B6-2ACA0AFE3E28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sway.Web.Mvc", "Sway.Web.Mvc\Sway.Web.Mvc.csproj", "{95728D9C-F4BF-4260-B5B6-2ACA0AFE3E28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
