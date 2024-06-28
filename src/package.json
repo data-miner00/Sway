@@ -1,0 +1,11 @@
+{
+  "name": "sway",
+  "version": "1.0.0",
+  "description": "An ecommerce platform.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "shaun chong <mumk0313@gmail.com>",
+  "license": "MIT"
+}
