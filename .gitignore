@@ -365,3 +365,10 @@ FodyWeavers.xsd
 # Drawio
 *.dtmp
 *.bkp
+
+# Javascript build
+dist/
+
+# Restored npm packages
+bootstrap-icon/
+jquery/
