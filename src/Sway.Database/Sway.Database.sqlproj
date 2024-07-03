@@ -123,6 +123,9 @@
     <Build Include="dbo\Stored Procedures\usp_UpdatePaymentMethod.sql" />
     <Build Include="dbo\Stored Procedures\usp_DeletePaymentMethodById.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddPaymentMethod.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdateUser.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteUserById.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
