@@ -66,6 +66,7 @@
     <Folder Include="dbo\Functions\" />
     <Folder Include="Scripts" />
     <Folder Include="dbo\User Defined Types\" />
+    <Folder Include="Seeds" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
@@ -131,5 +132,6 @@
     <None Include="Scripts\LastExecutedStatement.sql" />
     <None Include="Scripts\PreviousExecutedQueries.sql" />
     <None Include="Scripts\CreateLogins.sql" />
+    <None Include="Seeds\SeedProductsAndEtc.sql" />
   </ItemGroup>
 </Project>
