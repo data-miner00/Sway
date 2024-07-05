@@ -2,9 +2,9 @@
 
 public class Order
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
-    public string UserId { get; set; }
+    public Guid UserId { get; set; }
 
     public OrderStatus Status { get; set; }
 
@@ -14,9 +14,9 @@ public class Order
 
     public string PaymentInfoId { get; set; }
 
-    public string ShippingAddressId { get; set; }
+    public Guid ShippingAddressId { get; set; }
 
-    public string BillingAddressId { get; set; }
+    public Guid BillingAddressId { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

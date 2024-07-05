@@ -4,7 +4,7 @@ using System;
 
 public class UserCredential
 {
-    public string UserId { get; set; }
+    public Guid UserId { get; set; }
 
     public string Username { get; set; }
 
