@@ -1,5 +1,14 @@
-﻿@{
+﻿@using Sway.Core.Models
+@model IEnumerable<Product>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<button class="btn btn-primary">This is a button</button>
+<h1>Hot</h1>
+
+@foreach (var product in Model)
+{
+    <div>
+        @product.Name
+    </div>
+}

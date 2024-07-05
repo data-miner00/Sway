@@ -2,7 +2,7 @@
 
 public class Product
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 
     public string Name { get; set; }
 
@@ -10,13 +10,13 @@ public class Product
 
     public decimal Price { get; set; }
 
-    public int Stock { get; set; }
+    public int InStock { get; set; }
 
-    public string SKU { get; set; }
+    public string? SKU { get; set; }
 
-    public string BrandId { get; set; }
+    public Guid BrandId { get; set; }
 
-    public string CategoryId { get; set; }
+    public Guid? CategoryId { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
