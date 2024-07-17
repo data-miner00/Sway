@@ -4,11 +4,28 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Hot</h1>
-
-@foreach (var product in Model)
-{
-    <div>
-        @product.Name
-    </div>
-}
+<h1 class="text-3xl font-bold mb-4">Trending</h1>
+<div class="flex gap-4 flex-wrap">
+    @foreach (var product in Model)
+    {
+        <article class="card bg-base-100 w-96 shadow-xl">
+            <figure>
+                <img
+                    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                    alt="Shoes"
+                />
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title">
+                    @product.Name
+                    <span class="badge badge-secondary">NEW</span>
+                </h2>
+                <p>@product.Description</p>
+                <div class="card-actions justify-end">
+                    <div class="badge badge-outline">Fashion</div>
+                    <div class="badge badge-outline">Products</div>
+                </div>
+            </div>
+        </article>
+    }
+</div>
