@@ -11,6 +11,7 @@ ConfigureDatabase(builder);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>();
 
 var app = builder.Build();
 

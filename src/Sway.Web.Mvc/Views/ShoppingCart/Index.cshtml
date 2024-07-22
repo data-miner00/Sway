@@ -1,0 +1,20 @@
+﻿@using Sway.Core.Models
+@model ShoppingCart
+@{
+    ViewData["Title"] = "My shopping cart";
+}
+
+
+@if (Model is not null)
+{
+    <p>My shopping cart Id: @Model.Id</p>
+    <p>Last updated at: @Model.ModifiedAt</p>
+}
+else
+{
+    <p>You have no cart yet.</p>
+}
+
+<button class="btn btn-primary">
+    Checkout
+</button>
