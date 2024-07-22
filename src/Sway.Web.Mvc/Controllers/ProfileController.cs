@@ -18,7 +18,7 @@ public class ProfileController : Controller
     // GET: ProfileController
     public async Task<IActionResult> Index()
     {
-        var user = await this.repository.GetByIdAsync("2BA7AD7C-4731-43BF-AE9C-28B0BD2B0095", this.CancellationToken);
+        var user = await this.repository.GetByIdAsync(Constants.TestUserId, this.CancellationToken);
 
         return this.View(user);
     }

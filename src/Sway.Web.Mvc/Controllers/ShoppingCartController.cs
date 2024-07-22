@@ -9,9 +9,6 @@ public class ShoppingCartController : Controller
 {
     private readonly IShoppingCartRepository repository;
 
-    // temporary
-    private string UserId => "2BA7AD7C-4731-43BF-AE9C-28B0BD2B0095";
-
     private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
     public ShoppingCartController(IShoppingCartRepository repository)
@@ -23,7 +20,7 @@ public class ShoppingCartController : Controller
     public async Task<IActionResult> Index()
     {
         var cart = await this.repository
-            .GetByUserIdAsync(this.UserId, this.CancellationToken)
+            .GetByUserIdAsync(Constants.TestUserId, this.CancellationToken)
             .ConfigureAwait(false);
 
         return this.View(cart);
