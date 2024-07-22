@@ -52,7 +52,7 @@ public sealed class UserRepository : IUserRepository
     public Task DeleteByIdAsync(string id, CancellationToken cancellationToken)
     {
         var command = new CommandDefinition(
-            "EXEC [dbo].[usp_DeleteUserById @Id",
+            "EXEC [dbo].[usp_DeleteUserById] @Id",
             new { Id = id },
             commandType: CommandType.StoredProcedure);
 
@@ -70,9 +70,9 @@ public sealed class UserRepository : IUserRepository
     /// <inheritdoc/>
     public Task<User> GetByIdAsync(string id, CancellationToken cancellationToken)
     {
-        var query = "SELECT * FROM [dbo].[Users] WHERE [Id] = @Id;";
+        var query = "SELECT * FROM [dbo].[vw_UserDetails] WHERE [Id] = @Id;";
 
-        return this.connection.QueryFirstAsync<User>(query);
+        return this.connection.QueryFirstAsync<User>(query, new { Id = id });
     }
 
     /// <inheritdoc/>

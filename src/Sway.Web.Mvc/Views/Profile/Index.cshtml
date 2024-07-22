@@ -1,0 +1,20 @@
+﻿@using Sway.Core.Models
+@model User
+@{
+    ViewData["Title"] = "My profile";
+}
+
+<div>
+    <div class="avatar">
+        <div class="ring-primary ring-offset-base-100 w-16 rounded-full ring ring-offset-2">
+            <img src="@Model.PhotoUrl" alt="Profile image" />
+        </div>
+    </div>
+    <h1>@Model.Name</h1>
+    <p>@Model.Phone</p>
+    <p>@Model.Description</p>
+</div>
+
+<div class="flex gap-4 my-2">
+    <button class="btn">Edit</button>
+</div>

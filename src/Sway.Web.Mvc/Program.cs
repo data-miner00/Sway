@@ -10,6 +10,7 @@ ConfigureDatabase(builder);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
