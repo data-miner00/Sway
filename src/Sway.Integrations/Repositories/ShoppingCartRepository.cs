@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using SpNames = Sway.Common.StoredProcedureNames;
+
 public sealed class ShoppingCartRepository : IShoppingCartRepository
 {
     private readonly IDbConnection connection;
@@ -32,8 +34,9 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
         var parameters = new DynamicParameters();
         parameters.Add("UserId", userId);
 
-        var storedProcName = "usp_GetShoppingCartByUserId";
-
-        return this.connection.QuerySingleOrDefaultAsync<ShoppingCart>(storedProcName, parameters, commandType: CommandType.StoredProcedure);
+        return this.connection.QuerySingleOrDefaultAsync<ShoppingCart>(
+            SpNames.GetShoppingCartByUserId,
+            parameters,
+            commandType: CommandType.StoredProcedure);
     }
 }
