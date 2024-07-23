@@ -39,4 +39,13 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
             parameters,
             commandType: CommandType.StoredProcedure);
     }
+
+    public Task<IEnumerable<CartItem>> GetCartItemsInShoppingCartAsync(string cartId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var query = "SELECT * FROM [dbo].[CartItems] WHERE [ShoppingCartId] = @CartId;";
+
+        return this.connection.QueryAsync<CartItem>(query, new { CartId = cartId });
+    }
 }

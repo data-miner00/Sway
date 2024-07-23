@@ -12,4 +12,6 @@ public interface IShoppingCartRepository
     Task<ShoppingCart> GetByIdAsync(string id, CancellationToken cancellationToken);
 
     Task<ShoppingCart?> GetByUserIdAsync(string userId, CancellationToken cancellationToken);
+
+    Task<IEnumerable<CartItem>> GetCartItemsInShoppingCartAsync(string cartId, CancellationToken cancellationToken);
 }
