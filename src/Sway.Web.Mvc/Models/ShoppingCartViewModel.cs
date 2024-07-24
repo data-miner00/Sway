@@ -1,12 +1,12 @@
 ﻿namespace Sway.Web.Mvc.Models;
 
-using Sway.Core.Models;
+using Sway.Core.Dtos;
 
 public class ShoppingCartViewModel
 {
     public Guid Id { get; set; }
 
-    public IEnumerable<CartItem> CartItems { get; set; }
+    public IEnumerable<CartItemDto> CartItems { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

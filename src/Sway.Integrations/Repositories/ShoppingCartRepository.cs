@@ -1,6 +1,7 @@
 ﻿namespace Sway.Integrations.Repositories;
 
 using Dapper;
+using Sway.Core.Dtos;
 using Sway.Core.Models;
 using Sway.Core.Repositories;
 using System;
@@ -24,6 +25,7 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
 
     public Task<ShoppingCart> GetByIdAsync(string id, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         var query = "SELECT * FROM [dbo].[ShoppingCarts] WHERE [Id] = @Id;";
 
         return this.connection.QueryFirstAsync<ShoppingCart>(query, new { Id = id });
@@ -31,11 +33,26 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
 
     public Task<ShoppingCart?> GetByUserIdAsync(string userId, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var parameters = new DynamicParameters();
         parameters.Add("UserId", userId);
 
         return this.connection.QuerySingleOrDefaultAsync<ShoppingCart>(
             SpNames.GetShoppingCartByUserId,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
+
+    public Task<IEnumerable<CartItemDto>> GetCartItemsByUserIdAsync(string userId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("UserId", userId);
+
+        return this.connection.QueryAsync<CartItemDto>(
+            SpNames.GetShoppingCartItemsByUserId,
             parameters,
             commandType: CommandType.StoredProcedure);
     }

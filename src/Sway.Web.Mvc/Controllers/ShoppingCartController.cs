@@ -37,7 +37,7 @@ public class ShoppingCartController : Controller
         };
 
         var items = await this.repository
-            .GetCartItemsInShoppingCartAsync(cart.Id.ToString(), this.CancellationToken)
+            .GetCartItemsByUserIdAsync(Constants.TestUserId, this.CancellationToken)
             .ConfigureAwait(false);
 
         viewModel.CartItems = items;

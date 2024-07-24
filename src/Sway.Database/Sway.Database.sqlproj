@@ -131,6 +131,7 @@
     <Build Include="dbo\Tables\OrderPaymentMethods.sql" />
     <Build Include="dbo\User Defined Types\typ_Address.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetShoppingCartByUserId.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetUserCartItemDetails.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
