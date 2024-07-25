@@ -1,5 +1,6 @@
 ﻿namespace Sway.Database.Seeder;
 
+using Sway.Database.Seeder.Generator;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,15 +10,15 @@ using System.Threading.Tasks;
 
 internal sealed class Executor : IExecutor
 {
-    private readonly IDbConnection connection;
+    private readonly UserGenerator userGenerator;
 
-    public Executor(IDbConnection connection)
+    public Executor(UserGenerator userGenerator)
     {
-        this.connection = connection;
+        this.userGenerator = userGenerator;
     }
 
     public Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        return Console.Out.WriteLineAsync(this.connection.Database);
+        return this.userGenerator.ProvisionAsync(20, cancellationToken);
     }
 }

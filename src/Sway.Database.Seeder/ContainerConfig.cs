@@ -3,7 +3,10 @@
 using Autofac;
 using Autofac.Configuration;
 using Microsoft.Extensions.Configuration;
+using Sway.Core.Repositories;
+using Sway.Database.Seeder.Generator;
 using Sway.Database.Seeder.Options;
+using Sway.Integrations.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,6 +24,7 @@ internal static class ContainerConfig
         builder
             .ConfigureOptions()
             .ConfigureDatabase()
+            .ConfigureRepositories()
             .ConfigureEntryPoint();
 
         return builder.Build();
@@ -38,7 +42,7 @@ internal static class ContainerConfig
         builder.RegisterModule(module);
 
         var databaseOption =
-            config.GetSection(typeof(DatabaseOption).Name).Get<DatabaseOption>()
+            config.GetSection(nameof(DatabaseOption)).Get<DatabaseOption>()
             ?? throw new InvalidOperationException("The database option cannot be empty.");
 
         builder.RegisterInstance(databaseOption);
@@ -59,6 +63,14 @@ internal static class ContainerConfig
                 })
             .As<IDbConnection>()
             .SingleInstance();
+
+        return builder;
+    }
+
+    private static ContainerBuilder ConfigureRepositories(this ContainerBuilder builder)
+    {
+        builder.RegisterType<UserRepository>().As<IUserRepository>().SingleInstance();
+        builder.RegisterType<UserGenerator>().AsSelf().SingleInstance();
 
         return builder;
     }
