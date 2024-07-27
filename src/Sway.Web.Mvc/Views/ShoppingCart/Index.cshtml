@@ -1,0 +1,25 @@
+﻿@using Sway.Web.Mvc.Models
+@model ShoppingCartViewModel
+@{
+    ViewData["Title"] = "My shopping cart";
+}
+
+
+@if (Model is not null)
+{
+    <p>My shopping cart Id: @Model.Id</p>
+    <p>Last updated at: @Model.ModifiedAt</p>
+
+    @foreach (var item in Model.CartItems)
+    {
+        <div>@item.ProductName</div>
+    }
+}
+else
+{
+    <p>You have no cart yet.</p>
+}
+
+<button class="btn btn-primary">
+    Checkout
+</button>

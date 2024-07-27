@@ -1,7 +1,17 @@
+using System.Data;
+using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
+using Sway.Core.Repositories;
+using Sway.Integrations.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+ConfigureDatabase(builder);
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>();
 
 var app = builder.Build();
 
@@ -25,3 +35,10 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+static void ConfigureDatabase(WebApplicationBuilder builder)
+{
+    var dbConnectionString = builder.Configuration.GetConnectionString("Database");
+    var connection = new SqlConnection(dbConnectionString);
+    builder.Services.AddSingleton<IDbConnection>(connection);
+}

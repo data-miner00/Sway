@@ -4,14 +4,17 @@
     [Status]            NVARCHAR (50) NOT NULL,
     [TotalAmount]       MONEY         NOT NULL,
     [Currency]          NVARCHAR (50) NOT NULL,
-    [PaymentInfoId]     NVARCHAR (50) NOT NULL,
-    [ShippingAddressId] NVARCHAR (50) NOT NULL,
-    [BillingAddressId]  NVARCHAR (50) NULL,
+    [PaymentInfoId]     UNIQUEIDENTIFIER NOT NULL,
+    [ShippingAddressId] UNIQUEIDENTIFIER NOT NULL,
+    [BillingAddressId]  UNIQUEIDENTIFIER NULL,
     [CreatedAt]         DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
     [ModifiedAt]        DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
     CONSTRAINT [PK_Orders] PRIMARY KEY CLUSTERED ([Id] ASC), 
     CONSTRAINT [FK_Orders_Users] FOREIGN KEY ([UserId]) REFERENCES [Users]([Id]), 
-    CONSTRAINT [CK_Orders_TotalAmount_Positive] CHECK ([TotalAmount] > 0)
+    CONSTRAINT [CK_Orders_TotalAmount_Positive] CHECK ([TotalAmount] > 0), 
+    CONSTRAINT [FK_Orders_OrderShippingAddress] FOREIGN KEY ([ShippingAddressId]) REFERENCES [OrderAddresses]([Id]),
+    CONSTRAINT [FK_Orders_OrderBillingAddress] FOREIGN KEY ([BillingAddressId]) REFERENCES [OrderAddresses]([Id]),
+    CONSTRAINT [FK_Orders_OrderPaymentMethods] FOREIGN KEY ([PaymentInfoId]) REFERENCES [OrderPaymentMethods]([Id])
 );
 
 GO

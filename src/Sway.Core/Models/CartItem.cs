@@ -2,11 +2,11 @@
 
 public class CartItem
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 
-    public string CartId { get; set; }
+    public Guid CartId { get; set; }
 
-    public string ProductId { get; set; }
+    public Guid ProductId { get; set; }
 
     public int Quantity { get; set; }
 

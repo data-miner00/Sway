@@ -55,8 +55,7 @@ public sealed class ProductRepository : IProductRepository
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var command = new CommandDefinition(
-            "SELECT * FROM Products;");
+        var command = new CommandDefinition("SELECT * FROM [dbo].[Products];");
 
         return this.connection.QueryAsync<Product>(command);
     }

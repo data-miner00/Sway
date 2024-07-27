@@ -4,7 +4,7 @@ using System;
 
 public class Address
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 
     public AddressType Type { get; set; }
 

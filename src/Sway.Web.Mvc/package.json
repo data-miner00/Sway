@@ -14,7 +14,9 @@
   "author": "shaun chong <mumk0313@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
     "bootstrap-icons": "^1.11.3",
+    "daisyui": "^4.12.10",
     "jquery": "^3.7.1",
     "tailwindcss": "^3.4.4"
   }

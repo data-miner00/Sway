@@ -19,9 +19,52 @@ CREATE TRIGGER [dbo].[Trigger_CartItems_OnUpdate]
 	BEGIN
 		SET NOCOUNT ON;
 
+        DECLARE @CartId UNIQUEIDENTIFIER;
+
 		UPDATE [dbo].[CartItems]
 		SET [ModifiedAt] = GETDATE()
 		FROM [dbo].[CartItems] T
-		INNER JOIN inserted I ON T.ID = I.ID;    
+		INNER JOIN inserted I ON T.ID = I.ID;
+
+        SELECT @CartId = [ShoppingCartId] FROM inserted;
+
+        UPDATE [dbo].[ShoppingCarts]
+        SET [ModifiedAt] = GETDATE()
+        WHERE [Id] = @CartId;
 	END;
 
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_CartItems_OnInsert]
+    ON [dbo].[CartItems]
+    FOR INSERT
+    AS
+    BEGIN
+        SET NOCOUNT ON;
+
+        DECLARE @CartId UNIQUEIDENTIFIER;
+
+        SELECT @CartId = [ShoppingCartId] FROM inserted;
+
+        UPDATE [dbo].[ShoppingCarts]
+        SET [ModifiedAt] = GETDATE()
+        WHERE [Id] = @CartId;
+    END
+GO
+
+CREATE TRIGGER [dbo].[Trigger_CartItems_OnDelete]
+    ON [dbo].[CartItems]
+    FOR DELETE
+    AS
+    BEGIN
+        SET NOCOUNT ON;
+
+        DECLARE @CartId UNIQUEIDENTIFIER;
+
+        SELECT @CartId = [ShoppingCartId] FROM deleted;
+
+        UPDATE [dbo].[ShoppingCarts]
+        SET [ModifiedAt] = GETDATE()
+        WHERE [Id] = @CartId;
+    END

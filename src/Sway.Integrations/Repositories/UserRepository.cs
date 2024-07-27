@@ -9,6 +9,8 @@ using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
+using SpNames = Sway.Common.StoredProcedureNames;
+
 /// <summary>
 /// The repository for <see cref="User"/> resource.
 /// </summary>
@@ -28,31 +30,30 @@ public sealed class UserRepository : IUserRepository
     /// <inheritdoc/>
     public Task CreateAsync(User entity, CancellationToken cancellationToken)
     {
-        var command = new CommandDefinition(
-            "EXEC [dbo].[usp_AddNewUser] @Name, @Status, @Role, @Email, @Phone, @PhotoUrl, @Description, @ShippingAddressId, @BillingAddressId, @DateOfBirth;",
-            new
-            {
-                entity.Name,
-                Status = entity.Status.ToString(),
-                Role = entity.Role.ToString(),
-                entity.Email,
-                entity.Phone,
-                entity.PhotoUrl,
-                entity.Description,
-                entity.ShippingAddressId,
-                entity.BillingAddressId,
-                entity.DateOfBirth,
-            },
-            commandType: CommandType.StoredProcedure);
+        cancellationToken.ThrowIfCancellationRequested();
 
-        return this.connection.ExecuteAsync(command);
+        var parameters = new DynamicParameters();
+        parameters.Add("Username", entity.Name);
+        parameters.Add("DateOfBirth", entity.DateOfBirth);
+        parameters.Add("Email", entity.Email);
+        parameters.Add("Phone", entity.Phone);
+        parameters.Add("PhotoUrl", entity.PhotoUrl);
+        parameters.Add("Description", entity.Description);
+        parameters.Add("PasswordHash", "default_hash");
+        parameters.Add("PasswordSalt", "default_salt");
+        parameters.Add("HashAlgorithm", "sha256");
+
+        return this.connection.ExecuteAsync(
+            SpNames.CreateNewUser,
+            parameters,
+            commandType: CommandType.StoredProcedure);
     }
 
     /// <inheritdoc/>
     public Task DeleteByIdAsync(string id, CancellationToken cancellationToken)
     {
         var command = new CommandDefinition(
-            "EXEC [dbo].[usp_DeleteUserById @Id",
+            "EXEC [dbo].[usp_DeleteUserById] @Id",
             new { Id = id },
             commandType: CommandType.StoredProcedure);
 
@@ -70,9 +71,9 @@ public sealed class UserRepository : IUserRepository
     /// <inheritdoc/>
     public Task<User> GetByIdAsync(string id, CancellationToken cancellationToken)
     {
-        var query = "SELECT * FROM [dbo].[Users] WHERE [Id] = @Id;";
+        var query = "SELECT * FROM [dbo].[vw_UserDetails] WHERE [Id] = @Id;";
 
-        return this.connection.QueryFirstAsync<User>(query);
+        return this.connection.QueryFirstAsync<User>(query, new { Id = id });
     }
 
     /// <inheritdoc/>

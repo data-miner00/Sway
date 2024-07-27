@@ -4,7 +4,7 @@ using System;
 
 public class User
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 
     public string Name { get; set; }
 
@@ -20,9 +20,9 @@ public class User
 
     public string? Description { get; set; }
 
-    public string ShippingAddressId { get; set; }
+    public Guid ShippingAddressId { get; set; }
 
-    public string BillingAddressId { get; set; }
+    public Guid BillingAddressId { get; set; }
 
     public DateTime DateOfBirth { get; set; }
 

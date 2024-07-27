@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sway.Core\Sway.Core.csproj" />
+    <ProjectReference Include="..\Sway.Integrations\Sway.Integrations.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <UpToDateCheckBuilt Include="wwwroot/lib/tailwindcss/index.css" Set="Css" />
     <UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
   </ItemGroup>

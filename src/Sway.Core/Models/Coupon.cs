@@ -2,9 +2,9 @@
 
 public class Coupon
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
-    public string? OwnerId { get; set; }
+    public Guid? OwnerId { get; set; }
 
     public string Code { get; set; }
 
@@ -14,9 +14,9 @@ public class Coupon
 
     public DiscountType Type { get; set; }
 
-    public string? ApplicableFor { get; set; }
+    public Guid? ApplicableFor { get; set; }
 
-    public string? AppliedToOrder { get; set; }
+    public Guid? AppliedToOrder { get; set; }
 
     public DateTime? ExpiryDate { get; set; }
 

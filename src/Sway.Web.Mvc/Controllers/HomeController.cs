@@ -1,20 +1,26 @@
 namespace Sway.Web.Mvc.Controllers;
+
 using Microsoft.AspNetCore.Mvc;
+using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
 using System.Diagnostics;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IProductRepository productRepository;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IProductRepository productRepository)
     {
         _logger = logger;
+        this.productRepository = productRepository;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var products = await this.productRepository.GetAllAsync(default);
+
+        return this.View(products);
     }
 
     public IActionResult Privacy()

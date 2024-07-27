@@ -66,6 +66,8 @@
     <Folder Include="dbo\Functions\" />
     <Folder Include="Scripts" />
     <Folder Include="dbo\User Defined Types\" />
+    <Folder Include="Seeds" />
+    <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
@@ -126,10 +128,21 @@
     <Build Include="dbo\Stored Procedures\usp_UpdateUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_DeleteUserById.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddUser.sql" />
+    <Build Include="dbo\Tables\OrderAddresses.sql" />
+    <Build Include="dbo\Tables\OrderPaymentMethods.sql" />
+    <Build Include="dbo\User Defined Types\typ_Address.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetShoppingCartByUserId.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetUserCartItemDetails.sql" />
+    <Build Include="Security\SwayUser.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="Scripts\SwayUserLogin.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CreateShoppingCartForUser.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddItemIntoCartForUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
     <None Include="Scripts\PreviousExecutedQueries.sql" />
     <None Include="Scripts\CreateLogins.sql" />
+    <None Include="Seeds\SeedProductsAndEtc.sql" />
   </ItemGroup>
 </Project>
