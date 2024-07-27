@@ -41,7 +41,7 @@ BEGIN
 			'Active',
 			@ProfileId,
 			@CredentialId,
-			'User',
+			'Customer',
 			@DateOfBirth
 		);
 

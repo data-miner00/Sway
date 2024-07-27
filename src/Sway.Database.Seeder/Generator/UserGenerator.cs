@@ -16,7 +16,6 @@ internal sealed class UserGenerator
 
     private Faker<User> faker;
 
-    // Use bogus to generate data for usp_CreateNewUser
     public UserGenerator(IUserRepository repository)
     {
         this.repository = repository;
@@ -30,7 +29,11 @@ internal sealed class UserGenerator
 
         var users = this.faker.Generate(count);
 
-        await Console.Out.WriteLineAsync();
+        // Task.WhenAll does not work here
+        foreach (var user in users)
+        {
+            await this.repository.CreateAsync(user, cancellationToken);
+        }
     }
 
     private void ConfigureUserFaker()
@@ -45,6 +48,7 @@ internal sealed class UserGenerator
 
                 return s.Internet.Email(firstName: splitName[0], lastName: splitName[1]);
             })
+            .RuleFor(x => x.Phone, s => s.Phone.PhoneNumber())
             .RuleFor(x => x.PhotoUrl, s => s.Internet.Avatar())
             .RuleFor(x => x.Description, (s, o) => $"Hi, I am {o.Name}")
             .RuleFor(x => x.DateOfBirth, s => s.Date.Past());
