@@ -3,7 +3,7 @@
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE usp_CreateNewUser
+CREATE PROCEDURE [dbo].[usp_CreateNewUser]
 	@Username NVARCHAR(50),
 	@DateOfBirth DATETIME2(7),
 	@Email NVARCHAR(50),

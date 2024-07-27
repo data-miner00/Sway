@@ -67,6 +67,7 @@
     <Folder Include="Scripts" />
     <Folder Include="dbo\User Defined Types\" />
     <Folder Include="Seeds" />
+    <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
@@ -132,6 +133,9 @@
     <Build Include="dbo\User Defined Types\typ_Address.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetShoppingCartByUserId.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetUserCartItemDetails.sql" />
+    <Build Include="Security\SwayUser.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="Scripts\SwayUserLogin.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
