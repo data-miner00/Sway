@@ -1,0 +1,20 @@
+﻿@using Sway.Core.Models
+@model Product
+@{
+    ViewData["Title"] = "Details";
+}
+
+<p>@Model.Name</p>
+<p>Price: @Model.Price</p>
+
+<form
+    method="post"
+    asp-action="AddToCart"
+    asp-controller="ShoppingCart"
+    asp-route-userId="@Constants.TestUserId"
+>
+    <input type="text" hidden value="@Model.Id" name="productId" />
+    <input type="number" placeholder="Quantity" name="quantity" />
+    <button type="submit">Add to Cart</button>
+</form>
+

@@ -44,4 +44,26 @@ public class ShoppingCartController : Controller
 
         return this.View(viewModel);
     }
+
+    public record AddToCartRequest(Guid ProductId, int Quantity);
+
+    [HttpPost]
+    //[ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddToCart(
+        AddToCartRequest request,
+        [FromQuery] Guid userId)
+    {
+        if (this.ModelState.IsValid)
+        {
+            await this.repository.AddItemIntoCartForUserAsync(
+                userId.ToString(),
+                request.ProductId.ToString(),
+                request.Quantity,
+                this.CancellationToken);
+        }
+
+        this.TempData["Success"] = "Successfully added item to cart.";
+
+        return this.RedirectToAction(nameof(ProductController.Details), nameof(ProductController), request.ProductId);
+    }
 }

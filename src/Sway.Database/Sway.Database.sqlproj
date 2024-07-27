@@ -136,6 +136,8 @@
     <Build Include="Security\SwayUser.sql" />
     <Build Include="Security\RoleMemberships.sql" />
     <Build Include="Scripts\SwayUserLogin.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CreateShoppingCartForUser.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddItemIntoCartForUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

@@ -17,4 +17,6 @@ public interface IShoppingCartRepository
     Task<IEnumerable<CartItem>> GetCartItemsInShoppingCartAsync(string cartId, CancellationToken cancellationToken);
 
     Task<IEnumerable<CartItemDto>> GetCartItemsByUserIdAsync(string userId, CancellationToken cancellationToken);
+
+    Task AddItemIntoCartForUserAsync(string userId, string productId, int quantity, CancellationToken cancellationToken);
 }

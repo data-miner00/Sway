@@ -65,4 +65,19 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
 
         return this.connection.QueryAsync<CartItem>(query, new { CartId = cartId });
     }
+
+    public Task AddItemIntoCartForUserAsync(string userId, string productId, int quantity, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("UserId", userId);
+        parameters.Add("ProductId", productId);
+        parameters.Add("Quantity", quantity);
+
+        return this.connection.ExecuteAsync(
+            SpNames.AddItemIntoCartForUser,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
 }
