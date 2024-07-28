@@ -1,20 +1,20 @@
 ﻿namespace Sway.Database.Seeder;
 
-using Sway.Database.Seeder.Generator;
+using Sway.Database.Seeder.Sinks;
 using System.Threading.Tasks;
 
 internal sealed class Executor : IExecutor
 {
-    private readonly UserGenerator userGenerator;
+    private readonly DatabaseSink sink;
 
-    public Executor(UserGenerator userGenerator)
+    public Executor(DatabaseSink sink)
     {
-        this.userGenerator = userGenerator;
+        this.sink = sink;
     }
 
     public Task ExecuteAsync(CancellationToken cancellationToken)
     {
         var usersToBeGenerated = 5;
-        return this.userGenerator.ProvisionAsync(usersToBeGenerated, cancellationToken);
+        return this.sink.ProvisionAsync(usersToBeGenerated, cancellationToken);
     }
 }

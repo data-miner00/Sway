@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Sway.Core.Repositories;
 using Sway.Database.Seeder.Generator;
 using Sway.Database.Seeder.Options;
+using Sway.Database.Seeder.Sinks;
 using Sway.Integrations.Repositories;
 using System;
 using System.Collections.Generic;
@@ -23,8 +24,10 @@ internal static class ContainerConfig
 
         builder
             .ConfigureOptions()
+            .ConfigureGenerators()
             .ConfigureDatabase()
             .ConfigureRepositories()
+            .ConfigureSinks()
             .ConfigureEntryPoint();
 
         return builder.Build();
@@ -70,7 +73,20 @@ internal static class ContainerConfig
     private static ContainerBuilder ConfigureRepositories(this ContainerBuilder builder)
     {
         builder.RegisterType<UserRepository>().As<IUserRepository>().SingleInstance();
+
+        return builder;
+    }
+
+    public static ContainerBuilder ConfigureGenerators(this ContainerBuilder builder)
+    {
         builder.RegisterType<UserGenerator>().AsSelf().SingleInstance();
+
+        return builder;
+    }
+
+    private static ContainerBuilder ConfigureSinks(this ContainerBuilder builder)
+    {
+        builder.RegisterType<DatabaseSink>().AsSelf().SingleInstance();
 
         return builder;
     }
