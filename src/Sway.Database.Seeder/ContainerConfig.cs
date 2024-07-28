@@ -3,10 +3,12 @@
 using Autofac;
 using Autofac.Configuration;
 using Microsoft.Extensions.Configuration;
+using Sway.Core.Models;
 using Sway.Core.Repositories;
 using Sway.Database.Seeder.Generator;
 using Sway.Database.Seeder.Options;
 using Sway.Database.Seeder.Sinks;
+using Sway.Database.Seeder.Writers;
 using Sway.Integrations.Repositories;
 using System;
 using System.Collections.Generic;
@@ -73,6 +75,7 @@ internal static class ContainerConfig
     private static ContainerBuilder ConfigureRepositories(this ContainerBuilder builder)
     {
         builder.RegisterType<UserRepository>().As<IUserRepository>().SingleInstance();
+        builder.RegisterType<UserSeedSqlWriter>().As<ISqlWriter<User>>().SingleInstance();
 
         return builder;
     }
@@ -87,6 +90,7 @@ internal static class ContainerConfig
     private static ContainerBuilder ConfigureSinks(this ContainerBuilder builder)
     {
         builder.RegisterType<DatabaseSink>().AsSelf().SingleInstance();
+        builder.RegisterType<SqlScriptSink>().AsSelf().SingleInstance();
 
         return builder;
     }

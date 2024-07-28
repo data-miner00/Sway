@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 internal sealed class Executor : IExecutor
 {
-    private readonly DatabaseSink sink;
+    private readonly SqlScriptSink sink;
 
-    public Executor(DatabaseSink sink)
+    public Executor(SqlScriptSink sink)
     {
         this.sink = sink;
     }
