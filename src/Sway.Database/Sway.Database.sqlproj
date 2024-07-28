@@ -143,7 +143,5 @@
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
     <None Include="Scripts\PreviousExecutedQueries.sql" />
-    <None Include="Scripts\CreateLogins.sql" />
-    <None Include="Seeds\SeedProductsAndEtc.sql" />
   </ItemGroup>
 </Project>
