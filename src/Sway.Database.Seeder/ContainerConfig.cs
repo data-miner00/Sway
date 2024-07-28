@@ -3,9 +3,12 @@
 using Autofac;
 using Autofac.Configuration;
 using Microsoft.Extensions.Configuration;
+using Sway.Core.Models;
 using Sway.Core.Repositories;
 using Sway.Database.Seeder.Generator;
 using Sway.Database.Seeder.Options;
+using Sway.Database.Seeder.Sinks;
+using Sway.Database.Seeder.Writers;
 using Sway.Integrations.Repositories;
 using System;
 using System.Collections.Generic;
@@ -23,8 +26,10 @@ internal static class ContainerConfig
 
         builder
             .ConfigureOptions()
+            .ConfigureGenerators()
             .ConfigureDatabase()
             .ConfigureRepositories()
+            .ConfigureSinks()
             .ConfigureEntryPoint();
 
         return builder.Build();
@@ -47,6 +52,18 @@ internal static class ContainerConfig
 
         builder.RegisterInstance(databaseOption);
 
+        var seedingOption =
+            config.GetSection(nameof(SeedingOption)).Get<SeedingOption>()
+            ?? throw new InvalidOperationException("The seeding option cannot be empty.");
+
+        builder.RegisterInstance(seedingOption);
+
+        var sqlSinkOption =
+            config.GetSection(nameof(SqlSinkOption)).Get<SqlSinkOption>()
+            ?? throw new InvalidOperationException("The seeding option cannot be empty.");
+
+        builder.RegisterInstance(sqlSinkOption);
+
         return builder;
     }
 
@@ -54,13 +71,13 @@ internal static class ContainerConfig
     {
         builder.Register(
             ctx =>
-                {
-                    var option = ctx.Resolve<DatabaseOption>();
+            {
+                var option = ctx.Resolve<DatabaseOption>();
 
-                    var connection = new SqlConnection(option.ConnectionString);
+                var connection = new SqlConnection(option.ConnectionString);
 
-                    return connection;
-                })
+                return connection;
+            })
             .As<IDbConnection>()
             .SingleInstance();
 
@@ -70,7 +87,32 @@ internal static class ContainerConfig
     private static ContainerBuilder ConfigureRepositories(this ContainerBuilder builder)
     {
         builder.RegisterType<UserRepository>().As<IUserRepository>().SingleInstance();
+        builder.Register(
+            ctx =>
+            {
+                var sinkOption = ctx.Resolve<SqlSinkOption>();
+
+                return new UserSeedSqlWriter(sinkOption.OutputPath, sinkOption.NamingStrategy);
+            })
+            .As<ISqlWriter<User>>().SingleInstance();
+
+        return builder;
+    }
+
+    private static ContainerBuilder ConfigureGenerators(this ContainerBuilder builder)
+    {
         builder.RegisterType<UserGenerator>().AsSelf().SingleInstance();
+
+        return builder;
+    }
+
+    private static ContainerBuilder ConfigureSinks(this ContainerBuilder builder)
+    {
+        builder.RegisterType<DatabaseSink>().AsSelf().SingleInstance();
+        builder.RegisterType<SqlScriptSink>().AsSelf().SingleInstance();
+        builder.RegisterType<VoidSink>().AsSelf().SingleInstance();
+
+        builder.RegisterType<SinkFactory>().As<ISinkFactory>().SingleInstance();
 
         return builder;
     }

@@ -2,38 +2,25 @@
 
 using Bogus;
 using Sway.Core.Models;
-using Sway.Core.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-internal sealed class UserGenerator
+internal sealed class UserGenerator : IGenerator<User>
 {
-    private readonly IUserRepository repository;
-
     private Faker<User> faker;
 
-    public UserGenerator(IUserRepository repository)
+    public UserGenerator()
     {
-        this.repository = repository;
-
         this.ConfigureUserFaker();
     }
 
-    public async Task ProvisionAsync(int count, CancellationToken cancellationToken)
+    public Task<IEnumerable<User>> GenerateAsync(int count, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var users = this.faker.Generate(count);
-
-        // Task.WhenAll does not work here
-        foreach (var user in users)
-        {
-            await this.repository.CreateAsync(user, cancellationToken);
-        }
+        return Task.FromResult(this.faker.Generate(count).AsEnumerable());
     }
 
     private void ConfigureUserFaker()
