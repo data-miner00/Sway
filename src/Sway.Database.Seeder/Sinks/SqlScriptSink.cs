@@ -4,9 +4,6 @@ using Sway.Core.Models;
 using Sway.Database.Seeder.Generator;
 using Sway.Database.Seeder.Writers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
