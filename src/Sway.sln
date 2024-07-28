@@ -30,9 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{988783AC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sway.Web.Mvc", "Sway.Web.Mvc\Sway.Web.Mvc.csproj", "{95728D9C-F4BF-4260-B5B6-2ACA0AFE3E28}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sway.Database.Seeder", "Sway.Database.Seeder\Sway.Database.Seeder.csproj", "{1F473C6B-DE7B-4F91-A72E-E7E0F5732C01}"
-EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Sway.Database.Extras", "Sway.Database.Extras\Sway.Database.Extras.sqlproj", "{500EF2F4-94EE-4FD9-BB1A-057CC18F3412}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sway.Database.Seeder", "Sway.Database.Seeder\Sway.Database.Seeder.csproj", "{1F473C6B-DE7B-4F91-A72E-E7E0F5732C01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,11 +72,6 @@ Global
 		{1F473C6B-DE7B-4F91-A72E-E7E0F5732C01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F473C6B-DE7B-4F91-A72E-E7E0F5732C01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F473C6B-DE7B-4F91-A72E-E7E0F5732C01}.Release|Any CPU.Build.0 = Release|Any CPU
-		{500EF2F4-94EE-4FD9-BB1A-057CC18F3412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{500EF2F4-94EE-4FD9-BB1A-057CC18F3412}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{500EF2F4-94EE-4FD9-BB1A-057CC18F3412}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{500EF2F4-94EE-4FD9-BB1A-057CC18F3412}.Release|Any CPU.Build.0 = Release|Any CPU
-		{500EF2F4-94EE-4FD9-BB1A-057CC18F3412}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
