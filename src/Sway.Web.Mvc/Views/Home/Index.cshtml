@@ -12,7 +12,7 @@
             <article class="card bg-base-100 w-96 shadow-xl">
                 <figure>
                     <img
-                        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                        src="@Constants.TestItemPhotoUrl"
                         alt="Shoes"
                     />
                 </figure>
@@ -31,3 +31,11 @@
         </a>
     }
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
+
+    <script type="text/javascript">
+        console.log("hlelo");
+    </script>
+}

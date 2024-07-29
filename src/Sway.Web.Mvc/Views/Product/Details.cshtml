@@ -4,17 +4,26 @@
     ViewData["Title"] = "Details";
 }
 
-<p>@Model.Name</p>
-<p>Price: @Model.Price</p>
+<div class="flex gap-4 bg-gray-50">
+    <div>
+        <img src="@Constants.TestItemPhotoUrl" alt="Shoe" />
+    </div>
+    <div class="p-8">
+        <p class="font-bold text-lg mb-2">@Model.Name</p>
 
-<form
-    method="post"
-    asp-action="AddToCart"
-    asp-controller="ShoppingCart"
-    asp-route-userId="@Constants.TestUserId"
->
-    <input type="text" hidden value="@Model.Id" name="productId" />
-    <input type="number" placeholder="Quantity" name="quantity" />
-    <button type="submit">Add to Cart</button>
-</form>
+        <p class="mb-4">RM @Model.Price.ToString("0.00")</p>
 
+        <p class="mb-8">@Model.Description</p>
+
+        <form
+            method="post"
+            asp-action="AddToCart"
+            asp-controller="ShoppingCart"
+            asp-route-userId="@Constants.TestUserId"
+        >
+            <input type="text" hidden value="@Model.Id" name="productId" />
+            <input class="input w-full max-w-xs input-bordered mb-1" type="number" placeholder="Quantity" name="quantity" />
+            <button class="btn btn-secondary" type="submit">Add to Cart</button>
+        </form>
+    </div>
+</div>
