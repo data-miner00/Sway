@@ -14,6 +14,8 @@ public class Product
 
     public string? SKU { get; set; }
 
+    public float AverageRatings { get; set; }
+
     public Guid BrandId { get; set; }
 
     public Guid? CategoryId { get; set; }

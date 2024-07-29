@@ -146,4 +146,7 @@
     <None Include="Scripts\CreateLogins.sql" />
     <None Include="Seeds\SeedProductsAndEtc.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Sway.Database.refactorlog" />
+  </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@
     [CategoryId]  UNIQUEIDENTIFIER NULL,
     [CreatedAt]   DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
     [ModifiedAt]  DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
+    [AverageRatings] FLOAT NOT NULL DEFAULT 0.0, 
     CONSTRAINT [PK_Products] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [CK_Products_Price_Positive] CHECK ([Price] > 0),
     CONSTRAINT [CK_Products_InStock_Positive] CHECK ([InStock] > 0), 
