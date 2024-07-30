@@ -44,7 +44,9 @@ internal sealed class UserSeedSqlWriter : ISqlWriter<User>
             var birthdayString = user.DateOfBirth.ToString("yyyy-MM-dd");
 
             sb.AppendLine(@$"EXEC {SpNames.CreateNewUser}");
-            sb.AppendLine($"    @Username = '{user.Name}',"); // change to username, firstname, lastname
+            sb.AppendLine($"    @Username = '{user.Username}',");
+            sb.AppendLine($"    @FirstName = '{user.FirstName}',");
+            sb.AppendLine($"    @LastName = '{user.LastName}',");
             sb.AppendLine($"    @DateOfBirth = '{birthdayString}',");
             sb.AppendLine($"    @Email = '{user.Email}',");
             sb.AppendLine($"    @Phone = '{user.Phone}',");

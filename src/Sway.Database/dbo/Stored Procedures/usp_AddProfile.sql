@@ -8,6 +8,8 @@ CREATE PROCEDURE usp_AddProfile
 	@Phone NVARCHAR(50),
 	@PhotoUrl NVARCHAR(255),
 	@Description NVARCHAR(255),
+	@FirstName NVARCHAR(50),
+	@LastName NVARCHAR(50),
 	@RowId UNIQUEIDENTIFIER OUTPUT
 AS
 BEGIN
@@ -21,7 +23,9 @@ BEGIN
 			[Email],
 			[Phone],
 			[PhotoUrl],
-			[Description]
+			[Description],
+			[FirstName],
+			[LastName]
 		)
 		OUTPUT inserted.Id INTO @OutputTable
 		VALUES
@@ -29,7 +33,9 @@ BEGIN
 			@Email,
 			@Phone,
 			@PhotoUrl,
-			@Description
+			@Description,
+			@FirstName,
+			@LastName
 		);
 
 	COMMIT TRANSACTION;

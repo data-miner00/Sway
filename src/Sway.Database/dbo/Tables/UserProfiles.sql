@@ -8,6 +8,8 @@
     [BillingAddressId]  UNIQUEIDENTIFIER  NULL,
     [CreatedAt]         DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
     [ModifiedAt]        DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
+    [FirstName] NVARCHAR(50) NOT NULL , 
+    [LastName] NVARCHAR(50) NOT NULL , 
     CONSTRAINT [PK_UserProfiles] PRIMARY KEY CLUSTERED ([Id] ASC), 
     CONSTRAINT [FK_UserProfiles_Addresses_ShippingAddress] FOREIGN KEY ([ShippingAddressId]) REFERENCES [Addresses]([Id]),
     CONSTRAINT [FK_UserProfiles_Addresses_BillingAddress] FOREIGN KEY ([BillingAddressId]) REFERENCES [Addresses]([Id]),
