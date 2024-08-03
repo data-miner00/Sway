@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
-using System.Data;
 
-public class ShoppingCartController : Controller
+public sealed class ShoppingCartController : Controller
 {
     private readonly IShoppingCartRepository repository;
 
@@ -53,17 +52,23 @@ public class ShoppingCartController : Controller
         AddToCartRequest request,
         [FromQuery] Guid userId)
     {
-        if (this.ModelState.IsValid)
+        if (!this.ModelState.IsValid)
         {
-            await this.repository.AddItemIntoCartForUserAsync(
-                userId.ToString(),
-                request.ProductId.ToString(),
-                request.Quantity,
-                this.CancellationToken);
+            this.TempData[Constants.Error] = "Failed adding item to cart.";
+            return this.View(request);
         }
 
-        this.TempData["Success"] = "Successfully added item to cart.";
+        await this.repository.AddItemIntoCartForUserAsync(
+            userId.ToString(),
+            request.ProductId.ToString(),
+            request.Quantity,
+            this.CancellationToken);
 
-        return this.RedirectToAction(nameof(ProductController.Details), nameof(ProductController), request.ProductId);
+        this.TempData[Constants.Success] = "Successfully added item to cart.";
+
+        return this.RedirectToAction(
+            nameof(ProductController.Details),
+            ProductController.ControllerName,
+            new { id = request.ProductId });
     }
 }

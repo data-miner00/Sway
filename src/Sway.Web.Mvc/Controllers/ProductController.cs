@@ -5,6 +5,8 @@ using Sway.Core.Repositories;
 
 public class ProductController : Controller
 {
+    public static readonly string ControllerName = "Product";
+
     private readonly IProductRepository repository;
 
     private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
