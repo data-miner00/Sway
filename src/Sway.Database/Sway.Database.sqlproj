@@ -139,6 +139,8 @@
     <Build Include="dbo\Stored Procedures\usp_CreateShoppingCartForUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddItemIntoCartForUser.sql" />
     <None Include="Seeds\SeedUsers.sql" />
+    <Build Include="dbo\Stored Procedures\usp_IncrementCartItemQuantity.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DecrementCartItemQuantity.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

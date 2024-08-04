@@ -12,7 +12,23 @@
 
     @foreach (var item in Model.CartItems)
     {
-        <div>@item.ProductName</div>
+        <div class="p-4 border border-gray-400 border-dashed">
+            <div>@item.ProductName</div>
+            <div>@item.ProductDescription</div>
+            <div>@item.UnitPrice</div>
+            <div class="flex gap-2">
+                <button class="btn btn-secondary" onclick="return decrementQuantity('@item.Id.ToString()')">-</button>
+                <div id="@("quantity-" + item.Id.ToString())">@item.Quantity</div>
+                <button class="btn btn-secondary" onclick="return incrementQuantity('@item.Id.ToString()')">+</button>
+            </div>
+        </div>
+    }
+
+    @if (Model.CartItems.Count() > 0)
+    {
+        <a class="btn btn-primary" asp-action="Index" asp-controller="Checkout">
+            Checkout
+        </a>
     }
 }
 else
@@ -20,6 +36,27 @@ else
     <p>You have no cart yet.</p>
 }
 
-<button class="btn btn-primary">
-    Checkout
-</button>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
+
+    <script type="text/javascript">
+        function updateUiQuantity(cartItemId, isIncrement) {
+            var currentUiCount = $(`#quantity-${cartItemId}`).text();
+            var currentUiCountNumber = Number(currentUiCount);
+            var newUiCount = isIncrement ? ++currentUiCountNumber : --currentUiCountNumber;
+            $(`#quantity-${cartItemId}`).text(newUiCount);
+        }
+
+        function incrementQuantity(cartItemId) {
+            fetch(`/ShoppingCart/IncrementCartItem/${cartItemId}`, { method: "POST" })
+                .then(() => updateUiQuantity(cartItemId, true))
+                .catch(console.error);
+        }
+
+        function decrementQuantity(cartItemId) {
+            fetch(`/ShoppingCart/DecrementCartItem/${cartItemId}`, { method: "POST" })
+                .then(() => updateUiQuantity(cartItemId, false))
+                .catch(console.error);
+        }
+    </script>
+}

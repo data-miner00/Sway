@@ -71,4 +71,20 @@ public sealed class ShoppingCartController : Controller
             ProductController.ControllerName,
             new { id = request.ProductId });
     }
+
+    [HttpPost("ShoppingCart/IncrementCartItem/{cartItemId}")]
+    public async Task<IActionResult> IncrementCartItem([FromRoute] Guid cartItemId)
+    {
+        await this.repository.IncrementCartItemAsync(cartItemId.ToString(), this.CancellationToken);
+
+        return this.Ok();
+    }
+
+    [HttpPost("ShoppingCart/DecrementCartItem/{cartItemId}")]
+    public async Task<IActionResult> DecrementCartItem([FromRoute] Guid cartItemId)
+    {
+        await this.repository.DecrementCartItemAsync(cartItemId.ToString(), this.CancellationToken);
+
+        return this.Ok();
+    }
 }

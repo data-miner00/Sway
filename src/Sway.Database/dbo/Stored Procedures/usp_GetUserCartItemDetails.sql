@@ -16,6 +16,7 @@ BEGIN
 	WHERE [Id] = @UserId;
     
 	SELECT 
+		c.Id Id,
 		p.Name ProductName,
 		p.Description ProductDescription,
 		p.Price UnitPrice,
