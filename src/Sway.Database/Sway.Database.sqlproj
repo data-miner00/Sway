@@ -141,6 +141,7 @@
     <None Include="Seeds\SeedUsers.sql" />
     <Build Include="dbo\Stored Procedures\usp_IncrementCartItemQuantity.sql" />
     <Build Include="dbo\Stored Procedures\usp_DecrementCartItemQuantity.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ConsolidateCartItem.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
