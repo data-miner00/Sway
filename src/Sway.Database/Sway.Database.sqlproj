@@ -142,6 +142,7 @@
     <Build Include="dbo\Stored Procedures\usp_IncrementCartItemQuantity.sql" />
     <Build Include="dbo\Stored Procedures\usp_DecrementCartItemQuantity.sql" />
     <Build Include="dbo\Stored Procedures\usp_ConsolidateCartItem.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAllProductsWithPagination.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
