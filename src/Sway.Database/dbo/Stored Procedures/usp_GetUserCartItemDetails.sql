@@ -26,5 +26,6 @@ BEGIN
 	FROM [dbo].[CartItems] c
 	INNER JOIN [dbo].[Products] p
 	ON p.Id = c.ProductId
-	WHERE c.ShoppingCartId = @CartId;
+	WHERE c.ShoppingCartId = @CartId
+	AND c.IsDeleted != 1;
 END

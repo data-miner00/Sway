@@ -13,4 +13,6 @@ public static class StoredProcedureNames
     public const string IncrementCartItemQuantity = "usp_IncrementCartItemQuantity";
 
     public const string DecrementCartItemQuantity = "usp_DecrementCartItemQuantity";
+
+    public const string SoftDeleteCartItem = "usp_SoftDeleteCartItem";
 }

@@ -87,4 +87,12 @@ public sealed class ShoppingCartController : Controller
 
         return this.Ok();
     }
+
+    [HttpPost("[controller]/Delete/{cartItemId}")]
+    public async Task<IActionResult> SoftDeleteCartItem([FromRoute] Guid cartItemId)
+    {
+        await this.repository.SoftDeleteCartItemAsync(cartItemId.ToString(), this.CancellationToken);
+
+        return this.Ok();
+    }
 }

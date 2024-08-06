@@ -23,4 +23,6 @@ public interface IShoppingCartRepository
     Task IncrementCartItemAsync(string cartItemId, CancellationToken cancellationToken);
 
     Task DecrementCartItemAsync(string cartItemId, CancellationToken cancellationToken);
+
+    Task SoftDeleteCartItemAsync(string cartItemId, CancellationToken cancellationToken);
 }

@@ -12,7 +12,7 @@
 
     @foreach (var item in Model.CartItems)
     {
-        <div class="p-4 border border-gray-400 border-dashed">
+        <div class="p-4 border border-gray-400 border-dashed" id="@("container-" + item.Id.ToString())">
             <div>@item.ProductName</div>
             <div>@item.ProductDescription</div>
             <div>@item.UnitPrice</div>
@@ -20,6 +20,11 @@
                 <button class="btn btn-secondary" onclick="return decrementQuantity('@item.Id.ToString()')">-</button>
                 <div id="@("quantity-" + item.Id.ToString())">@item.Quantity</div>
                 <button class="btn btn-secondary" onclick="return incrementQuantity('@item.Id.ToString()')">+</button>
+            </div>
+            <div>
+                <button class="btn btn-ghost" onclick="return softDeleteCartItem('@item.Id.ToString()')">
+                    <i class="bi bi-trash"></i>
+                </button>
             </div>
         </div>
     }
@@ -47,6 +52,13 @@ else
             $(`#quantity-${cartItemId}`).text(newUiCount);
         }
 
+        function removeCartItemFromUi(cartItemId) {
+            var cartItemContainer = $(`#container-${cartItemId}`);
+            if (cartItemContainer) {
+                cartItemContainer.remove();
+            }
+        }
+
         function incrementQuantity(cartItemId) {
             fetch(`/ShoppingCart/IncrementCartItem/${cartItemId}`, { method: "POST" })
                 .then(() => updateUiQuantity(cartItemId, true))
@@ -56,6 +68,12 @@ else
         function decrementQuantity(cartItemId) {
             fetch(`/ShoppingCart/DecrementCartItem/${cartItemId}`, { method: "POST" })
                 .then(() => updateUiQuantity(cartItemId, false))
+                .catch(console.error);
+        }
+
+        function softDeleteCartItem(cartItemId) {
+            fetch(`/ShoppingCart/Delete/${cartItemId}`, { method: "POST" })
+                .then(() => removeCartItemFromUi(cartItemId))
                 .catch(console.error);
         }
     </script>
