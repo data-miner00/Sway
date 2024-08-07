@@ -119,4 +119,17 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
             parameters,
             commandType: CommandType.StoredProcedure);
     }
+
+    public Task UndoDeletedCartItemAsync(string cartItemId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("CartItemId", cartItemId);
+
+        return this.connection.ExecuteAsync(
+            SpNames.UndoDeletedCartItem,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
 }

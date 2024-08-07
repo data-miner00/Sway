@@ -145,6 +145,7 @@
     <Build Include="dbo\Stored Procedures\usp_GetAllProductsWithPagination.sql" />
     <Build Include="dbo\Stored Procedures\usp_HousekeepDeletedCartItems.sql" />
     <Build Include="dbo\Stored Procedures\usp_SoftDeleteCartItem.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UndoDeletedCartItem.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

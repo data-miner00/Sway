@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sway.Common;
 using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
 
@@ -13,7 +14,7 @@ public sealed class ShoppingCartController : Controller
 
     public ShoppingCartController(IShoppingCartRepository repository)
     {
-        this.repository = repository;
+        this.repository = Guard.ThrowIfNull(repository);
     }
 
     // GET: ShoppingCartController
@@ -44,7 +45,7 @@ public sealed class ShoppingCartController : Controller
         return this.View(viewModel);
     }
 
-    public record AddToCartRequest(Guid ProductId, int Quantity);
+    public sealed record AddToCartRequest(Guid ProductId, int Quantity);
 
     [HttpPost]
     //[ValidateAntiForgeryToken]
@@ -92,6 +93,14 @@ public sealed class ShoppingCartController : Controller
     public async Task<IActionResult> SoftDeleteCartItem([FromRoute] Guid cartItemId)
     {
         await this.repository.SoftDeleteCartItemAsync(cartItemId.ToString(), this.CancellationToken);
+
+        return this.Ok();
+    }
+
+    [HttpPost("[controller]/Undo/{cartItemId}")]
+    public async Task<IActionResult> UndoDeletedCartItem([FromRoute] Guid cartItemId)
+    {
+        await this.repository.UndoDeletedCartItemAsync(cartItemId.ToString(), this.CancellationToken);
 
         return this.Ok();
     }

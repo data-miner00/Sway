@@ -4,6 +4,7 @@
     ViewData["Title"] = "My shopping cart";
 }
 
+<div id="notification-container" class="bg-green-300"></div>
 
 @if (Model is not null)
 {
@@ -21,11 +22,11 @@
                 <div id="@("quantity-" + item.Id.ToString())">@item.Quantity</div>
                 <button class="btn btn-secondary" onclick="return incrementQuantity('@item.Id.ToString()')">+</button>
             </div>
-            <div>
-                <button class="btn btn-ghost" onclick="return softDeleteCartItem('@item.Id.ToString()')">
+            <form action="javascript:softDeleteCartItem('@item.Id.ToString()')">
+                <button type="submit" class="btn btn-ghost" onclick="return confirm('Are you sure?')">
                     <i class="bi bi-trash"></i>
                 </button>
-            </div>
+            </form>
         </div>
     }
 
@@ -55,8 +56,32 @@ else
         function removeCartItemFromUi(cartItemId) {
             var cartItemContainer = $(`#container-${cartItemId}`);
             if (cartItemContainer) {
-                cartItemContainer.remove();
+                cartItemContainer.hide();
             }
+        }
+
+        function showHiddenCartItemInUi(cartItemId) {
+            var cartItemContainer = $(`#container-${cartItemId}`);
+            if (cartItemContainer) {
+                cartItemContainer.show();
+            }
+        }
+
+        function displayRemovedNotificationWithUndo(cartItemId, cartItemName) {
+            var notificationContainer = $("#notification-container");
+
+            var newMessageNode = document.createElement("div");
+            newMessageNode.innerHTML = `Removed ${cartItemName} from shopping cart.`;
+
+            var undoButton = document.createElement("button");
+            undoButton.innerText = "Undo";
+            undoButton.className = "btn btn-ghost";
+            undoButton.onclick = () => {
+                undoDeletedCartItem(cartItemId);
+                notificationContainer.empty();
+            }
+
+            notificationContainer.append(newMessageNode).append(undoButton);
         }
 
         function incrementQuantity(cartItemId) {
@@ -73,7 +98,16 @@ else
 
         function softDeleteCartItem(cartItemId) {
             fetch(`/ShoppingCart/Delete/${cartItemId}`, { method: "POST" })
-                .then(() => removeCartItemFromUi(cartItemId))
+                .then(() => {
+                    removeCartItemFromUi(cartItemId);
+                    displayRemovedNotificationWithUndo(cartItemId, "Cart Item #1");
+                })
+                .catch(console.error);
+        }
+
+        function undoDeletedCartItem(cartItemId) {
+            fetch(`/ShoppingCart/Undo/${cartItemId}`, { method: "POST" })
+                .then(() => showHiddenCartItemInUi(cartItemId))
                 .catch(console.error);
         }
     </script>
