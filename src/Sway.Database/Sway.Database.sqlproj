@@ -147,6 +147,7 @@
     <Build Include="dbo\Stored Procedures\usp_SoftDeleteCartItem.sql" />
     <Build Include="dbo\Stored Procedures\usp_UndoDeletedCartItem.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetTopExpensiveProducts.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdateProductInStockUnit.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
