@@ -10,7 +10,8 @@ CREATE PROCEDURE [dbo].[usp_AddProduct]
 	@InStock INT,
 	@SKU NVARCHAR(255),
 	@BrandId UNIQUEIDENTIFIER,
-	@CategoryId UNIQUEIDENTIFIER
+	@CategoryId UNIQUEIDENTIFIER,
+	@DeliveryTime NVARCHAR(50)
 AS
 BEGIN
 	SET NOCOUNT, XACT_ABORT ON;
@@ -25,7 +26,8 @@ BEGIN
 		[InStock],
 		[SKU],
 		[BrandId],
-		[CategoryId]
+		[CategoryId],
+		[DeliveryTime]
 	)
 	VALUES
 	(
@@ -35,7 +37,8 @@ BEGIN
 		@InStock,
 		@SKU,
 		@BrandId,
-		@CategoryId
+		@CategoryId,
+		@DeliveryTime
 	);
 
 	COMMIT TRANSACTION

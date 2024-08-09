@@ -20,6 +20,12 @@ public class Product
 
     public Guid? CategoryId { get; set; }
 
+    public int UnitsSold { get; set; }
+
+    public string? DeliveryTime { get; set; }
+
+    public int Favourite { get; set; }
+
     public DateTime CreatedAt { get; set; }
 
     public DateTime ModifiedAt { get; set; }

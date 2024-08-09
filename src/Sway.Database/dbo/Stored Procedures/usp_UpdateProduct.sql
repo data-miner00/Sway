@@ -11,7 +11,8 @@ CREATE PROCEDURE [dbo].[usp_UpdateProduct]
 	@InStock INT,
 	@SKU NVARCHAR(255),
 	@BrandId UNIQUEIDENTIFIER,
-	@CategoryId UNIQUEIDENTIFIER
+	@CategoryId UNIQUEIDENTIFIER,
+	@DeliveryTime NVARCHAR(50)
 AS
 BEGIN
 	SET NOCOUNT, XACT_ABORT ON;
@@ -26,7 +27,8 @@ BEGIN
 		[InStock] = InStock,
 		[SKU] = @SKU,
 		[BrandId] = @BrandId,
-		[CategoryId] = @CategoryId
+		[CategoryId] = @CategoryId,
+		[DeliveryTime] = @DeliveryTime
 	WHERE
 		[Id] = @Id;
 
