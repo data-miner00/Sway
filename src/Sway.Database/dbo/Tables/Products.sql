@@ -13,6 +13,7 @@
     [UnitsSold] INT NOT NULL DEFAULT 0, 
     [DeliveryTime] NVARCHAR(50) NULL, 
     [Favourite] INT NOT NULL DEFAULT 0, 
+    [IsDeleted] BIT NOT NULL DEFAULT 0, 
     CONSTRAINT [PK_Products] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [CK_Products_Price_Positive] CHECK ([Price] > 0),
     CONSTRAINT [CK_Products_InStock_Positive] CHECK ([InStock] > 0), 

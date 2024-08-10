@@ -26,6 +26,8 @@ public class Product
 
     public int Favourite { get; set; }
 
+    public bool IsDeleted { get; set; }
+
     public DateTime CreatedAt { get; set; }
 
     public DateTime ModifiedAt { get; set; }
