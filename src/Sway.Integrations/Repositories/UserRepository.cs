@@ -33,7 +33,9 @@ public sealed class UserRepository : IUserRepository
         cancellationToken.ThrowIfCancellationRequested();
 
         var parameters = new DynamicParameters();
-        parameters.Add("Username", entity.Name);
+        parameters.Add("Username", entity.Username);
+        parameters.Add("FirstName", entity.FirstName);
+        parameters.Add("LastName", entity.LastName);
         parameters.Add("DateOfBirth", entity.DateOfBirth);
         parameters.Add("Email", entity.Email);
         parameters.Add("Phone", entity.Phone);

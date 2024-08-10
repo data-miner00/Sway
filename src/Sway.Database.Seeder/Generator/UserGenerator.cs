@@ -26,18 +26,18 @@ internal sealed class UserGenerator : IGenerator<User>
     private void ConfigureUserFaker()
     {
         this.faker = new Faker<User>()
-            .RuleFor(x => x.Name, s => s.Name.FullName())
+            .RuleFor(x => x.FirstName, s => s.Name.FirstName())
+            .RuleFor(x => x.LastName, s => s.Name.LastName())
+            .RuleFor(x => x.Username, (s, o) => string.Concat(o.FirstName.ToLowerInvariant(), o.LastName.ToLowerInvariant()))
             .RuleFor(x => x.Status, s => s.PickRandom<Status>())
             .RuleFor(x => x.Role, s => s.PickRandom<Role>())
             .RuleFor(x => x.Email, (s, o) =>
             {
-                var splitName = o.Name.Split(' ');
-
-                return s.Internet.Email(firstName: splitName[0], lastName: splitName[1]);
+                return s.Internet.Email(firstName: o.FirstName, lastName: o.LastName);
             })
             .RuleFor(x => x.Phone, s => s.Phone.PhoneNumber())
             .RuleFor(x => x.PhotoUrl, s => s.Internet.Avatar())
-            .RuleFor(x => x.Description, (s, o) => $"Hi, I am {o.Name}")
+            .RuleFor(x => x.Description, (s, o) => $"Hi, I am {o.FirstName} {o.LastName}")
             .RuleFor(x => x.DateOfBirth, s => s.Date.Past());
     }
 }

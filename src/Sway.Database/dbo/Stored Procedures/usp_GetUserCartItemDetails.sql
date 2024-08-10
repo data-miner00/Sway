@@ -16,6 +16,7 @@ BEGIN
 	WHERE [Id] = @UserId;
     
 	SELECT 
+		c.Id Id,
 		p.Name ProductName,
 		p.Description ProductDescription,
 		p.Price UnitPrice,
@@ -25,5 +26,6 @@ BEGIN
 	FROM [dbo].[CartItems] c
 	INNER JOIN [dbo].[Products] p
 	ON p.Id = c.ProductId
-	WHERE c.ShoppingCartId = @CartId;
+	WHERE c.ShoppingCartId = @CartId
+	AND c.IsDeleted != 1;
 END

@@ -1,7 +1,8 @@
 ﻿CREATE VIEW dbo.vw_UserDetails
 AS
 SELECT        dbo.Users.Id, dbo.Users.Username, dbo.Users.Status, dbo.Users.DateOfBirth, dbo.Users.Role, dbo.Users.CreatedAt, dbo.Users.ModifiedAt, dbo.UserProfiles.Email, dbo.UserProfiles.Phone, dbo.UserProfiles.PhotoUrl, 
-                         dbo.UserProfiles.Description, dbo.Credentials.HashAlgorithm, dbo.Credentials.PasswordHash, dbo.Credentials.PasswordSalt, dbo.Credentials.PreviousPasswordHash
+                         dbo.UserProfiles.Description, dbo.Credentials.HashAlgorithm, dbo.Credentials.PasswordHash, dbo.Credentials.PasswordSalt, dbo.Credentials.PreviousPasswordHash, dbo.UserProfiles.FirstName, 
+                         dbo.UserProfiles.LastName
 FROM            dbo.Users INNER JOIN
                          dbo.UserProfiles ON dbo.Users.ProfileId = dbo.UserProfiles.Id INNER JOIN
                          dbo.Credentials ON dbo.Users.CredentialId = dbo.Credentials.Id
@@ -99,7 +100,7 @@ Begin DesignProperties =
                Right = 434
             End
             DisplayFlags = 280
-            TopColumn = 4
+            TopColumn = 7
          End
          Begin Table = "Credentials"
             Begin Extent = 
@@ -138,4 +139,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vw_UserDetails';
+
+
 

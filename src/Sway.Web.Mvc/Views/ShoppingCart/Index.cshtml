@@ -4,6 +4,7 @@
     ViewData["Title"] = "My shopping cart";
 }
 
+<div id="notification-container" class="bg-green-300"></div>
 
 @if (Model is not null)
 {
@@ -12,7 +13,28 @@
 
     @foreach (var item in Model.CartItems)
     {
-        <div>@item.ProductName</div>
+        <div class="p-4 border border-gray-400 border-dashed" id="@("container-" + item.Id.ToString())">
+            <div>@item.ProductName</div>
+            <div>@item.ProductDescription</div>
+            <div>@item.UnitPrice</div>
+            <div class="flex gap-2">
+                <button class="btn btn-secondary" onclick="return decrementQuantity('@item.Id.ToString()')">-</button>
+                <div id="@("quantity-" + item.Id.ToString())">@item.Quantity</div>
+                <button class="btn btn-secondary" onclick="return incrementQuantity('@item.Id.ToString()')">+</button>
+            </div>
+            <form action="javascript:softDeleteCartItem('@item.Id.ToString()')">
+                <button type="submit" class="btn btn-ghost" onclick="return confirm('Are you sure?')">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </form>
+        </div>
+    }
+
+    @if (Model.CartItems.Count() > 0)
+    {
+        <a class="btn btn-primary" asp-action="Index" asp-controller="Checkout">
+            Checkout
+        </a>
     }
 }
 else
@@ -20,6 +42,73 @@ else
     <p>You have no cart yet.</p>
 }
 
-<button class="btn btn-primary">
-    Checkout
-</button>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
+
+    <script type="text/javascript">
+        function updateUiQuantity(cartItemId, isIncrement) {
+            var currentUiCount = $(`#quantity-${cartItemId}`).text();
+            var currentUiCountNumber = Number(currentUiCount);
+            var newUiCount = isIncrement ? ++currentUiCountNumber : --currentUiCountNumber;
+            $(`#quantity-${cartItemId}`).text(newUiCount);
+        }
+
+        function removeCartItemFromUi(cartItemId) {
+            var cartItemContainer = $(`#container-${cartItemId}`);
+            if (cartItemContainer) {
+                cartItemContainer.hide();
+            }
+        }
+
+        function showHiddenCartItemInUi(cartItemId) {
+            var cartItemContainer = $(`#container-${cartItemId}`);
+            if (cartItemContainer) {
+                cartItemContainer.show();
+            }
+        }
+
+        function displayRemovedNotificationWithUndo(cartItemId, cartItemName) {
+            var notificationContainer = $("#notification-container");
+
+            var newMessageNode = document.createElement("div");
+            newMessageNode.innerHTML = `Removed ${cartItemName} from shopping cart.`;
+
+            var undoButton = document.createElement("button");
+            undoButton.innerText = "Undo";
+            undoButton.className = "btn btn-ghost";
+            undoButton.onclick = () => {
+                undoDeletedCartItem(cartItemId);
+                notificationContainer.empty();
+            }
+
+            notificationContainer.append(newMessageNode).append(undoButton);
+        }
+
+        function incrementQuantity(cartItemId) {
+            fetch(`/ShoppingCart/IncrementCartItem/${cartItemId}`, { method: "POST" })
+                .then(() => updateUiQuantity(cartItemId, true))
+                .catch(console.error);
+        }
+
+        function decrementQuantity(cartItemId) {
+            fetch(`/ShoppingCart/DecrementCartItem/${cartItemId}`, { method: "POST" })
+                .then(() => updateUiQuantity(cartItemId, false))
+                .catch(console.error);
+        }
+
+        function softDeleteCartItem(cartItemId) {
+            fetch(`/ShoppingCart/Delete/${cartItemId}`, { method: "POST" })
+                .then(() => {
+                    removeCartItemFromUi(cartItemId);
+                    displayRemovedNotificationWithUndo(cartItemId, "Cart Item #1");
+                })
+                .catch(console.error);
+        }
+
+        function undoDeletedCartItem(cartItemId) {
+            fetch(`/ShoppingCart/Undo/${cartItemId}`, { method: "POST" })
+                .then(() => showHiddenCartItemInUi(cartItemId))
+                .catch(console.error);
+        }
+    </script>
+}

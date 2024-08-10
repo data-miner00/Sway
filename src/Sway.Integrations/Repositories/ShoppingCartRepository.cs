@@ -80,4 +80,56 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
             parameters,
             commandType: CommandType.StoredProcedure);
     }
+
+    public Task IncrementCartItemAsync(string cartItemId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("CartItemId", cartItemId);
+
+        return this.connection.ExecuteAsync(
+            SpNames.IncrementCartItemQuantity,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
+
+    public Task DecrementCartItemAsync(string cartItemId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("CartItemId", cartItemId);
+
+        return this.connection.ExecuteAsync(
+            SpNames.DecrementCartItemQuantity,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
+
+    public Task SoftDeleteCartItemAsync(string cartItemId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("CartItemId", cartItemId);
+
+        return this.connection.ExecuteAsync(
+            SpNames.SoftDeleteCartItem,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
+
+    public Task UndoDeletedCartItemAsync(string cartItemId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("CartItemId", cartItemId);
+
+        return this.connection.ExecuteAsync(
+            SpNames.UndoDeletedCartItem,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
 }

@@ -139,11 +139,24 @@
     <Build Include="dbo\Stored Procedures\usp_CreateShoppingCartForUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddItemIntoCartForUser.sql" />
     <None Include="Seeds\SeedUsers.sql" />
+    <Build Include="dbo\Stored Procedures\usp_IncrementCartItemQuantity.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DecrementCartItemQuantity.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ConsolidateCartItem.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAllProductsWithPagination.sql" />
+    <Build Include="dbo\Stored Procedures\usp_HousekeepDeletedCartItems.sql" />
+    <Build Include="dbo\Stored Procedures\usp_SoftDeleteCartItem.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UndoDeletedCartItem.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetTopExpensiveProducts.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdateProductInStockUnit.sql" />
+    <Build Include="dbo\Tables\ProductRatings.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
     <None Include="Scripts\PreviousExecutedQueries.sql" />
     <None Include="Scripts\CreateLogins.sql" />
     <None Include="Seeds\SeedProductsAndEtc.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Sway.Database.refactorlog" />
   </ItemGroup>
 </Project>

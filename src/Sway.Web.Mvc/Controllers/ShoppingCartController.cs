@@ -2,11 +2,11 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sway.Common;
 using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
-using System.Data;
 
-public class ShoppingCartController : Controller
+public sealed class ShoppingCartController : Controller
 {
     private readonly IShoppingCartRepository repository;
 
@@ -14,7 +14,7 @@ public class ShoppingCartController : Controller
 
     public ShoppingCartController(IShoppingCartRepository repository)
     {
-        this.repository = repository;
+        this.repository = Guard.ThrowIfNull(repository);
     }
 
     // GET: ShoppingCartController
@@ -45,7 +45,7 @@ public class ShoppingCartController : Controller
         return this.View(viewModel);
     }
 
-    public record AddToCartRequest(Guid ProductId, int Quantity);
+    public sealed record AddToCartRequest(Guid ProductId, int Quantity);
 
     [HttpPost]
     //[ValidateAntiForgeryToken]
@@ -53,17 +53,55 @@ public class ShoppingCartController : Controller
         AddToCartRequest request,
         [FromQuery] Guid userId)
     {
-        if (this.ModelState.IsValid)
+        if (!this.ModelState.IsValid)
         {
-            await this.repository.AddItemIntoCartForUserAsync(
-                userId.ToString(),
-                request.ProductId.ToString(),
-                request.Quantity,
-                this.CancellationToken);
+            this.TempData[Constants.Error] = "Failed adding item to cart.";
+            return this.View(request);
         }
 
-        this.TempData["Success"] = "Successfully added item to cart.";
+        await this.repository.AddItemIntoCartForUserAsync(
+            userId.ToString(),
+            request.ProductId.ToString(),
+            request.Quantity,
+            this.CancellationToken);
 
-        return this.RedirectToAction(nameof(ProductController.Details), nameof(ProductController), request.ProductId);
+        this.TempData[Constants.Success] = "Successfully added item to cart.";
+
+        return this.RedirectToAction(
+            nameof(ProductController.Details),
+            ProductController.ControllerName,
+            new { id = request.ProductId });
+    }
+
+    [HttpPost("ShoppingCart/IncrementCartItem/{cartItemId}")]
+    public async Task<IActionResult> IncrementCartItem([FromRoute] Guid cartItemId)
+    {
+        await this.repository.IncrementCartItemAsync(cartItemId.ToString(), this.CancellationToken);
+
+        return this.Ok();
+    }
+
+    [HttpPost("ShoppingCart/DecrementCartItem/{cartItemId}")]
+    public async Task<IActionResult> DecrementCartItem([FromRoute] Guid cartItemId)
+    {
+        await this.repository.DecrementCartItemAsync(cartItemId.ToString(), this.CancellationToken);
+
+        return this.Ok();
+    }
+
+    [HttpPost("[controller]/Delete/{cartItemId}")]
+    public async Task<IActionResult> SoftDeleteCartItem([FromRoute] Guid cartItemId)
+    {
+        await this.repository.SoftDeleteCartItemAsync(cartItemId.ToString(), this.CancellationToken);
+
+        return this.Ok();
+    }
+
+    [HttpPost("[controller]/Undo/{cartItemId}")]
+    public async Task<IActionResult> UndoDeletedCartItem([FromRoute] Guid cartItemId)
+    {
+        await this.repository.UndoDeletedCartItemAsync(cartItemId.ToString(), this.CancellationToken);
+
+        return this.Ok();
     }
 }

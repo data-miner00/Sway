@@ -5,6 +5,7 @@
     [Quantity]       INT           NOT NULL,
     [CreatedAt]      DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
     [ModifiedAt]     DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
+    [IsDeleted] BIT NOT NULL DEFAULT 0, 
     CONSTRAINT [PK_CartItems] PRIMARY KEY CLUSTERED ([Id] ASC), 
     CONSTRAINT [FK_CartItems_ShoppingCarts] FOREIGN KEY ([ShoppingCartId]) REFERENCES [ShoppingCarts]([Id])
 );
