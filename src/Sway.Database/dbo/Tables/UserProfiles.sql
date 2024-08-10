@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[UserProfiles] (
     [Id]                UNIQUEIDENTIFIER CONSTRAINT [DF_UserProfiles_Id] DEFAULT NEWID() NOT NULL,
     [Email]             NVARCHAR (50)  CONSTRAINT [UQ_UserProfiles_Email] UNIQUE NOT NULL,
-    [Phone]             NVARCHAR (50)  CONSTRAINT [UQ_UserProfiles_Phone] UNIQUE NULL,
+    [Phone]             NVARCHAR (50)  NULL,
     [PhotoUrl]          NVARCHAR (255) NULL,
     [Description]       NVARCHAR (255) NULL,
     [ShippingAddressId] UNIQUEIDENTIFIER  NULL,
@@ -30,4 +30,9 @@ CREATE TRIGGER [dbo].[Trigger_UserProfiles_OnUpdate]
 		FROM [dbo].[UserProfiles] T
 		INNER JOIN inserted I ON T.ID = I.ID;    
 	END;
+
+GO
+
+-- Reference: https://stackoverflow.com/questions/767657/how-do-i-create-a-unique-constraint-that-also-allows-nulls
+CREATE UNIQUE NONCLUSTERED INDEX IX_UserProfiles_Phone ON [UserProfiles] (Phone) WHERE Phone IS NOT NULL;
 
