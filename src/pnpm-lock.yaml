@@ -19,6 +19,9 @@ importers:
       daisyui:
         specifier: ^4.12.10
         version: 4.12.10(postcss@8.4.38)
+      htmx.org:
+        specifier: 2.0.1
+        version: 2.0.1
       jquery:
         specifier: ^3.7.1
         version: 3.7.1
@@ -214,6 +217,9 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
+
+  htmx.org@2.0.1:
+    resolution: {integrity: sha512-wO/rWlveSLD2mzRS9Em0v5hlsi6r21iUvaS17GPMgehBbM7eoQmqGQCkscsM67poF24zONgq3gQv+q/cgCHn2w==}
 
   is-binary-path@2.1.0:
     resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}
@@ -679,6 +685,8 @@ snapshots:
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
+
+  htmx.org@2.0.1: {}
 
   is-binary-path@2.1.0:
     dependencies:
