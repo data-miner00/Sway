@@ -86,7 +86,7 @@ internal static class ContainerConfig
 
     private static ContainerBuilder ConfigureRepositories(this ContainerBuilder builder)
     {
-        builder.RegisterType<UserRepository>().As<IUserRepository>().SingleInstance();
+        builder.RegisterType<UserRepository>().As<IRepository<User>>().SingleInstance();
         builder.Register(
             ctx =>
             {
@@ -101,15 +101,15 @@ internal static class ContainerConfig
 
     private static ContainerBuilder ConfigureGenerators(this ContainerBuilder builder)
     {
-        builder.RegisterType<UserGenerator>().AsSelf().SingleInstance();
+        builder.RegisterType<UserGenerator>().As<IGenerator<User>>().SingleInstance();
 
         return builder;
     }
 
     private static ContainerBuilder ConfigureSinks(this ContainerBuilder builder)
     {
-        builder.RegisterType<DatabaseSink>().AsSelf().SingleInstance();
-        builder.RegisterType<SqlScriptSink>().AsSelf().SingleInstance();
+        builder.RegisterType<DatabaseSink<User>>().AsSelf().SingleInstance();
+        builder.RegisterType<SqlScriptSink<User>>().AsSelf().SingleInstance();
         builder.RegisterType<VoidSink>().AsSelf().SingleInstance();
 
         builder.RegisterType<SinkFactory>().As<ISinkFactory>().SingleInstance();
