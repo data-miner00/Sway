@@ -9,6 +9,8 @@ internal sealed class SinkFactory : ISinkFactory
 {
     private readonly DatabaseSink<User> userDatabaseSink;
     private readonly SqlScriptSink<User> userSqlScriptSink;
+    private readonly DatabaseSink<ProductRating> productRatingDatabaseSink;
+    private readonly SqlScriptSink<ProductRating> productRatingSqlScriptSink;
     private readonly VoidSink voidSink;
 
     /// <summary>
@@ -16,14 +18,20 @@ internal sealed class SinkFactory : ISinkFactory
     /// </summary>
     /// <param name="userDatabaseSink">The user database sink.</param>
     /// <param name="userSqlScriptSink">The user sql script sink.</param>
+    /// <param name="productRatingDatabaseSink">The product rating database sink.</param>
+    /// <param name="productRatingSqlScriptSink">The product rating sql script sink.</param>
     /// <param name="voidSink">The void sink.</param>
     public SinkFactory(
         DatabaseSink<User> userDatabaseSink,
         SqlScriptSink<User> userSqlScriptSink,
+        DatabaseSink<ProductRating> productRatingDatabaseSink,
+        SqlScriptSink<ProductRating> productRatingSqlScriptSink,
         VoidSink voidSink)
     {
         this.userDatabaseSink = userDatabaseSink;
         this.userSqlScriptSink = userSqlScriptSink;
+        this.productRatingDatabaseSink = productRatingDatabaseSink;
+        this.productRatingSqlScriptSink = productRatingSqlScriptSink;
         this.voidSink = voidSink;
     }
 
@@ -34,6 +42,8 @@ internal sealed class SinkFactory : ISinkFactory
         {
             (SwayEntity.User, SinkType.Database) => this.userDatabaseSink,
             (SwayEntity.User, SinkType.SqlScript) => this.userSqlScriptSink,
+            (SwayEntity.ProductRating, SinkType.Database) => this.productRatingDatabaseSink,
+            (SwayEntity.ProductRating, SinkType.SqlScript) => this.productRatingSqlScriptSink,
             _ => this.voidSink,
         };
     }

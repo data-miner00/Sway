@@ -107,12 +107,23 @@ internal static class ContainerConfig
         builder.RegisterType<UserRepository>().As<IRepository<User>>().SingleInstance();
         builder.RegisterType<UserSeedSqlWriter>().As<ISqlWriter<User>>().SingleInstance();
 
+        builder.RegisterType<ProductRatingRepository>().As<IRepository<ProductRating>>().SingleInstance();
+        builder.RegisterType<ProductRatingSeedSqlWriter>().As<ISqlWriter<ProductRating>>().SingleInstance();
+
         return builder;
     }
 
     private static ContainerBuilder ConfigureGenerators(this ContainerBuilder builder)
     {
         builder.RegisterType<UserGenerator>().As<IGenerator<User>>().SingleInstance();
+        builder.Register(
+            ctx =>
+            {
+                var option = ctx.Resolve<SeedingOption>().ProductRatingOption;
+
+                return new ProductRatingGenerator(option.ExistingProductId, option.ExistingUserId);
+            })
+            .As<IGenerator<ProductRating>>().SingleInstance();
 
         return builder;
     }
@@ -121,6 +132,8 @@ internal static class ContainerConfig
     {
         builder.RegisterType<DatabaseSink<User>>().AsSelf().SingleInstance();
         builder.RegisterType<SqlScriptSink<User>>().AsSelf().SingleInstance();
+        builder.RegisterType<DatabaseSink<ProductRating>>().AsSelf().SingleInstance();
+        builder.RegisterType<SqlScriptSink<ProductRating>>().AsSelf().SingleInstance();
         builder.RegisterType<VoidSink>().AsSelf().SingleInstance();
 
         builder.RegisterType<SinkFactory>().As<ISinkFactory>().SingleInstance();

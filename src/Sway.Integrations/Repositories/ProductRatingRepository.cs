@@ -61,7 +61,7 @@ public sealed class ProductRatingRepository : IProductRatingRepository
         return this.connection.QueryAsync<ProductRating>(query);
     }
 
-    public Task<IEnumerable<ProductRating>> GetAllForProduct(string productId, CancellationToken cancellationToken)
+    public Task<IEnumerable<ProductRating>> GetAllForProductAsync(string productId, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
