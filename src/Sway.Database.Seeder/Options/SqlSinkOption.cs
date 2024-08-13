@@ -4,5 +4,5 @@ internal sealed class SqlSinkOption
 {
     public string OutputPath { get; set; }
 
-    public string NamingStrategy { get; set; }
+    public NamingStrategy NamingStrategy { get; set; }
 }

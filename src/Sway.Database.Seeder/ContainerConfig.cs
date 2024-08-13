@@ -26,6 +26,7 @@ internal static class ContainerConfig
 
         builder
             .ConfigureOptions()
+            .ConfigureFileNameBuilder()
             .ConfigureGenerators()
             .ConfigureDatabase()
             .ConfigureRepositories()
@@ -62,6 +63,9 @@ internal static class ContainerConfig
             config.GetSection(nameof(SqlSinkOption)).Get<SqlSinkOption>()
             ?? throw new InvalidOperationException("The seeding option cannot be empty.");
 
+        // Make sure the directory exists
+        Directory.CreateDirectory(sqlSinkOption.OutputPath);
+
         builder.RegisterInstance(sqlSinkOption);
 
         return builder;
@@ -84,17 +88,24 @@ internal static class ContainerConfig
         return builder;
     }
 
-    private static ContainerBuilder ConfigureRepositories(this ContainerBuilder builder)
+    private static ContainerBuilder ConfigureFileNameBuilder(this ContainerBuilder builder)
     {
-        builder.RegisterType<UserRepository>().As<IRepository<User>>().SingleInstance();
         builder.Register(
             ctx =>
             {
                 var sinkOption = ctx.Resolve<SqlSinkOption>();
 
-                return new UserSeedSqlWriter(sinkOption.OutputPath, sinkOption.NamingStrategy);
+                return new SqlFileNameBuilder(sinkOption.OutputPath, sinkOption.NamingStrategy);
             })
-            .As<ISqlWriter<User>>().SingleInstance();
+            .AsSelf().SingleInstance();
+
+        return builder;
+    }
+
+    private static ContainerBuilder ConfigureRepositories(this ContainerBuilder builder)
+    {
+        builder.RegisterType<UserRepository>().As<IRepository<User>>().SingleInstance();
+        builder.RegisterType<UserSeedSqlWriter>().As<ISqlWriter<User>>().SingleInstance();
 
         return builder;
     }
