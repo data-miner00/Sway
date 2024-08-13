@@ -12,6 +12,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>();
+builder.Services.AddSingleton<IProductRatingRepository, ProductRatingRepository>();
 
 var app = builder.Build();
 
