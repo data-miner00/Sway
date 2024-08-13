@@ -155,6 +155,7 @@
     <Build Include="dbo\Stored Procedures\usp_AddProductRating.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddOrUpdateProductRating.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetRatingsForProduct.sql" />
+    <Build Include="dbo\Stored Procedures\usp_SetFirstProductName.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
