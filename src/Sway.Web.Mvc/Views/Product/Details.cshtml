@@ -47,11 +47,20 @@
         <div class="flex gap-4">
             <div>
                 @product.AverageRatings
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
+                @{
+                    var fullStarCount = Math.Floor(product.AverageRatings);
+                    var emptyStarCount = 5 - fullStarCount;
+                }
+
+                @for(var i = 0; i < fullStarCount; i++)
+                {
+                    <i class="bi bi-star-fill"></i>
+                }
+
+                @for(var i = 0; i < emptyStarCount; i++)
+                {
+                    <i class="bi bi-star"></i>
+                }
             </div>
             <div>
                 1.1k Ratings
@@ -65,20 +74,23 @@
     </div>
 </div>
 
-<div class="border border-solid border-gray-600 p-5 flex flex-col gap-5">
-    @foreach (var rating in ratings)
-    {
-        <div class="bg-yellow-200 rounded-lg">
-            <p>By @rating.AuthorId</p>
-            <p>On @rating.CreatedAt.ToShortDateString()</p>
-            <p>Rating: @rating.Rating</p>
-            @if (rating.Comment is not null)
-            {
-                <p>@rating.Comment</p>
-            }
-        </div>
-    }
-</div>
+@if (ratings.Any())
+{
+    <div class="border border-solid border-gray-600 p-5 flex flex-col gap-5">
+        @foreach (var rating in ratings)
+        {
+            <div class="bg-yellow-200 rounded-lg">
+                <p>By @rating.AuthorId</p>
+                <p>On @rating.CreatedAt.ToShortDateString()</p>
+                <p>Rating: @rating.Rating</p>
+                @if (rating.Comment is not null)
+                {
+                    <p>@rating.Comment</p>
+                }
+            </div>
+        }
+    </div>
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
