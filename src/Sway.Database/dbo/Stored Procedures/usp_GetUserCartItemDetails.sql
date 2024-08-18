@@ -19,6 +19,7 @@ BEGIN
 		c.Id Id,
 		p.Name ProductName,
 		p.Description ProductDescription,
+		p.Id ProductId,
 		p.Price UnitPrice,
 		c.Quantity Quantity,
 		c.CreatedAt AddedAt,
