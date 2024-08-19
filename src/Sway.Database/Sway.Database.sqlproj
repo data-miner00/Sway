@@ -156,6 +156,10 @@
     <Build Include="dbo\Stored Procedures\usp_AddOrUpdateProductRating.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetRatingsForProduct.sql" />
     <Build Include="dbo\Stored Procedures\usp_SetFirstProductName.sql" />
+    <Build Include="dbo\Tables\Favourites.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ToggleFavourite.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteFavourite.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddFavourite.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

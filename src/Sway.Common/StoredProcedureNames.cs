@@ -25,4 +25,8 @@ public static class StoredProcedureNames
     public const string DeleteProductRatingById = "usp_DeleteProductRatingById";
 
     public const string GetRatingsForProduct = "usp_GetRatingsForProduct";
+
+    public const string AddFavourite = "usp_AddFavourite";
+
+    public const string DeleteFavourite = "usp_DeleteFavourite";
 }

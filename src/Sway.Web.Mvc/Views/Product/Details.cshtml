@@ -11,9 +11,12 @@
 <div class="flex gap-4 bg-gray-50">
     <div class="relative">
         <img src="@Constants.TestItemPhotoUrl" alt="Shoe" />
-        <button class="absolute top-4 right-4">
-            <i class="bi bi-heart"></i>
-        </button>
+        <form method="post" asp-action="Favourite" asp-controller="Product" asp-route-id="@Model.Product.Id">
+            <input hidden name="id" value="@Model.Product.Id" />
+            <button class="absolute top-4 right-4">
+                <i class="bi bi-heart"></i>
+            </button>
+        </form>
     </div>
     <div class="p-8">
         <p class="font-bold text-lg mb-2">@product.Name</p>

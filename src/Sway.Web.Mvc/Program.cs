@@ -1,6 +1,5 @@
 using System.Data;
 using System.Data.SqlClient;
-using System.Runtime.CompilerServices;
 using Sway.Core.Repositories;
 using Sway.Integrations.Repositories;
 
@@ -13,6 +12,7 @@ builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddSingleton<IProductRatingRepository, ProductRatingRepository>();
+builder.Services.AddSingleton<IFavouriteRepository, FavouriteRepository>();
 
 var app = builder.Build();
 
