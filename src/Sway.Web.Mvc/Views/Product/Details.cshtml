@@ -14,7 +14,10 @@
         <form method="post" asp-action="Favourite" asp-controller="Product" asp-route-id="@Model.Product.Id">
             <input hidden name="id" value="@Model.Product.Id" />
             <button class="absolute top-4 right-4">
-                <i class="bi bi-heart"></i>
+                @{
+                    var heartIcon = Model.IsFavourited ? "bi-heart-fill" : "bi-heart";
+                }
+                <i class="bi @heartIcon"></i>
             </button>
         </form>
     </div>

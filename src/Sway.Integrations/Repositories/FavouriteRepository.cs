@@ -25,6 +25,19 @@ public sealed class FavouriteRepository : IFavouriteRepository
         this.connection = Guard.ThrowIfNull(connection);
     }
 
+    public Task<Favourite> GetAsync(string productId, string userId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("ProductId", productId);
+        parameters.Add("UserId", userId);
+
+        var query = "SELECT * FROM [dbo].[Favourites] WHERE [ProductId] = @ProductId AND [UserId] = @UserId;";
+
+        return this.connection.QueryFirstAsync<Favourite>(query, parameters);
+    }
+
     public Task CreateAsync(CreateFavouriteRequest request, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();

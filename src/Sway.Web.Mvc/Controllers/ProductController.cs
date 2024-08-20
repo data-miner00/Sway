@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Sway.Common;
 using Sway.Core.Dtos;
+using Sway.Core.Models;
 using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
 
@@ -36,10 +37,22 @@ public class ProductController : Controller
         var product = await this.productRepository.GetByIdAsync(id.ToString(), this.CancellationToken);
         var ratings = await this.ratingRepository.GetAllForProductAsync(id.ToString(), this.CancellationToken);
 
+        Favourite? favourite = null;
+
+        try
+        {
+            favourite = await this.favouriteRepository.GetAsync(id.ToString(), Constants.TestUserId, this.CancellationToken);
+        }
+        catch (InvalidOperationException)
+        {
+            Console.WriteLine("Not liked");
+        }
+
         var viewModel = new ProductDetailsViewModel
         {
             Product = product,
             Ratings = ratings,
+            IsFavourited = favourite is not null,
         };
 
         return this.View(viewModel);
