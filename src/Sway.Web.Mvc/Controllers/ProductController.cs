@@ -43,7 +43,7 @@ public class ProductController : Controller
         {
             favourite = await this.favouriteRepository.GetAsync(id.ToString(), Constants.TestUserId, this.CancellationToken);
         }
-        catch (InvalidOperationException)
+        catch (InvalidOperationException ex) when (ex.Message == "Sequence contains no elements")
         {
             Console.WriteLine("Not liked");
         }
