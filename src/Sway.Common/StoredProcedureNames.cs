@@ -29,4 +29,6 @@ public static class StoredProcedureNames
     public const string AddFavourite = "usp_AddFavourite";
 
     public const string DeleteFavourite = "usp_DeleteFavourite";
+
+    public const string GetAddressesByUserId = "usp_GetAddressesByUserId";
 }

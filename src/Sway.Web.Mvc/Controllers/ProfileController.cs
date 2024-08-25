@@ -3,24 +3,35 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sway.Core.Repositories;
+using Sway.Web.Mvc.Models;
 
-public class ProfileController : Controller
+public sealed class ProfileController : Controller
 {
-    private readonly IUserRepository repository;
+    private readonly IUserRepository userRepository;
+    private readonly IAddressRepository addressRepository;
 
     private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
-    public ProfileController(IUserRepository repository)
+    public ProfileController(IUserRepository userRepository, IAddressRepository addressRepository)
     {
-        this.repository = repository;
+        this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
     }
 
     // GET: ProfileController
     public async Task<IActionResult> Index()
     {
-        var user = await this.repository.GetByIdAsync(Constants.TestUserId, this.CancellationToken);
+        var user = await this.userRepository.GetByIdAsync(Constants.TestUserId, this.CancellationToken);
+        var addresses = await this.addressRepository.GetAllByUserAsync(Constants.TestUserId, this.CancellationToken);
 
-        return this.View(user);
+        var model = new ProfileDetailsViewModel
+        {
+            User = user,
+            BillingAddress = addresses.FirstOrDefault(x => x.Type.ToString().Equals("Billing", StringComparison.InvariantCulture)),
+            ShippingAddress = addresses.FirstOrDefault(x => x.Type.ToString().Equals("Shipping", StringComparison.InvariantCulture)),
+        };
+
+        return this.View(model);
     }
 
     // GET: ProfileController/Details/5

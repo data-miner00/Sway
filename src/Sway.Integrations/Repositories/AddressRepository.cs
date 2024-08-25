@@ -1,12 +1,15 @@
 ﻿namespace Sway.Integrations.Repositories;
 
 using Dapper;
+using Sway.Common;
 using Sway.Core.Models;
 using Sway.Core.Repositories;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
+
+using SpNames = Sway.Common.StoredProcedureNames;
 
 /// <summary>
 /// The repository for <see cref="Address"/>.
@@ -21,7 +24,7 @@ public sealed class AddressRepository : IAddressRepository
     /// <param name="connection">The database connection.</param>
     public AddressRepository(IDbConnection connection)
     {
-        this.connection = connection;
+        this.connection = Guard.ThrowIfNull(connection);
     }
 
     /// <inheritdoc/>
@@ -83,5 +86,19 @@ public sealed class AddressRepository : IAddressRepository
             address);
 
         return this.connection.ExecuteAsync(command);
+    }
+
+    /// <inheritdoc/>
+    public Task<IEnumerable<Address>> GetAllByUserAsync(string userId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("UserId", userId);
+
+        return this.connection.QueryAsync<Address>(
+            SpNames.GetAddressesByUserId,
+            parameters,
+            commandType: CommandType.StoredProcedure);
     }
 }

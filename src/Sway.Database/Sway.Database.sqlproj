@@ -160,6 +160,8 @@
     <Build Include="dbo\Stored Procedures\usp_ToggleFavourite.sql" />
     <Build Include="dbo\Stored Procedures\usp_DeleteFavourite.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddFavourite.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LinkAddressToUser.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAddressesByUserId.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

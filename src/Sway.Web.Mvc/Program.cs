@@ -13,6 +13,7 @@ builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddSingleton<IProductRatingRepository, ProductRatingRepository>();
 builder.Services.AddSingleton<IFavouriteRepository, FavouriteRepository>();
+builder.Services.AddSingleton<IAddressRepository, AddressRepository>();
 
 var app = builder.Build();
 

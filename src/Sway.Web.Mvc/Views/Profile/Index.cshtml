@@ -1,20 +1,95 @@
 ﻿@using Sway.Core.Models
-@model User
+@model ProfileDetailsViewModel
 @{
     ViewData["Title"] = "My profile";
+    var user = Model.User;
+    var shippingAddress = Model.ShippingAddress;
+    var billingAddress = Model.BillingAddress;
 }
 
-<div>
-    <div class="avatar">
-        <div class="ring-primary ring-offset-base-100 w-16 rounded-full ring ring-offset-2">
-            <img src="@Model.PhotoUrl" alt="Profile image" />
+<div class="flex gap-4">
+    <nav class="border border-orange border-solid p-4 flex flex-col gap-4">
+        <a class="block">Account</a>
+        <a class="block">Purchase History</a>
+        <a class="block">Notifications</a>
+        <a class="block">Vouchers</a>
+    </nav>
+
+    <div>
+        <form onsubmit="javascript:void(0)">
+            <div class="p-4 border-b border-solid border-gray-500">
+                <h1 class="text-3xl font-bold">My Account</h1>
+                <p>Manage the account information</p>
+            </div>
+            <div>
+                <div class="avatar">
+                    <div class="ring-primary ring-offset-base-100 w-16 rounded-full ring ring-offset-2">
+                        <img src="@user.PhotoUrl" alt="Profile image" />
+                    </div>
+                </div>
+                <div class="mb-8">
+                    <label for="username">Username</label>
+                    <input name="username" value="@user.Username" />
+
+                    <label for="firstname">First Name</label>
+                    <input name="firstname" value="@user.FirstName" />
+
+                    <label for="lastname">Last name</label>
+                    <input name="lastname" value="@user.LastName" />
+
+                    <label for="phone">Phone</label>
+                    <input name="phone" value="@user.Phone" />
+
+                    <label for="description">Description</label>
+                    <textarea name="description">@user.Description</textarea>
+
+                    <label for="email">Email</label>
+                    <input name="email" type="email" value="@user.Email" />
+
+                    <p>Status: @user.Status</p>
+                </div>
+
+                <h2 class="text-2xl font-bold my-4">Addresses</h2>
+
+                @if (shippingAddress is not null)
+                {
+                    <fieldset>
+                        <legend>Shipping Address</legend>
+                        <p>Street1: @shippingAddress.Street1</p>
+                        <p>Street2: @shippingAddress.Street2</p>
+                        <p>City: @shippingAddress.City</p>
+                        <p>State: @shippingAddress.State</p>
+                        <p>PostalCode: @shippingAddress.PostalCode</p>
+                        <p>Country: @shippingAddress.Country</p>
+                    </fieldset>
+                }
+                else
+                {
+                    <p>Shipping Address is not set</p>
+                }
+
+                @if (billingAddress is not null)
+                {
+                    <fieldset>
+                        <legend>Billing Address</legend>
+                        <p>Street1: @billingAddress.Street1</p>
+                        <p>Street2: @billingAddress.Street2</p>
+                        <p>City: @billingAddress.City</p>
+                        <p>State: @billingAddress.State</p>
+                        <p>PostalCode: @billingAddress.PostalCode</p>
+                        <p>Country: @billingAddress.Country</p>
+                    </fieldset>
+                }
+                else
+                {
+                    <p>Billing Address is not set</p>
+                }
+            </div>
+        </form>
+
+        <div class="flex gap-4 my-2">
+            <button class="btn">Save</button>
         </div>
     </div>
-    <h1>@Model.FirstName @Model.LastName</h1>
-    <p>@Model.Phone</p>
-    <p>@Model.Description</p>
 </div>
 
-<div class="flex gap-4 my-2">
-    <button class="btn">Edit</button>
-</div>
