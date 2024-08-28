@@ -163,6 +163,8 @@
     <Build Include="dbo\Stored Procedures\usp_LinkAddressToUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetAddressesByUserId.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetRecentlyAddedProductsByDays.sql" />
+    <Build Include="dbo\Views\vw_ValidCoupons.sql" />
+    <Build Include="dbo\Views\vw_ExpiredCoupons.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
