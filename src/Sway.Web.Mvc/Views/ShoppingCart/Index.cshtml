@@ -1,46 +1,86 @@
 ﻿@using Sway.Web.Mvc.Models
+@using Sway.Common
 @model ShoppingCartViewModel
 @{
     ViewData["Title"] = "My shopping cart";
+    var itemsCount = Model.CartItems.Count();
 }
 
 <div id="notification-container" class="bg-green-300"></div>
 
-@if (Model is not null)
-{
-    <p>My shopping cart Id: @Model.Id</p>
-    <p>Last updated at: @Model.ModifiedAt</p>
+<div class="overflow-x-auto">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <label>
+                        <input type="checkbox" class="checkbox" />
+                    </label>
+                </th>
+                <th>Product</th>
+                <th>Tags</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr id="@("container-" + item.Id.ToString())">
+                    <th>
+                        <label>
+                            <input type="checkbox" class="checkbox" />
+                        </label>
+                    </th>
+                    <td>
+                        <p>@item.ProductName</p>
+                    </td>
+                    <td>
+                        <div class="badge">default</div>
+                        <div class="badge badge-neutral">neutral</div>
+                        <div class="badge badge-primary">primary</div>
+                    </td>
+                    <td>
+                        RM@(item.UnitPrice.ToMoney())
+                    </td>
+                    <td>
+                        <div class="flex gap-2">
+                            <button class="btn btn-outline btn-xs" onclick="return decrementQuantity('@item.Id.ToString()')">-</button>
+                            <div id="@("quantity-" + item.Id.ToString())">@item.Quantity</div>
+                            <button class="btn btn-outline btn-xs" onclick="return incrementQuantity('@item.Id.ToString()')">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        RM@((item.UnitPrice * item.Quantity).ToMoney())
+                    </td>
+                    <td>
+                        <form action="javascript:softDeleteCartItem('@item.Id.ToString()')">
+                            <button type="submit" class="btn btn-ghost" onclick="return confirm('Are you sure?')">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-    @foreach (var item in Model.CartItems)
-    {
-        <div class="p-4 border border-gray-400 border-dashed" id="@("container-" + item.Id.ToString())">
-            <div>@item.ProductName</div>
-            <div>@item.ProductDescription</div>
-            <div>@item.UnitPrice</div>
-            <div class="flex gap-2">
-                <button class="btn btn-secondary" onclick="return decrementQuantity('@item.Id.ToString()')">-</button>
-                <div id="@("quantity-" + item.Id.ToString())">@item.Quantity</div>
-                <button class="btn btn-secondary" onclick="return incrementQuantity('@item.Id.ToString()')">+</button>
-            </div>
-            <form action="javascript:softDeleteCartItem('@item.Id.ToString()')">
-                <button type="submit" class="btn btn-ghost" onclick="return confirm('Are you sure?')">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </form>
+    <div class="flex justify-between max-w-screen p-4 border border-solid border-gray-100">
+        <div>
+            @itemsCount Items
         </div>
-    }
+        <div>
+            <a class="btn btn-primary" asp-action="Index" asp-controller="Checkout">
+                Checkout
+            </a>
+        </div>
+    </div>
+</div>
 
-    @if (Model.CartItems.Count() > 0)
-    {
-        <a class="btn btn-primary" asp-action="Index" asp-controller="Checkout">
-            Checkout
-        </a>
-    }
-}
-else
-{
-    <p>You have no cart yet.</p>
-}
+@* <p>My shopping cart Id: @Model.Id</p> *@
+@* <p>Last updated at: @Model.ModifiedAt</p> *@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
