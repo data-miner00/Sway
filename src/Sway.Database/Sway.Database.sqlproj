@@ -165,6 +165,7 @@
     <Build Include="dbo\Stored Procedures\usp_GetRecentlyAddedProductsByDays.sql" />
     <Build Include="dbo\Views\vw_ValidCoupons.sql" />
     <Build Include="dbo\Views\vw_ExpiredCoupons.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetUserCartItemDetailsSorted.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
@@ -174,5 +175,8 @@
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sway.Database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\ExecuteUserCartItemDetailsSorted.sql" />
   </ItemGroup>
 </Project>
