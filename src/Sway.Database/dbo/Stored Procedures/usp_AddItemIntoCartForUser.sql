@@ -27,18 +27,31 @@ BEGIN
 		
 	END
 
-	INSERT INTO [dbo].[CartItems]
-	(
-		[ShoppingCartId],
-		[ProductId],
-		[Quantity]
-	)
-	VALUES
-	(
-		@CartId,
-		@ProductId,
-		@Quantity
-	);
+	MERGE INTO [dbo].[CartItems] T
+	USING (
+		SELECT
+			@CartId ShoppingCartId,
+			@ProductId ProductId,
+			@Quantity Quantity
+	) S
+	ON T.ShoppingCartId = S.ShoppingCartId
+	AND T.ProductId = S.ProductId
+	WHEN MATCHED THEN
+		UPDATE SET
+			[Quantity] = T.Quantity + S.Quantity
+	WHEN NOT MATCHED THEN
+		INSERT
+		(
+			[ShoppingCartId],
+			[ProductId],
+			[Quantity]
+		)
+		VALUES
+		(
+			S.ShoppingCartId,
+			S.ProductId,
+			S.Quantity
+		);
 
 	COMMIT TRANSACTION
 
