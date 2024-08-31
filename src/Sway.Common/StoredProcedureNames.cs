@@ -31,4 +31,6 @@ public static class StoredProcedureNames
     public const string DeleteFavourite = "usp_DeleteFavourite";
 
     public const string GetAddressesByUserId = "usp_GetAddressesByUserId";
+
+    public const string UpdateUserProfile = "usp_UpdateUserProfile";
 }

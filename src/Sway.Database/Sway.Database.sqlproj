@@ -166,6 +166,7 @@
     <Build Include="dbo\Views\vw_ValidCoupons.sql" />
     <Build Include="dbo\Views\vw_ExpiredCoupons.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetUserCartItemDetailsSorted.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdateUserProfile.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

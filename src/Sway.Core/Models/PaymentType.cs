@@ -11,4 +11,10 @@ public enum PaymentType
     OnlineBanking,
 
     Cryptocurrency,
+
+    CashOnDelivery,
+
+    GooglePay,
+
+    PayPal,
 }

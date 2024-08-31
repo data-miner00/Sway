@@ -2,6 +2,8 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sway.Core.Dtos;
+using Sway.Core.Models;
 using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
 
@@ -27,11 +29,32 @@ public sealed class ProfileController : Controller
         var model = new ProfileDetailsViewModel
         {
             User = user,
-            BillingAddress = addresses.FirstOrDefault(x => x.Type.ToString().Equals("Billing", StringComparison.InvariantCulture)),
-            ShippingAddress = addresses.FirstOrDefault(x => x.Type.ToString().Equals("Shipping", StringComparison.InvariantCulture)),
+            BillingAddress = addresses.FirstOrDefault(x => x.Type.Equals(AddressType.Billing)),
+            ShippingAddress = addresses.FirstOrDefault(x => x.Type.Equals(AddressType.Shipping)),
         };
 
         return this.View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Index(UpdateProfileRequest request)
+    {
+        var updatedProfile = new UserProfile
+        {
+            Id = request.UserId,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Email = request.Email,
+            Phone = request.Phone,
+            PhotoUrl = request.PhotoUrl,
+            Description = request.Description,
+        };
+
+        await this.userRepository.UpdateAsync(updatedProfile, this.CancellationToken);
+
+        this.TempData[Constants.Success] = "Successfully updated profile.";
+
+        return this.RedirectToAction(nameof(this.Index));
     }
 
     // GET: ProfileController/Details/5

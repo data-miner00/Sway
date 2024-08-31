@@ -21,4 +21,8 @@ public class UserProfile
     public DateTime CreatedAt { get; set; }
 
     public DateTime ModifiedAt { get; set; }
+
+    public string FirstName { get; set; }
+
+    public string LastName { get; set; }
 }
