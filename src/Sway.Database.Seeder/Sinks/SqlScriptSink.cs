@@ -1,18 +1,17 @@
 ﻿namespace Sway.Database.Seeder.Sinks;
 
-using Sway.Core.Models;
 using Sway.Database.Seeder.Generator;
 using Sway.Database.Seeder.Writers;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal class SqlScriptSink : ISink
+internal class SqlScriptSink<T> : ISink
 {
-    private readonly UserGenerator generator;
-    private readonly ISqlWriter<User> writer;
+    private readonly IGenerator<T> generator;
+    private readonly ISqlWriter<T> writer;
 
-    public SqlScriptSink(UserGenerator generator, ISqlWriter<User> writer)
+    public SqlScriptSink(IGenerator<T> generator, ISqlWriter<T> writer)
     {
         this.generator = generator;
         this.writer = writer;
@@ -20,9 +19,9 @@ internal class SqlScriptSink : ISink
 
     public async Task ProvisionAsync(int count, CancellationToken cancellationToken)
     {
-        var users = await this.generator.GenerateAsync(count, cancellationToken);
+        var entities = await this.generator.GenerateAsync(count, cancellationToken);
 
-        await this.writer.BulkWriteAsync(users, cancellationToken);
+        await this.writer.BulkWriteAsync(entities, cancellationToken);
         await Console.Out.WriteLineAsync("Writing done.");
     }
 }

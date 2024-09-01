@@ -1,3 +1,24 @@
 h1 {
-    color: blanchedalmond;
+  color: blanchedalmond;
+}
+
+.animate-gradient {
+  background-size: 400% 400% !important;
+  animation: gradient-x 10s ease infinite;
+}
+
+.color-gradient {
+  background: linear-gradient(90deg,#26091a 0,#c65a58 30%,#9f4e94 35%,#7942cf 40%,#0e031e);
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position:0 50%
+  }
+  50% {
+    background-position:100% 50%
+  }
+  to {
+    background-position:0 50%
+  }
 }

@@ -26,6 +26,7 @@ internal static class ContainerConfig
 
         builder
             .ConfigureOptions()
+            .ConfigureFileNameBuilder()
             .ConfigureGenerators()
             .ConfigureDatabase()
             .ConfigureRepositories()
@@ -62,6 +63,9 @@ internal static class ContainerConfig
             config.GetSection(nameof(SqlSinkOption)).Get<SqlSinkOption>()
             ?? throw new InvalidOperationException("The seeding option cannot be empty.");
 
+        // Make sure the directory exists
+        Directory.CreateDirectory(sqlSinkOption.OutputPath);
+
         builder.RegisterInstance(sqlSinkOption);
 
         return builder;
@@ -84,32 +88,52 @@ internal static class ContainerConfig
         return builder;
     }
 
-    private static ContainerBuilder ConfigureRepositories(this ContainerBuilder builder)
+    private static ContainerBuilder ConfigureFileNameBuilder(this ContainerBuilder builder)
     {
-        builder.RegisterType<UserRepository>().As<IUserRepository>().SingleInstance();
         builder.Register(
             ctx =>
             {
                 var sinkOption = ctx.Resolve<SqlSinkOption>();
 
-                return new UserSeedSqlWriter(sinkOption.OutputPath, sinkOption.NamingStrategy);
+                return new SqlFileNameBuilder(sinkOption.OutputPath, sinkOption.NamingStrategy);
             })
-            .As<ISqlWriter<User>>().SingleInstance();
+            .AsSelf().SingleInstance();
+
+        return builder;
+    }
+
+    private static ContainerBuilder ConfigureRepositories(this ContainerBuilder builder)
+    {
+        builder.RegisterType<UserRepository>().As<IRepository<User>>().SingleInstance();
+        builder.RegisterType<UserSeedSqlWriter>().As<ISqlWriter<User>>().SingleInstance();
+
+        builder.RegisterType<ProductRatingRepository>().As<IRepository<ProductRating>>().SingleInstance();
+        builder.RegisterType<ProductRatingSeedSqlWriter>().As<ISqlWriter<ProductRating>>().SingleInstance();
 
         return builder;
     }
 
     private static ContainerBuilder ConfigureGenerators(this ContainerBuilder builder)
     {
-        builder.RegisterType<UserGenerator>().AsSelf().SingleInstance();
+        builder.RegisterType<UserGenerator>().As<IGenerator<User>>().SingleInstance();
+        builder.Register(
+            ctx =>
+            {
+                var option = ctx.Resolve<SeedingOption>().ProductRatingOption;
+
+                return new ProductRatingGenerator(option.ExistingProductId, option.ExistingUserId);
+            })
+            .As<IGenerator<ProductRating>>().SingleInstance();
 
         return builder;
     }
 
     private static ContainerBuilder ConfigureSinks(this ContainerBuilder builder)
     {
-        builder.RegisterType<DatabaseSink>().AsSelf().SingleInstance();
-        builder.RegisterType<SqlScriptSink>().AsSelf().SingleInstance();
+        builder.RegisterType<DatabaseSink<User>>().AsSelf().SingleInstance();
+        builder.RegisterType<SqlScriptSink<User>>().AsSelf().SingleInstance();
+        builder.RegisterType<DatabaseSink<ProductRating>>().AsSelf().SingleInstance();
+        builder.RegisterType<SqlScriptSink<ProductRating>>().AsSelf().SingleInstance();
         builder.RegisterType<VoidSink>().AsSelf().SingleInstance();
 
         builder.RegisterType<SinkFactory>().As<ISinkFactory>().SingleInstance();

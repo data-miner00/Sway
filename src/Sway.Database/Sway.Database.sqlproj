@@ -149,6 +149,24 @@
     <Build Include="dbo\Stored Procedures\usp_GetTopExpensiveProducts.sql" />
     <Build Include="dbo\Stored Procedures\usp_UpdateProductInStockUnit.sql" />
     <Build Include="dbo\Tables\ProductRatings.sql" />
+    <Build Include="dbo\Views\vw_UsersDistinctRegions.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdateProductRatingById.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteProductRatingById.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddProductRating.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddOrUpdateProductRating.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetRatingsForProduct.sql" />
+    <Build Include="dbo\Stored Procedures\usp_SetFirstProductName.sql" />
+    <Build Include="dbo\Tables\Favourites.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ToggleFavourite.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteFavourite.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddFavourite.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LinkAddressToUser.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetAddressesByUserId.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetRecentlyAddedProductsByDays.sql" />
+    <Build Include="dbo\Views\vw_ValidCoupons.sql" />
+    <Build Include="dbo\Views\vw_ExpiredCoupons.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetUserCartItemDetailsSorted.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdateUserProfile.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
@@ -158,5 +176,8 @@
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sway.Database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\ExecuteUserCartItemDetailsSorted.sql" />
   </ItemGroup>
 </Project>

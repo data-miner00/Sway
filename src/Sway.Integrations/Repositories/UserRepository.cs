@@ -88,4 +88,24 @@ public sealed class UserRepository : IUserRepository
 
         return this.connection.ExecuteAsync(command);
     }
+
+    /// <inheritdoc/>
+    public Task UpdateAsync(UserProfile profile, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("UserId", profile.Id);
+        parameters.Add("FirstName", profile.FirstName);
+        parameters.Add("LastName", profile.LastName);
+        parameters.Add("Email", profile.Email);
+        parameters.Add("Phone", profile.Phone);
+        parameters.Add("PhotoUrl", profile.PhotoUrl);
+        parameters.Add("Description", profile.Description);
+
+        return this.connection.ExecuteAsync(
+            SpNames.UpdateUserProfile,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
 }

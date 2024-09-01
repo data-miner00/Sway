@@ -17,4 +17,20 @@ public static class StoredProcedureNames
     public const string SoftDeleteCartItem = "usp_SoftDeleteCartItem";
 
     public const string UndoDeletedCartItem = "usp_UndoDeletedCartItem";
+
+    public const string AddProductRating = "usp_AddProductRating";
+
+    public const string UpdateProductRatingById = "usp_UpdateProductRatingById";
+
+    public const string DeleteProductRatingById = "usp_DeleteProductRatingById";
+
+    public const string GetRatingsForProduct = "usp_GetRatingsForProduct";
+
+    public const string AddFavourite = "usp_AddFavourite";
+
+    public const string DeleteFavourite = "usp_DeleteFavourite";
+
+    public const string GetAddressesByUserId = "usp_GetAddressesByUserId";
+
+    public const string UpdateUserProfile = "usp_UpdateUserProfile";
 }

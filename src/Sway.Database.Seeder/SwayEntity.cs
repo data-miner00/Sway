@@ -33,4 +33,6 @@ internal enum SwayEntity
     SystemSetting,
 
     Tag,
+
+    ProductRating,
 }

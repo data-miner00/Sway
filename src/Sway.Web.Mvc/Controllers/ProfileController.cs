@@ -2,25 +2,59 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sway.Core.Dtos;
+using Sway.Core.Models;
 using Sway.Core.Repositories;
+using Sway.Web.Mvc.Models;
 
-public class ProfileController : Controller
+public sealed class ProfileController : Controller
 {
-    private readonly IUserRepository repository;
+    private readonly IUserRepository userRepository;
+    private readonly IAddressRepository addressRepository;
 
     private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
-    public ProfileController(IUserRepository repository)
+    public ProfileController(IUserRepository userRepository, IAddressRepository addressRepository)
     {
-        this.repository = repository;
+        this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
     }
 
     // GET: ProfileController
     public async Task<IActionResult> Index()
     {
-        var user = await this.repository.GetByIdAsync(Constants.TestUserId, this.CancellationToken);
+        var user = await this.userRepository.GetByIdAsync(Constants.TestUserId, this.CancellationToken);
+        var addresses = await this.addressRepository.GetAllByUserAsync(Constants.TestUserId, this.CancellationToken);
 
-        return this.View(user);
+        var model = new ProfileDetailsViewModel
+        {
+            User = user,
+            BillingAddress = addresses.FirstOrDefault(x => x.Type.Equals(AddressType.Billing)),
+            ShippingAddress = addresses.FirstOrDefault(x => x.Type.Equals(AddressType.Shipping)),
+        };
+
+        return this.View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Index(UpdateProfileRequest request)
+    {
+        var updatedProfile = new UserProfile
+        {
+            Id = request.UserId,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Email = request.Email,
+            Phone = request.Phone,
+            PhotoUrl = request.PhotoUrl,
+            Description = request.Description,
+        };
+
+        await this.userRepository.UpdateAsync(updatedProfile, this.CancellationToken);
+
+        this.TempData[Constants.Success] = "Successfully updated profile.";
+
+        return this.RedirectToAction(nameof(this.Index));
     }
 
     // GET: ProfileController/Details/5

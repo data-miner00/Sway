@@ -5,9 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Sway.Common;
 using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
+using System.ComponentModel.DataAnnotations;
 
 public sealed class ShoppingCartController : Controller
 {
+    public const string ControllerName = "ShoppingCart";
+
     private readonly IShoppingCartRepository repository;
 
     private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
@@ -45,7 +48,7 @@ public sealed class ShoppingCartController : Controller
         return this.View(viewModel);
     }
 
-    public sealed record AddToCartRequest(Guid ProductId, int Quantity);
+    public sealed record AddToCartRequest(Guid ProductId, [Range(1, int.MaxValue)] int Quantity);
 
     [HttpPost]
     //[ValidateAntiForgeryToken]
@@ -56,7 +59,10 @@ public sealed class ShoppingCartController : Controller
         if (!this.ModelState.IsValid)
         {
             this.TempData[Constants.Error] = "Failed adding item to cart.";
-            return this.View(request);
+            return this.RedirectToAction(
+                nameof(ProductController.Details),
+                ProductController.ControllerName,
+                new { id = request.ProductId });
         }
 
         await this.repository.AddItemIntoCartForUserAsync(

@@ -23,4 +23,18 @@ public class Address
     public DateTime CreatedAt { get; set; }
 
     public DateTime ModifiedAt { get; set; }
+
+    public override string ToString()
+    {
+        List<string> elements = [
+            this.Street1,
+            this.Street2,
+            this.City,
+            this.State,
+            this.PostalCode,
+            this.Country,
+        ];
+
+        return string.Join(", ", elements.Where(x => x != null));
+    }
 }

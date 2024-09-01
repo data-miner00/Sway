@@ -10,12 +10,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal class DatabaseSink : ISink
+internal class DatabaseSink<T> : ISink
 {
-    private readonly UserGenerator generator;
-    private readonly IUserRepository repository;
+    private readonly IGenerator<T> generator;
+    private readonly IRepository<T> repository;
 
-    public DatabaseSink(UserGenerator generator, IUserRepository repository)
+    public DatabaseSink(IGenerator<T> generator, IRepository<T> repository)
     {
         this.generator = generator;
         this.repository = repository;
@@ -23,11 +23,11 @@ internal class DatabaseSink : ISink
 
     public async Task ProvisionAsync(int count, CancellationToken cancellationToken)
     {
-        var users = await this.generator.GenerateAsync(count, cancellationToken);
+        var entities = await this.generator.GenerateAsync(count, cancellationToken);
 
-        foreach (var user in users)
+        foreach (var entity in entities)
         {
-            await this.repository.CreateAsync(user, cancellationToken);
+            await this.repository.CreateAsync(entity, cancellationToken);
         }
     }
 }

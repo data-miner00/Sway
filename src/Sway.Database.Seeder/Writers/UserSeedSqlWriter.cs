@@ -12,15 +12,11 @@ using SpNames = Sway.Common.StoredProcedureNames;
 
 internal sealed class UserSeedSqlWriter : ISqlWriter<User>
 {
-    private const string DefaultSqlFileName = "script.sql";
+    private readonly SqlFileNameBuilder fileNameBuilder;
 
-    private readonly string basePath;
-    private readonly string namingStrategy;
-
-    public UserSeedSqlWriter(string basePath, string namingStrategy)
+    public UserSeedSqlWriter(SqlFileNameBuilder fileNameBuilder)
     {
-        this.basePath = Guard.ThrowIfNullOrWhitespace(basePath);
-        this.namingStrategy = Guard.ThrowIfNullOrWhitespace(namingStrategy);
+        this.fileNameBuilder = Guard.ThrowIfNull(fileNameBuilder);
     }
 
     public Task BulkWriteAsync(IEnumerable<User> entities, CancellationToken cancellationToken)
@@ -61,21 +57,8 @@ internal sealed class UserSeedSqlWriter : ISqlWriter<User>
 
         var scriptContent = sb.ToString();
 
-        Directory.CreateDirectory(this.basePath);
-
-        var fullFilePath = this.ConstructFullFilePath();
+        var fullFilePath = this.fileNameBuilder.Build();
 
         return File.WriteAllTextAsync(fullFilePath, scriptContent, cancellationToken);
-    }
-
-    private string ConstructFullFilePath()
-    {
-        var fileName = this.namingStrategy switch
-        {
-            "Timestamp" => string.Concat(DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), ".sql"),
-            _ => DefaultSqlFileName,
-        };
-
-        return Path.Join(this.basePath, fileName);
     }
 }
