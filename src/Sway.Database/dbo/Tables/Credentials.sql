@@ -22,5 +22,5 @@ CREATE TRIGGER [dbo].[Trigger_Credentials_OnUpdate]
 		UPDATE [dbo].[Credentials]
 		SET [ModifiedAt] = GETDATE()
 		FROM [dbo].[Credentials] T
-        INNER JOIN inserted I ON T.Id = I.Id;
+		INNER JOIN inserted I ON T.Id = I.Id;
 	END;

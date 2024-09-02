@@ -24,7 +24,7 @@ CREATE TRIGGER [dbo].[Trigger_PaymentMethods_OnUpdate]
 		UPDATE [dbo].[PaymentMethods]
 		SET [ModifiedAt] = GETDATE()
 		FROM [dbo].[PaymentMethods] T
-        INNER JOIN inserted I ON T.Id = I.Id;
+		INNER JOIN inserted I ON T.Id = I.Id;
 	END;
 
 

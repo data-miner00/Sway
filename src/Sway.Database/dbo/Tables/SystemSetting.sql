@@ -18,5 +18,5 @@ CREATE TRIGGER [dbo].[Trigger_SystemSetting_OnUpdate]
 		UPDATE [dbo].[SystemSetting]
 		SET [ModifiedAt] = GETDATE()
 		FROM [dbo].[SystemSetting] T
-        INNER JOIN inserted I ON T.Id = I.Id;
+		INNER JOIN inserted I ON T.Id = I.Id;
 	END;

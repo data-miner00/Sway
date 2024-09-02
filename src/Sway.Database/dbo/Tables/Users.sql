@@ -37,5 +37,5 @@ CREATE TRIGGER [dbo].[Trigger_Users_OnUpdate]
 		UPDATE [dbo].[Users]
 		SET [ModifiedAt] = GETDATE()
 		FROM [dbo].[Users] T
-        INNER JOIN inserted I ON T.Id = I.Id;
+		INNER JOIN inserted I ON T.Id = I.Id;
 	END;

@@ -22,7 +22,7 @@ CREATE TRIGGER [dbo].[Trigger_Categories_OnUpdate]
 		UPDATE [dbo].[Categories]
 		SET [ModifiedAt] = GETDATE()
 		FROM [dbo].[Categories] T
-        INNER JOIN inserted I ON T.Id = I.Id;
+		INNER JOIN inserted I ON T.Id = I.Id;
 	END;
 
 

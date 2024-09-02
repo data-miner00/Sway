@@ -28,5 +28,5 @@ CREATE TRIGGER [dbo].[Trigger_OrderItems_OnUpdate]
 		UPDATE [dbo].[OrderItems]
 		SET [ModifiedAt] = GETDATE()
 		FROM [dbo].[OrderItems] T
-        INNER JOIN inserted I ON T.Id = I.Id;
+		INNER JOIN inserted I ON T.Id = I.Id;
 	END;
