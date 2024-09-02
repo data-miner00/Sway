@@ -4,14 +4,14 @@
 @model CheckoutViewModel
 @{
     ViewData["Title"] = "Checkout";
-    var cartItems = Model.CartItems;
+    var cartItems = Model.CartItems.ToArray();
     var shippingAddress = Model.ShippingAddress;
-    var totalCost = cartItems.Sum(x => x.UnitPrice * x.Quantity);
+    var totalCost = cartItems.Where(x => x.IsSelected).Sum(x => x.UnitPrice * x.Quantity);
 }
 
 <h1 class="text-xl font-bold mb-4">Checkout</h1>
 
-<div class="border border-solid border-gray-100 p-4">
+<div class="border border-solid border-gray-100 p-4 mb-4">
     <table class="table">
         <thead>
             <tr>
@@ -54,22 +54,37 @@
             }
         </tbody>
     </table>
-    <div class="flex justify-end border-t border-solid border-gray-100">
+    <div class="flex justify-between border-t border-solid border-gray-100">
+        <div>
+            @cartItems.Length Items
+        </div>
         <div class="text-3xl font-bold text-orange-400">
             @totalCost.ToMoney("RM")
         </div>
     </div>
 </div>
 
-<div class="border border-solid border-gray-100 p-4">
+<div class="border border-solid border-gray-100 p-4 mb-4">
     <p>Shipping Address</p>
 
     <p>@shippingAddress.ToString()</p>
     @* <p>Billing Address</p> *@
 </div>
 
+<div class="border border-solid border-gray-100 p-4 mb-4">
+    <p>Voucher / Discount</p>
 
+    <p>No vouchers applied</p>
+</div>
 
+<div class="border border-solid border-gray-100 p-4 mb-4">
+    <p>Payment Method</p>
 
-<a class="btn btn-primary">Submit Order</a>
-<a class="btn btn-ghost">Cancel</a>
+    <p>Cash on Delivery</p>
+</div>
+
+<div class="flex justify-end">
+    <a class="btn btn-primary">Submit Order</a>
+    <a class="btn btn-ghost" asp-action="Index" asp-controller="ShoppingCart">Cancel</a>
+</div>
+
