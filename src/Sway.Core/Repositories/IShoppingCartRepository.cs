@@ -27,4 +27,8 @@ public interface IShoppingCartRepository
     Task SoftDeleteCartItemAsync(string cartItemId, CancellationToken cancellationToken);
 
     Task UndoDeletedCartItemAsync(string cartItemId, CancellationToken cancellationToken);
+
+    Task SelectCartItemAsync(string cartItemId, CancellationToken cancellationToken);
+
+    Task DeselectCartItemAsync(string cartItemId, CancellationToken cancellationToken);
 }

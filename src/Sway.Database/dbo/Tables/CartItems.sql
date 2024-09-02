@@ -1,14 +1,17 @@
 ﻿CREATE TABLE [dbo].[CartItems] (
-    [Id]             UNIQUEIDENTIFIER CONSTRAINT [DF_CartItems_Id] DEFAULT NEWSEQUENTIALID() NOT NULL,
+    [Id]             UNIQUEIDENTIFIER CONSTRAINT [DF_CartItems_Id] DEFAULT (newsequentialid()) NOT NULL,
     [ShoppingCartId] UNIQUEIDENTIFIER NOT NULL,
     [ProductId]      UNIQUEIDENTIFIER NOT NULL,
-    [Quantity]       INT           NOT NULL,
-    [CreatedAt]      DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
-    [ModifiedAt]     DATETIME2 (7) DEFAULT GETDATE() NOT NULL,
-    [IsDeleted] BIT NOT NULL DEFAULT 0, 
-    CONSTRAINT [PK_CartItems] PRIMARY KEY CLUSTERED ([Id] ASC), 
-    CONSTRAINT [FK_CartItems_ShoppingCarts] FOREIGN KEY ([ShoppingCartId]) REFERENCES [ShoppingCarts]([Id])
+    [Quantity]       INT              NOT NULL,
+    [CreatedAt]      DATETIME2 (7)    DEFAULT (getdate()) NOT NULL,
+    [ModifiedAt]     DATETIME2 (7)    DEFAULT (getdate()) NOT NULL,
+    [IsDeleted]      BIT              DEFAULT ((0)) NOT NULL,
+    [IsSelected]     BIT              CONSTRAINT [DF_CartItems_IsSelected] DEFAULT ((1)) NOT NULL,
+    CONSTRAINT [PK_CartItems] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_CartItems_ShoppingCarts] FOREIGN KEY ([ShoppingCartId]) REFERENCES [dbo].[ShoppingCarts] ([Id])
 );
+
+
 
 
 GO
@@ -69,3 +72,6 @@ CREATE TRIGGER [dbo].[Trigger_CartItems_OnDelete]
         SET [ModifiedAt] = GETDATE()
         WHERE [Id] = @CartId;
     END
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_Description', @value = N'Whether to include this item in the checkout page', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = N'CartItems', @level2type = N'COLUMN', @level2name = N'IsSelected';
+

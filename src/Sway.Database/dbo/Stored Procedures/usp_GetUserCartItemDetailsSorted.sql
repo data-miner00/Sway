@@ -30,6 +30,7 @@ BEGIN
 		p.Id ProductId,
 		p.Price UnitPrice,
 		c.Quantity Quantity,
+		c.IsSelected IsSelected,
 		c.CreatedAt AddedAt,
 		c.ModifiedAt ModifiedAt
 	FROM [dbo].[CartItems] c

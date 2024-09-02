@@ -132,4 +132,30 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
             parameters,
             commandType: CommandType.StoredProcedure);
     }
+
+    public Task SelectCartItemAsync(string cartItemId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("CartItemId", cartItemId);
+
+        return this.connection.ExecuteAsync(
+            SpNames.SelectCartItem,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
+
+    public Task DeselectCartItemAsync(string cartItemId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("CartItemId", cartItemId);
+
+        return this.connection.ExecuteAsync(
+            SpNames.DeselectCartItem,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
 }

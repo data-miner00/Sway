@@ -33,4 +33,8 @@ public static class StoredProcedureNames
     public const string GetAddressesByUserId = "usp_GetAddressesByUserId";
 
     public const string UpdateUserProfile = "usp_UpdateUserProfile";
+
+    public const string SelectCartItem = "usp_SelectCartItem";
+
+    public const string DeselectCartItem = "usp_DeselectCartItem";
 }
