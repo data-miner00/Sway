@@ -18,6 +18,6 @@ CREATE TRIGGER [dbo].[Trigger_ShoppingCarts_OnUpdate]
 		UPDATE [dbo].[ShoppingCarts]
 		SET [ModifiedAt] = GETDATE()
 		FROM [dbo].[ShoppingCarts] T
-		INNER JOIN inserted I ON T.ID = I.ID;    
+		INNER JOIN inserted I ON T.Id = I.Id;
 	END;
 

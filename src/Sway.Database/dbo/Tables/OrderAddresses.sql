@@ -25,5 +25,5 @@ CREATE TRIGGER [dbo].[Trigger_OrderAddresses_OnUpdate]
         UPDATE [dbo].[OrderAddresses]
         SET [ModifiedAt] = GETDATE()
         FROM [dbo].[OrderAddresses] T
-        INNER JOIN inserted I ON T.Id = I.Id;
+		INNER JOIN inserted I ON T.Id = I.Id;
     END;

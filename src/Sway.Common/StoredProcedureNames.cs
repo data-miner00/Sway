@@ -4,7 +4,7 @@ public static class StoredProcedureNames
 {
     public const string GetShoppingCartByUserId = "usp_GetShoppingCartByUserId";
 
-    public const string GetShoppingCartItemsByUserId = "usp_GetUserCartItemDetails";
+    public const string GetShoppingCartItemsByUserId = "usp_GetUserCartItemDetailsSorted";
 
     public const string CreateNewUser = "usp_CreateNewUser";
 
@@ -33,4 +33,10 @@ public static class StoredProcedureNames
     public const string GetAddressesByUserId = "usp_GetAddressesByUserId";
 
     public const string UpdateUserProfile = "usp_UpdateUserProfile";
+
+    public const string SelectCartItem = "usp_SelectCartItem";
+
+    public const string DeselectCartItem = "usp_DeselectCartItem";
+
+    public const string GetSelectedUserCartItemDetailsSorted = "usp_GetSelectedUserCartItemDetailsSorted";
 }

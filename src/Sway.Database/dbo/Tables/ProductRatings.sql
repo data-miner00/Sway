@@ -25,7 +25,7 @@ CREATE TRIGGER [dbo].[Trigger_ProductRatings_OnUpdate]
 		UPDATE [dbo].[ProductRatings]
 		SET [ModifiedAt] = GETDATE()
 		FROM [dbo].[ProductRatings] T
-		INNER JOIN inserted I ON T.Id = I.Id;    
+		INNER JOIN inserted I ON T.Id = I.Id;
 	END;
 
 

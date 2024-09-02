@@ -16,7 +16,7 @@ public interface IShoppingCartRepository
 
     Task<IEnumerable<CartItem>> GetCartItemsInShoppingCartAsync(string cartId, CancellationToken cancellationToken);
 
-    Task<IEnumerable<CartItemDto>> GetCartItemsByUserIdAsync(string userId, CancellationToken cancellationToken);
+    Task<IEnumerable<CartItemDto>> GetCartItemsByUserIdAsync(string userId, bool selectedOnly, CancellationToken cancellationToken);
 
     Task AddItemIntoCartForUserAsync(string userId, string productId, int quantity, CancellationToken cancellationToken);
 
@@ -27,4 +27,8 @@ public interface IShoppingCartRepository
     Task SoftDeleteCartItemAsync(string cartItemId, CancellationToken cancellationToken);
 
     Task UndoDeletedCartItemAsync(string cartItemId, CancellationToken cancellationToken);
+
+    Task SelectCartItemAsync(string cartItemId, CancellationToken cancellationToken);
+
+    Task DeselectCartItemAsync(string cartItemId, CancellationToken cancellationToken);
 }

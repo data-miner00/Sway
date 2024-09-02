@@ -40,7 +40,7 @@ public sealed class ShoppingCartController : Controller
         };
 
         var items = await this.repository
-            .GetCartItemsByUserIdAsync(Constants.TestUserId, this.CancellationToken)
+            .GetCartItemsByUserIdAsync(Constants.TestUserId, false, this.CancellationToken)
             .ConfigureAwait(false);
 
         viewModel.CartItems = items;
@@ -107,6 +107,22 @@ public sealed class ShoppingCartController : Controller
     public async Task<IActionResult> UndoDeletedCartItem([FromRoute] Guid cartItemId)
     {
         await this.repository.UndoDeletedCartItemAsync(cartItemId.ToString(), this.CancellationToken);
+
+        return this.Ok();
+    }
+
+    [HttpPost("[controller]/Select/{cartItemId}")]
+    public async Task<IActionResult> SelectCartItem([FromRoute] Guid cartItemId)
+    {
+        await this.repository.SelectCartItemAsync(cartItemId.ToString(), this.CancellationToken);
+
+        return this.Ok();
+    }
+
+    [HttpPost("[controller]/Deselect/{cartItemId}")]
+    public async Task<IActionResult> DeselectCartItem([FromRoute] Guid cartItemId)
+    {
+        await this.repository.DeselectCartItemAsync(cartItemId.ToString(), this.CancellationToken);
 
         return this.Ok();
     }

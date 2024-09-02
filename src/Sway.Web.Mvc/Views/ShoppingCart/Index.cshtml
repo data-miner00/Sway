@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "My shopping cart";
     var itemsCount = Model.CartItems.Count();
+    var currentSubtotal = Model.CartItems.Where(x => x.IsSelected).Sum(x => x.UnitPrice * x.Quantity);
 }
 
 <div id="notification-container" class="bg-green-300"></div>
@@ -31,7 +32,12 @@
                 <tr id="@("container-" + item.Id.ToString())">
                     <th>
                         <label>
-                            <input type="checkbox" class="checkbox" />
+                            <input
+                                type="checkbox"
+                                class="checkbox"
+                                onchange="return includeOrExcludeItemToCheckout('@item.Id.ToString()', event.target.checked)"
+                                checked="@item.IsSelected"
+                            />
                         </label>
                     </th>
                     <td>
@@ -69,7 +75,8 @@
 
     <div class="flex justify-between max-w-screen p-4 border border-solid border-gray-100">
         <div>
-            @itemsCount Items
+            <p>@itemsCount Items</p>
+            <p class="text-orange-600 font-bold text-3xl">RM@(currentSubtotal.ToMoney())</p>
         </div>
         <div>
             <a class="btn btn-primary" asp-action="Index" asp-controller="Checkout">
@@ -149,6 +156,18 @@
             fetch(`/ShoppingCart/Undo/${cartItemId}`, { method: "POST" })
                 .then(() => showHiddenCartItemInUi(cartItemId))
                 .catch(console.error);
+        }
+
+        function includeOrExcludeItemToCheckout(cartItemId, checked) {
+            if (checked) {
+                fetch(`/ShoppingCart/Select/${cartItemId}`, { method: "POST" })
+                    .then(() => console.log('ha'))
+                    .catch(console.error);
+            } else {
+                fetch(`/ShoppingCart/Deselect/${cartItemId}`, { method: "POST" })
+                    .then(() => console.log('ha'))
+                    .catch(console.error);
+            }
         }
     </script>
 }

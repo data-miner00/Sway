@@ -44,15 +44,21 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
             commandType: CommandType.StoredProcedure);
     }
 
-    public Task<IEnumerable<CartItemDto>> GetCartItemsByUserIdAsync(string userId, CancellationToken cancellationToken)
+    public Task<IEnumerable<CartItemDto>> GetCartItemsByUserIdAsync(string userId, bool selectedOnly, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
         var parameters = new DynamicParameters();
         parameters.Add("UserId", userId);
+        parameters.Add("SortColumn", "Name");
+        parameters.Add("SortOrder", "ASC");
+
+        var sp = selectedOnly
+            ? SpNames.GetSelectedUserCartItemDetailsSorted
+            : SpNames.GetShoppingCartItemsByUserId;
 
         return this.connection.QueryAsync<CartItemDto>(
-            SpNames.GetShoppingCartItemsByUserId,
+            sp,
             parameters,
             commandType: CommandType.StoredProcedure);
     }
@@ -129,6 +135,32 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
 
         return this.connection.ExecuteAsync(
             SpNames.UndoDeletedCartItem,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
+
+    public Task SelectCartItemAsync(string cartItemId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("CartItemId", cartItemId);
+
+        return this.connection.ExecuteAsync(
+            SpNames.SelectCartItem,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
+
+    public Task DeselectCartItemAsync(string cartItemId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("CartItemId", cartItemId);
+
+        return this.connection.ExecuteAsync(
+            SpNames.DeselectCartItem,
             parameters,
             commandType: CommandType.StoredProcedure);
     }

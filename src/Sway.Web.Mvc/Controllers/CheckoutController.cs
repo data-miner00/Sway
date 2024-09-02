@@ -20,7 +20,7 @@ public class CheckoutController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var items = await this.cartRepository.GetCartItemsByUserIdAsync(Constants.TestUserId, this.CancellationToken);
+        var items = await this.cartRepository.GetCartItemsByUserIdAsync(Constants.TestUserId, true, this.CancellationToken);
         var addresses = await this.addressRepository.GetAllByUserAsync(Constants.TestUserId, this.CancellationToken);
 
         var viewModel = new CheckoutViewModel

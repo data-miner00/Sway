@@ -167,6 +167,11 @@
     <Build Include="dbo\Views\vw_ExpiredCoupons.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetUserCartItemDetailsSorted.sql" />
     <Build Include="dbo\Stored Procedures\usp_UpdateUserProfile.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ToggleSelectCartItem.sql" />
+    <Build Include="dbo\Stored Procedures\usp_SelectCartItem.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeselectCartItem.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetSelectedUserCartItemDetailsSorted.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetSelectedUserCartItemDetails.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

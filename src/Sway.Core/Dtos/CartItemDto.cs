@@ -16,6 +16,8 @@ public sealed class CartItemDto
 
     public int Quantity { get; set; }
 
+    public bool IsSelected { get; set; }
+
     public DateTime AddedAt { get; set; }
 
     public DateTime ModifiedAt { get; set; }
