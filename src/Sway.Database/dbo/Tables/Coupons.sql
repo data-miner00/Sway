@@ -30,7 +30,7 @@ CREATE TRIGGER [dbo].[Trigger_Coupons_OnUpdate]
 		UPDATE [dbo].[Coupons]
 		SET [ModifiedAt] = GETDATE()
 		FROM [dbo].[Coupons] T
-		INNER JOIN inserted I ON T.ID = I.ID;    
+        INNER JOIN inserted I ON T.Id = I.Id;
 	END;
 
 
