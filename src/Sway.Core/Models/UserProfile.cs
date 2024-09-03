@@ -14,10 +14,6 @@ public class UserProfile
 
     public string Description { get; set; }
 
-    public Guid ShippingAddressId { get; set; }
-
-    public Guid BillingAddressId { get; set; }
-
     public DateTime CreatedAt { get; set; }
 
     public DateTime ModifiedAt { get; set; }

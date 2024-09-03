@@ -24,6 +24,8 @@ public class Address
 
     public DateTime ModifiedAt { get; set; }
 
+    public bool IsDefault { get; set; }
+
     public override string ToString()
     {
         List<string> elements = [

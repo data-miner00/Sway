@@ -9,9 +9,7 @@ CREATE PROCEDURE [dbo].[usp_UpdateOrder]
 	@Status NVARCHAR(50),
 	@TotalAmount MONEY,
 	@Currency NVARCHAR(50),
-	@PaymentInfoId UNIQUEIDENTIFIER,
-	@ShippingAddressId UNIQUEIDENTIFIER,
-	@BillingAddressId UNIQUEIDENTIFIER
+	@PaymentInfoId UNIQUEIDENTIFIER
 AS
 BEGIN
 	SET NOCOUNT, XACT_ABORT ON;
@@ -25,9 +23,7 @@ BEGIN
 			   @UserId UserId,
 			   @TotalAmount TotalAmount,
 			   @Currency Currency,
-			   @PaymentInfoId PaymentInfoId,
-			   @ShippingAddressId ShippingAddressId,
-			   @BillingAddressId BillingAddressId
+			   @PaymentInfoId PaymentInfoId
 	) S
 	ON (T.Id = S.Id)
 	WHEN MATCHED THEN
@@ -35,9 +31,7 @@ BEGIN
 			[UserId] = S.UserId,
 			[TotalAmount] = S.TotalAmount,
 			[Currency] = S.Currency,
-			[PaymentInfoId] = S.PaymentInfoId,
-			[ShippingAddressId] = S.ShippingAddressId,
-			[BillingAddressId] = S.BillingAddressId;
+			[PaymentInfoId] = S.PaymentInfoId;
 
 	COMMIT TRANSACTION;
 

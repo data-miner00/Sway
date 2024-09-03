@@ -8,9 +8,8 @@ CREATE PROCEDURE [dbo].[usp_AddOrder]
 	@Status NVARCHAR(50),
 	@TotalAmount MONEY,
 	@Currency NVARCHAR(50),
-	@PaymentInfoId UNIQUEIDENTIFIER,
-	@ShippingAddressId UNIQUEIDENTIFIER,
-	@BillingAddressId UNIQUEIDENTIFIER
+	@PaymentInfoId UNIQUEIDENTIFIER
+	-- TODO: Add order address parameter here
 AS
 BEGIN
 	SET NOCOUNT, XACT_ABORT ON;
@@ -23,9 +22,7 @@ BEGIN
 		[Status],
 		[TotalAmount],
 		[Currency],
-		[PaymentInfoId],
-		[ShippingAddressId],
-		[BillingAddressId]
+		[PaymentInfoId]
 	)
 	VALUES
 	(
@@ -33,9 +30,7 @@ BEGIN
 		@Status,
 		@TotalAmount,
 		@Currency,
-		@PaymentInfoId,
-		@ShippingAddressId,
-		@BillingAddressId
+		@PaymentInfoId
 	);
 
 	COMMIT TRANSACTION;
