@@ -1,0 +1,13 @@
+﻿@using Sway.Core.Models
+@model IEnumerable<Address>
+@{
+    ViewData["Title"] = "My addresses";
+    Layout = "_ProfileLayout";
+}
+
+<div>
+    @foreach (var address in Model)
+    {
+        <p>@address.ToString()</p>
+    }
+</div>
