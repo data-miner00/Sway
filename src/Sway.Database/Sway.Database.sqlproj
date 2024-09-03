@@ -160,7 +160,6 @@
     <Build Include="dbo\Stored Procedures\usp_ToggleFavourite.sql" />
     <Build Include="dbo\Stored Procedures\usp_DeleteFavourite.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddFavourite.sql" />
-    <Build Include="dbo\Stored Procedures\usp_LinkAddressToUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetAddressesByUserId.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetRecentlyAddedProductsByDays.sql" />
     <Build Include="dbo\Views\vw_ValidCoupons.sql" />
@@ -172,6 +171,7 @@
     <Build Include="dbo\Stored Procedures\usp_DeselectCartItem.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetSelectedUserCartItemDetailsSorted.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetSelectedUserCartItemDetails.sql" />
+    <None Include="Scripts\TruncateWithConstraint.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
