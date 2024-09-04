@@ -31,7 +31,11 @@
         <a class="block">Vouchers</a>
     </nav>
 
-    <div class="resize-x bg-gray-50">
+    <div class="resize-x bg-gray-50 w-full">
         @RenderBody()
     </div>
 </div>
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}

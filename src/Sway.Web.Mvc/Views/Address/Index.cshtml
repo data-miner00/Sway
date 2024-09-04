@@ -5,9 +5,44 @@
     Layout = "_ProfileLayout";
 }
 
-<div>
-    @foreach (var address in Model)
-    {
-        <p>@address.ToString()</p>
-    }
+<div class="border border-solid border-gray-100 w-full">
+    <div class="p-4 flex justify-between border-b border-solid border-gray-100 items-center">
+        <div>
+            <h1 class="font-bold text-2xl">My Addresses</h1>
+        </div>
+        <button class="btn btn-primary block" onclick="" id="add-address-btn">+ Add New Address</button>
+    </div>
+    <div>
+        @if (Model.Count() > 0)
+        {
+            foreach (var address in Model)
+            {
+                <div class="">
+                    <div><span class="font-bold">Firstname Lastname</span> | (+1) 234 56789</div>
+                    <div class="text-sm text-gray-600">
+                        @address.Street1, @address.Street2, @address.City<br/>
+                        @address.State, @address.PostalCode, @address.Country
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="flex items-center justify-center h-full w-full">
+                <div class="text-3xl">You have no address yet.</div>
+            </div>
+        }
+    </div>
 </div>
+
+<dialog hidden id="add-address-popup">
+    <div>Add New Address</div>
+</dialog>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
+
+    <script type="text/javascript">
+        $("#add-address-btn").on("click", console.log);
+    </script>
+}
