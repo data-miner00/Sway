@@ -61,6 +61,10 @@
             <input class="input input-bordered block" name="country" placeholder="Country" required value="Malaysia" />
         </div>
         <div>
+            <label for="isDefault">Set as default</label>
+            <input class="checkbox" type="checkbox" name="isDefault" />
+        </div>
+        <div>
             <button class="btn btn-primary">Add</button>
         </div>
     </form>
@@ -83,7 +87,8 @@
             var body = {};
 
             entries.forEach((entry) => {
-                body[entry[0]] = entry[1];
+                var value = entry[1] == "on" ? true : entry[1] == "off" ? false : entry[1];
+                body[entry[0]] = value;
             });
 
             $.ajax("/Profile/Address/Create", {
