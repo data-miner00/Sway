@@ -16,13 +16,15 @@ public class Address
 
     public string? State { get; set; }
 
-    public string PostalCode { get; set; }
+    public string Postcode { get; set; }
 
     public string Country { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
     public DateTime ModifiedAt { get; set; }
+
+    public string UserId { get; set; }
 
     public bool IsDefault { get; set; }
 
@@ -33,7 +35,7 @@ public class Address
             this.Street2,
             this.City,
             this.State,
-            this.PostalCode,
+            this.Postcode,
             this.Country,
         ];
 

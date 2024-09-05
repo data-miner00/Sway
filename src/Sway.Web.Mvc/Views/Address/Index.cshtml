@@ -21,7 +21,7 @@
                     <div><span class="font-bold">Firstname Lastname</span> | (+1) 234 56789</div>
                     <div class="text-sm text-gray-600">
                         @address.Street1, @address.Street2, @address.City<br/>
-                        @address.State, @address.PostalCode, @address.Country
+                        @address.State, @address.Postcode, @address.Country
                     </div>
                 </div>
             }
@@ -35,14 +35,66 @@
     </div>
 </div>
 
-<dialog hidden id="add-address-popup">
-    <div>Add New Address</div>
+<dialog hidden id="add-address-popup" class="p-8 border border-solid border-gray-200 bg-white">
+    <div class="text-3xl">Add New Address</div>
+    <form onsubmit="return addNewAddress(event)" autocomplete="off" spellcheck="false">
+        <div class="flex gap-2">
+            <input class="input input-bordered block" placeholder="First Name" />
+            <input class="input input-bordered block" placeholder="Second Name" />
+        </div>
+        <div>
+            <input class="input input-bordered block w-full" name="street1" placeholder="Street 1" required value="No. 43, Taman Kampung Lapan" />
+        </div>
+        <div>
+            <input class="input input-bordered block w-full" name="street2" placeholder="Street 2" />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="city" placeholder="City" required value="Batu Berendam" />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="state" placeholder="State" required value="Melaka" />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="postcode" placeholder="Postal Code" required value="75350" />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="country" placeholder="Country" required value="Malaysia" />
+        </div>
+        <div>
+            <button class="btn btn-primary">Add</button>
+        </div>
+    </form>
 </dialog>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
 
     <script type="text/javascript">
-        $("#add-address-btn").on("click", console.log);
+        $("#add-address-btn").on("click", () => {
+            $("#add-address-popup").toggle();
+        });
+
+        function addNewAddress(event) {
+            event.preventDefault();
+            
+            var data = new FormData(event.target);
+
+            var entries = [...data.entries()];
+            var body = {};
+
+            entries.forEach((entry) => {
+                body[entry[0]] = entry[1];
+            });
+
+            $.ajax("/Profile/Address/Create", {
+                headers: {
+                    "content-type": "application/json",
+                },
+                method: "post",
+                data: JSON.stringify(body),
+            }).done(() => {
+                $("#add-address-popup").hide();
+            });
+        }
     </script>
 }

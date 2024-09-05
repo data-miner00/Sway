@@ -4,13 +4,15 @@
 -- Description:	<Description,,>
 -- =============================================
 CREATE PROCEDURE usp_AddAddress
+	@UserId UNIQUEIDENTIFIER,
 	@Type NVARCHAR(50),
 	@Street1 NVARCHAR(255),
 	@Street2 NVARCHAR(255),
 	@City NVARCHAR(50),
 	@State NVARCHAR(50),
 	@Postcode NVARCHAR(50),
-	@Country NVARCHAR(50)
+	@Country NVARCHAR(50),
+	@IsDefault BIT
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -25,7 +27,9 @@ BEGIN
 		[City],
 		[State],
 		[Postcode],
-		[Country]
+		[Country],
+		[UserId],
+		[IsDefault]
 	)
 	VALUES
 	(
@@ -35,7 +39,9 @@ BEGIN
 		@City,
 		@State,
 		@Postcode,
-		@Country
+		@Country,
+		@UserId,
+		@IsDefault
 	);
 
 	COMMIT TRANSACTION;
