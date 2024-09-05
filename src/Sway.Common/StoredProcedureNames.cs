@@ -39,4 +39,6 @@ public static class StoredProcedureNames
     public const string DeselectCartItem = "usp_DeselectCartItem";
 
     public const string GetSelectedUserCartItemDetailsSorted = "usp_GetSelectedUserCartItemDetailsSorted";
+
+    public const string AddAddress = "usp_AddAddress";
 }

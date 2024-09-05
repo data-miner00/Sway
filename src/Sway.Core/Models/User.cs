@@ -24,10 +24,6 @@ public class User
 
     public string? Description { get; set; }
 
-    public Guid ShippingAddressId { get; set; }
-
-    public Guid BillingAddressId { get; set; }
-
     public DateTime DateOfBirth { get; set; }
 
     public DateTime CreatedAt { get; set; }

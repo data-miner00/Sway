@@ -32,12 +32,21 @@ public sealed class AddressRepository : IAddressRepository
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var command = new CommandDefinition(
-            "EXEC usp_AddAddress @Type, @Street1, @Street2, @City, @State, @Postcode, @Country;",
-            address,
-            commandType: CommandType.StoredProcedure);
+        var parameters = new DynamicParameters();
+        parameters.Add("Street1", address.Street1);
+        parameters.Add("Street2", address.Street2);
+        parameters.Add("City", address.City);
+        parameters.Add("State", address.State);
+        parameters.Add("Postcode", address.Postcode);
+        parameters.Add("Country", address.Country);
+        parameters.Add("IsDefault", address.IsDefault);
+        parameters.Add("Type", address.Type.ToString());
+        parameters.Add("UserId", address.UserId);
 
-        return this.connection.ExecuteAsync(command);
+        return this.connection.ExecuteAsync(
+            SpNames.AddAddress,
+            parameters,
+            commandType: CommandType.StoredProcedure);
     }
 
     /// <inheritdoc/>

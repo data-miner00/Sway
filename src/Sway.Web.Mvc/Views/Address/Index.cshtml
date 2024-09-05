@@ -1,0 +1,105 @@
+﻿@using Sway.Core.Models
+@model IEnumerable<Address>
+@{
+    ViewData["Title"] = "My addresses";
+    Layout = "_ProfileLayout";
+}
+
+<div class="border border-solid border-gray-100 w-full">
+    <div class="p-4 flex justify-between border-b border-solid border-gray-100 items-center">
+        <div>
+            <h1 class="font-bold text-2xl">My Addresses</h1>
+        </div>
+        <button class="btn btn-primary block" onclick="" id="add-address-btn">+ Add New Address</button>
+    </div>
+    <div>
+        @if (Model.Count() > 0)
+        {
+            foreach (var address in Model)
+            {
+                <div class="">
+                    <div><span class="font-bold">Firstname Lastname</span> | (+1) 234 56789</div>
+                    <div class="text-sm text-gray-600">
+                        @address.Street1, @address.Street2, @address.City<br/>
+                        @address.State, @address.Postcode, @address.Country
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="flex items-center justify-center h-full w-full">
+                <div class="text-3xl">You have no address yet.</div>
+            </div>
+        }
+    </div>
+</div>
+
+<dialog hidden id="add-address-popup" class="p-8 border border-solid border-gray-200 bg-white">
+    <div class="text-3xl">Add New Address</div>
+    <form onsubmit="return addNewAddress(event)" autocomplete="off" spellcheck="false">
+        <div class="flex gap-2">
+            <input class="input input-bordered block" placeholder="First Name" />
+            <input class="input input-bordered block" placeholder="Second Name" />
+        </div>
+        <div>
+            <input class="input input-bordered block w-full" name="street1" placeholder="Street 1" required value="No. 43, Taman Kampung Lapan" />
+        </div>
+        <div>
+            <input class="input input-bordered block w-full" name="street2" placeholder="Street 2" />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="city" placeholder="City" required value="Batu Berendam" />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="state" placeholder="State" required value="Melaka" />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="postcode" placeholder="Postal Code" required value="75350" />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="country" placeholder="Country" required value="Malaysia" />
+        </div>
+        <div>
+            <label for="isDefault">Set as default</label>
+            <input class="checkbox" type="checkbox" name="isDefault" />
+        </div>
+        <div>
+            <button class="btn btn-primary">Add</button>
+        </div>
+    </form>
+</dialog>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
+
+    <script type="text/javascript">
+        $("#add-address-btn").on("click", () => {
+            $("#add-address-popup").toggle();
+        });
+
+        function addNewAddress(event) {
+            event.preventDefault();
+            
+            var data = new FormData(event.target);
+
+            var entries = [...data.entries()];
+            var body = {};
+
+            entries.forEach((entry) => {
+                var value = entry[1] == "on" ? true : entry[1] == "off" ? false : entry[1];
+                body[entry[0]] = value;
+            });
+
+            $.ajax("/Profile/Address/Create", {
+                headers: {
+                    "content-type": "application/json",
+                },
+                method: "post",
+                data: JSON.stringify(body),
+            }).done(() => {
+                $("#add-address-popup").hide();
+            });
+        }
+    </script>
+}

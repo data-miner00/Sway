@@ -1,0 +1,41 @@
+﻿@using Sway.Core.Repositories
+@inject IUserRepository userRepository
+@{
+    Layout = "_Layout";
+    var user = await userRepository.GetByIdAsync(Constants.TestUserId, default);
+}
+
+<partial name="_Notification" />
+
+<div class="flex gap-4">
+    <nav class="p-4 flex flex-col gap-4 w-[300px]">
+        <div class="flex p-1 items-center gap-4">
+            <div class="avatar">
+                <div class="ring-primary ring-offset-base-100 w-8 rounded-full ring ring-offset-2">
+                    <img src="@user.PhotoUrl" alt="Profile image" />
+                </div>
+            </div>
+            <div>
+                <p class="font-bold">@user.Username</p>
+                <a><i class="bi bi-pencil-fill"></i> Edit profile</a>
+            </div>
+        </div>
+        <a class="block" asp-action="Index" asp-controller="Profile">Account</a>
+        <a class="block" asp-action="Index" asp-controller="Address">- Addresses</a>
+        <a class="block">- Payment Methods</a>
+        <a class="block">- Change Password</a>
+        <a class="block">- Notification</a>
+
+        <a class="block">Purchase History</a>
+        <a class="block">Notifications</a>
+        <a class="block">Vouchers</a>
+    </nav>
+
+    <div class="resize-x bg-gray-50 w-full">
+        @RenderBody()
+    </div>
+</div>
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}

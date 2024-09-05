@@ -1,7 +1,3 @@
-h1 {
-  color: blanchedalmond;
-}
-
 .animate-gradient {
   background-size: 400% 400% !important;
   animation: gradient-x 10s ease infinite;
