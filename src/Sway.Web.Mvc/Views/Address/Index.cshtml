@@ -17,11 +17,17 @@
         {
             foreach (var address in Model)
             {
-                <div class="">
-                    <div><span class="font-bold">Firstname Lastname</span> | (+1) 234 56789</div>
-                    <div class="text-sm text-gray-600">
-                        @address.Street1, @address.Street2, @address.City<br/>
-                        @address.State, @address.Postcode, @address.Country
+                <div class="flex">
+                    <div>
+                        <div><span class="font-bold">Firstname Lastname</span> | (+1) 234 56789</div>
+                        <div class="text-sm text-gray-600">
+                            @address.Street1, @address.Street2, @address.City<br/>
+                            @address.State, @address.Postcode, @address.Country
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button class="btn btn-ghost" onclick="return openEditAddressPopup('@address.Id')"><i class="bi bi-pencil-fill"></i></button>
+                        <button class="btn btn-ghost"><i class="bi bi-trash-fill"></i></button>
                     </div>
                 </div>
             }
@@ -70,6 +76,43 @@
     </form>
 </dialog>
 
+<dialog hidden id="update-address-popup" class="p-8 border border-solid border-gray-200 bg-white relative">
+    <button class="absolute top-0 right-0 btn btn-ghost block" onclick="return closeEditAddressPopup()"><i class="bi bi-x"></i></button>
+    <div class="text-3xl">Update Address</div>
+    <form onsubmit="return updateAddress(event)" autocomplete="off" spellcheck="false">
+        <input name="id" required hidden />
+        <div class="flex gap-2">
+            <input class="input input-bordered block" placeholder="First Name" />
+            <input class="input input-bordered block" placeholder="Second Name" />
+        </div>
+        <div>
+            <input class="input input-bordered block w-full" name="street1" placeholder="Street 1" required />
+        </div>
+        <div>
+            <input class="input input-bordered block w-full" name="street2" placeholder="Street 2" />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="city" placeholder="City" required />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="state" placeholder="State" required />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="postcode" placeholder="Postal Code" required />
+        </div>
+        <div>
+            <input class="input input-bordered block" name="country" placeholder="Country" required />
+        </div>
+        <div>
+            <label for="isDefault">Set as default</label>
+            <input class="checkbox" type="checkbox" name="isDefault" />
+        </div>
+        <div>
+            <button class="btn btn-primary">Update</button>
+        </div>
+    </form>
+</dialog>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
 
@@ -99,6 +142,54 @@
                 data: JSON.stringify(body),
             }).done(() => {
                 $("#add-address-popup").hide();
+            });
+        }
+
+        function openEditAddressPopup(id) {
+            fetch(`/Profile/Address/Index/${id}`)
+                .then((res) => {
+                    res.json().then((body) => {
+                        console.log(body);
+                        $("#update-address-popup [name='id']").val(body["id"]);
+                        $("#update-address-popup [name='street1']").val(body["street1"]);
+                        $("#update-address-popup [name='street2']").val(body["street2"]);
+                        $("#update-address-popup [name='city']").val(body["city"]);
+                        $("#update-address-popup [name='state']").val(body["state"]);
+                        $("#update-address-popup [name='postcode']").val(body["postcode"]);
+                        $("#update-address-popup [name='country']").val(body["country"]);
+
+                        $("#update-address-popup").show();
+                    })
+                        .catch(console.error);
+                })
+                .catch(console.error);
+        }
+
+        function closeEditAddressPopup() {
+            $('#update-address-popup').hide();
+        }
+
+        function updateAddress(event) {
+            event.preventDefault();
+            
+            var data = new FormData(event.target);
+
+            var entries = [...data.entries()];
+            var body = {};
+
+            entries.forEach((entry) => {
+                var value = entry[1] == "on" ? true : entry[1] == "off" ? false : entry[1];
+                body[entry[0]] = value;
+            });
+
+            $.ajax("/Profile/Address/Update", {
+                headers: {
+                    "content-type": "application/json",
+                },
+                method: "post",
+                data: JSON.stringify(body),
+            }).done(() => {
+                $("#update-address-popup").hide();
             });
         }
     </script>
