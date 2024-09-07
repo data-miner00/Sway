@@ -82,4 +82,11 @@ public class AddressController : Controller
 
         return this.NoContent();
     }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await this.repository.DeleteByIdAsync(id.ToString(), this.CancellationToken);
+        return this.NoContent();
+    }
 }

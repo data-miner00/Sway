@@ -17,7 +17,7 @@
         {
             foreach (var address in Model)
             {
-                <div class="flex">
+                <div class="flex" id="@address.Id">
                     <div>
                         <div><span class="font-bold">Firstname Lastname</span> | (+1) 234 56789</div>
                         <div class="text-sm text-gray-600">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="flex items-center gap-4">
                         <button class="btn btn-ghost" onclick="return openEditAddressPopup('@address.Id')"><i class="bi bi-pencil-fill"></i></button>
-                        <button class="btn btn-ghost"><i class="bi bi-trash-fill"></i></button>
+                        <button class="btn btn-ghost" onclick="confirm('Are you sure?'); deleteAddress('@address.Id')"><i class="bi bi-trash-fill"></i></button>
                     </div>
                 </div>
             }
@@ -190,6 +190,14 @@
                 data: JSON.stringify(body),
             }).done(() => {
                 $("#update-address-popup").hide();
+            });
+        }
+
+        function deleteAddress(id) {
+            $.ajax(`/Profile/Address/Delete/${id}`, {
+                method: "delete",
+            }).done(() => {
+                $(`#${id}`).remove();
             });
         }
     </script>

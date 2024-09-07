@@ -55,7 +55,7 @@ public sealed class AddressRepository : IAddressRepository
         cancellationToken.ThrowIfCancellationRequested();
 
         var command = new CommandDefinition(
-            "EXEC usp_DeleteAddressById @Id",
+            SpNames.DeleteAddressById,
             new { Id = id },
             commandType: CommandType.StoredProcedure);
 
