@@ -372,3 +372,6 @@ dist/
 # Restored npm packages
 bootstrap-icon/
 jquery/
+htmx/
+react/
+react-dom/

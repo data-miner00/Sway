@@ -4,3 +4,71 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+<div id="like_button_container"></div>
+<div id="like_button_container2"></div>
+
+<script src="https://unpkg.com/petite-vue" defer init></script>
+
+<div v-scope="{ count: 0 }">
+  {{ count }}
+  <button @@click="count++">inc</button>
+</div>
+
+@section Scripts {
+    @* <script src="https://unpkg.com/react@18/umd/react.development.js"></script> *@
+    @* <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> *@
+    <script src="~/lib/react/react.development.js"></script>
+    <script src="~/lib/react-dom/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/javascript">
+        const e = React.createElement;
+
+        class LikeButton extends React.Component {
+          constructor(props) {
+            super(props);
+            this.state = { liked: false };
+          }
+
+          render() {
+            if (this.state.liked) {
+              return 'You liked this.';
+            }
+
+            return e(
+              'button',
+              { onClick: () => this.setState({ liked: true }), className: "btn btn-primary" },
+              'Like'
+            );
+          }
+        }
+
+        const domContainer = document.querySelector('#like_button_container');
+        const root = ReactDOM.createRoot(domContainer);
+        root.render(e(LikeButton));
+    </script>
+    <script type="text/babel">
+        class LikeButton2 extends React.Component {
+          constructor(props) {
+            super(props);
+            this.state = { liked: false };
+          }
+
+          render() {
+            if (this.state.liked) {
+              return 'You liked this.';
+            }
+
+            return <button onClick={() => this.setState({ liked: true })} className="btn btn-secondary">Like</button>;
+          }
+        }
+
+        const domContainer2 = document.querySelector('#like_button_container2');
+        const root2 = ReactDOM.createRoot(domContainer2);
+        root2.render(<LikeButton2 />);
+    </script>
+    <!--
+        Note: this page is a great way to try React but it's not suitable for production.
+        It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+    -->
+}
