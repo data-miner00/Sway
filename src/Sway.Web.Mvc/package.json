@@ -8,7 +8,8 @@
     "release:css": "tailwindcss -i ./wwwroot/lib/tailwindcss/index.css -o ./wwwroot/lib/tailwindcss/dist/styles.css --minify",
     "copy:bicon": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/bootstrap-icons/font/* -DestinationFolder ./wwwroot/lib/bootstrap-icon/",
     "copy:jquery": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/jquery/dist/* -DestinationFolder ./wwwroot/lib/jquery/",
-    "copy": "pnpm copy:bicon && pnpm copy:jquery"
+    "copy:htmx": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/htmx.org/dist/* -DestinationFolder ./wwwroot/lib/htmx/",
+    "copy": "pnpm copy:bicon && pnpm copy:jquery && pnpm copy:htmx"
   },
   "keywords": [],
   "author": "shaun chong <mumk0313@gmail.com>",
