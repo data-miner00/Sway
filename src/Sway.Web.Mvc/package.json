@@ -9,7 +9,9 @@
     "copy:bicon": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/bootstrap-icons/font/* -DestinationFolder ./wwwroot/lib/bootstrap-icon/",
     "copy:jquery": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/jquery/dist/* -DestinationFolder ./wwwroot/lib/jquery/",
     "copy:htmx": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/htmx.org/dist/* -DestinationFolder ./wwwroot/lib/htmx/",
-    "copy": "pnpm copy:bicon && pnpm copy:jquery && pnpm copy:htmx"
+    "copy:react": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/react/umd/* -DestinationFolder ./wwwroot/lib/react/",
+    "copy:react-dom": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/react-dom/umd/* -DestinationFolder ./wwwroot/lib/react-dom/",
+    "copy": "pnpm copy:bicon && pnpm copy:jquery && pnpm copy:htmx && pnpm copy:react && pnpm copy:react-dom"
   },
   "keywords": [],
   "author": "shaun chong <mumk0313@gmail.com>",
@@ -20,6 +22,8 @@
     "daisyui": "^4.12.10",
     "htmx.org": "2.0.1",
     "jquery": "^3.7.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "tailwindcss": "^3.4.4"
   }
 }

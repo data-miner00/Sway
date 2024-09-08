@@ -373,3 +373,5 @@ dist/
 bootstrap-icon/
 jquery/
 htmx/
+react/
+react-dom/
