@@ -41,4 +41,8 @@ public static class StoredProcedureNames
     public const string GetSelectedUserCartItemDetailsSorted = "usp_GetSelectedUserCartItemDetailsSorted";
 
     public const string AddAddress = "usp_AddAddress";
+
+    public const string UpdateAddress = "usp_UpdateAddress";
+
+    public const string DeleteAddressById = "usp_DeleteAddressById";
 }

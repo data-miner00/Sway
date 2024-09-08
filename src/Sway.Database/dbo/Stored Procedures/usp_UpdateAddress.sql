@@ -3,7 +3,7 @@
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE usp_UpdateAddress
+CREATE PROCEDURE [dbo].[usp_UpdateAddress]
 	@Id UNIQUEIDENTIFIER,
 	@Type NVARCHAR(50),
 	@Street1 NVARCHAR(255),
@@ -11,7 +11,8 @@ CREATE PROCEDURE usp_UpdateAddress
 	@City NVARCHAR(50),
 	@State NVARCHAR(50),
 	@Postcode NVARCHAR(50),
-	@Country NVARCHAR(50)
+	@Country NVARCHAR(50),
+	@IsDefault BIT
 AS
 BEGIN
 	SET NOCOUNT, XACT_ABORT ON;
@@ -26,7 +27,8 @@ BEGIN
 		[City] = @City,
 		[State] = @State,
 		[Postcode] = @Postcode,
-		[Country] = @Country
+		[Country] = @Country,
+		[IsDefault] = @IsDefault
 	WHERE [Id] = @Id;
 
 	COMMIT TRANSACTION;

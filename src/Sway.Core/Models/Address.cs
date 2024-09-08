@@ -24,7 +24,7 @@ public class Address
 
     public DateTime ModifiedAt { get; set; }
 
-    public string UserId { get; set; }
+    public Guid UserId { get; set; }
 
     public bool IsDefault { get; set; }
 
@@ -39,6 +39,6 @@ public class Address
             this.Country,
         ];
 
-        return string.Join(", ", elements.Where(x => x != null));
+        return string.Join(", ", elements.Where(x => !string.IsNullOrWhiteSpace(x)));
     }
 }

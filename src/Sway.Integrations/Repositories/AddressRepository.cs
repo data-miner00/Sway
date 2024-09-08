@@ -41,7 +41,7 @@ public sealed class AddressRepository : IAddressRepository
         parameters.Add("Country", address.Country);
         parameters.Add("IsDefault", address.IsDefault);
         parameters.Add("Type", address.Type.ToString());
-        parameters.Add("UserId", address.UserId);
+        parameters.Add("UserId", address.UserId.ToString());
 
         return this.connection.ExecuteAsync(
             SpNames.AddAddress,
@@ -55,7 +55,7 @@ public sealed class AddressRepository : IAddressRepository
         cancellationToken.ThrowIfCancellationRequested();
 
         var command = new CommandDefinition(
-            "EXEC usp_DeleteAddressById @Id",
+            SpNames.DeleteAddressById,
             new { Id = id },
             commandType: CommandType.StoredProcedure);
 
@@ -90,11 +90,21 @@ public sealed class AddressRepository : IAddressRepository
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var command = new CommandDefinition(
-            "EXEC usp_UpdateAddress @Id, @Type, @Street1, @Street2, @City, @State, @Postcode, @Country;",
-            address);
+        var parameters = new DynamicParameters();
+        parameters.Add("Id", address.Id.ToString());
+        parameters.Add("Street1", address.Street1);
+        parameters.Add("Street2", address.Street2);
+        parameters.Add("City", address.City);
+        parameters.Add("State", address.State);
+        parameters.Add("Postcode", address.Postcode);
+        parameters.Add("Country", address.Country);
+        parameters.Add("IsDefault", address.IsDefault);
+        parameters.Add("Type", address.Type.ToString());
 
-        return this.connection.ExecuteAsync(command);
+        return this.connection.ExecuteAsync(
+            SpNames.UpdateAddress,
+            parameters,
+            commandType: CommandType.StoredProcedure);
     }
 
     /// <inheritdoc/>
