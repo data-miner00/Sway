@@ -83,41 +83,46 @@
     </div>
 </dialog>
 
-<dialog hidden id="update-address-popup" class="p-8 border border-solid border-gray-200 bg-white relative">
-    <button class="absolute top-0 right-0 btn btn-ghost block" onclick="return closeEditAddressPopup()"><i class="bi bi-x"></i></button>
-    <div class="text-3xl">Update Address</div>
-    <form onsubmit="return updateAddress(event)" autocomplete="off" spellcheck="false">
-        <input name="id" required hidden />
-        <div class="flex gap-2">
-            <input class="input input-bordered block" placeholder="First Name" />
-            <input class="input input-bordered block" placeholder="Second Name" />
-        </div>
-        <div>
-            <input class="input input-bordered block w-full" name="street1" placeholder="Street 1" required />
-        </div>
-        <div>
-            <input class="input input-bordered block w-full" name="street2" placeholder="Street 2" />
-        </div>
-        <div>
-            <input class="input input-bordered block" name="city" placeholder="City" required />
-        </div>
-        <div>
-            <input class="input input-bordered block" name="state" placeholder="State" required />
-        </div>
-        <div>
-            <input class="input input-bordered block" name="postcode" placeholder="Postal Code" required />
-        </div>
-        <div>
-            <input class="input input-bordered block" name="country" placeholder="Country" required />
-        </div>
-        <div>
-            <label for="isDefault">Set as default</label>
-            <input class="checkbox" type="checkbox" name="isDefault" />
-        </div>
-        <div>
-            <button class="btn btn-primary">Update</button>
-        </div>
-    </form>
+<dialog hidden id="updateAddressPopup" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <h3 class="text-xl font-bold mb-4">Update Address</h3>
+        <form onsubmit="return updateAddress(event)" autocomplete="off" spellcheck="false" class="flex flex-col gap-2">
+            <input name="id" required hidden />
+            <div class="flex gap-2">
+                <input class="input input-bordered block" placeholder="First Name" />
+                <input class="input input-bordered block" placeholder="Second Name" />
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="street1" placeholder="Street 1" required />
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="street2" placeholder="Street 2" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="city" placeholder="City" required />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="state" placeholder="State" required />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="postcode" placeholder="Postal Code" required />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="country" placeholder="Country" required />
+            </div>
+            <div class="flex items-center gap-4">
+                <input class="checkbox block" type="checkbox" name="isDefault" />
+                <label for="isDefault" class="block">Set as default</label>
+            </div>
+            <div class="modal-action">
+                <button type="button" class="btn btn-ghost" onclick="updateAddressPopup.close()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
 </dialog>
 
 @section Scripts {
@@ -153,15 +158,15 @@
                 .then((res) => {
                     res.json().then((body) => {
                         console.log(body);
-                        $("#update-address-popup [name='id']").val(body["id"]);
-                        $("#update-address-popup [name='street1']").val(body["street1"]);
-                        $("#update-address-popup [name='street2']").val(body["street2"]);
-                        $("#update-address-popup [name='city']").val(body["city"]);
-                        $("#update-address-popup [name='state']").val(body["state"]);
-                        $("#update-address-popup [name='postcode']").val(body["postcode"]);
-                        $("#update-address-popup [name='country']").val(body["country"]);
+                        $("#updateAddressPopup [name='id']").val(body["id"]);
+                        $("#updateAddressPopup [name='street1']").val(body["street1"]);
+                        $("#updateAddressPopup [name='street2']").val(body["street2"]);
+                        $("#updateAddressPopup [name='city']").val(body["city"]);
+                        $("#updateAddressPopup [name='state']").val(body["state"]);
+                        $("#updateAddressPopup [name='postcode']").val(body["postcode"]);
+                        $("#updateAddressPopup [name='country']").val(body["country"]);
 
-                        $("#update-address-popup").show();
+                        document.getElementById("updateAddressPopup").show();
                     })
                         .catch(console.error);
                 })
@@ -169,7 +174,8 @@
         }
 
         function closeEditAddressPopup() {
-            $('#update-address-popup').hide();
+            var updateAddressPopup = document.getElementById("updateAddressPopup");
+            updateAddressPopup.close();
         }
 
         function closeAddAddressPopup() {
@@ -197,7 +203,7 @@
                 method: "post",
                 data: JSON.stringify(body),
             }).done(() => {
-                $("#update-address-popup").hide();
+                closeEditAddressPopup();
             });
         }
 
