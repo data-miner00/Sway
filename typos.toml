@@ -1,0 +1,5 @@
+[default.extend-words]
+chanel = "chanel"
+
+[files]
+extend-exclude = ["LICENSE", "docs/*"]
