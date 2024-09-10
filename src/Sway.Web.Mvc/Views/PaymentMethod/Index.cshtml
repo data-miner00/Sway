@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Sway.Core.Models.PaymentMethod>
+@{
+    ViewData["Title"] = "Payment Methods";
+}
+
+<div class="border border-solid border-gray-100 w-full">
+    <div class="p-4 flex justify-between border-b border-solid border-gray-100 items-center">
+        <div>
+            <h1 class="font-bold text-2xl">My Payment Methods</h1>
+        </div>
+        <button class="btn btn-primary block" onclick="">+ Add New Payment Method</button>
+    </div>
+    <div>
+        @if (Model.Count() > 0)
+        {
+            @foreach (var method in Model)
+            {
+                <div class="flex" id="@method.Id">
+                    <div>
+                        <div><span class="font-bold">Firstname Lastname</span> | (+1) 234 56789</div>
+                        <div class="text-sm text-gray-600">
+                            @method.Type.ToString()
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button class="btn btn-ghost" onclick=""><i class="bi bi-pencil-fill"></i></button>
+                        <button class="btn btn-ghost" onclick="confirm('Are you sure?');"><i class="bi bi-trash-fill"></i></button>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="flex items-center justify-center h-full w-full">
+                <div class="text-3xl">You have no payment methods yet.</div>
+            </div>
+        }
+    </div>
+</div>
+
+
