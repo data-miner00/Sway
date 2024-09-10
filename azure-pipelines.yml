@@ -25,16 +25,14 @@ steps:
 
   - task: Cache@2
     inputs:
-      key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
+      key: 'pnpm | "$(Agent.OS)" | $(System.DefaultWorkingDirectory)/src/pnpm-lock.yaml'
       path: $(pnpm_config_cache)
-    workingDirectory: $(System.DefaultWorkingDirectory)/src
     displayName: Cache pnpm
 
   - script: |
       corepack enable
       corepack prepare pnpm@latest-9 --activate
       pnpm config set store-dir $(pnpm_config_cache)
-    workingDirectory: $(System.DefaultWorkingDirectory)/src
     displayName: "Setup pnpm"
 
   - script: |
