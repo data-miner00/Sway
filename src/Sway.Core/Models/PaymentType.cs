@@ -14,7 +14,5 @@ public enum PaymentType
 
     CashOnDelivery,
 
-    GooglePay,
-
-    PayPal,
+    EWallet,
 }
