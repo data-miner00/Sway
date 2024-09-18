@@ -45,4 +45,10 @@ public static class StoredProcedureNames
     public const string UpdateAddress = "usp_UpdateAddress";
 
     public const string DeleteAddressById = "usp_DeleteAddressById";
+
+    public const string AddPaymentMethod = "usp_AddPaymentMethod";
+
+    public const string UpdatePaymentMethod = "usp_UpdatePaymentMethod";
+
+    public const string DeletePaymentMethodById = "usp_DeletePaymentMethodById";
 }

@@ -1,32 +1,45 @@
 ﻿-- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
--- Description:	<Description,,>
+-- Description:	Updates the payment method.
+--				The owner cannot be updated.
 -- =============================================
 CREATE PROCEDURE [dbo].[usp_UpdatePaymentMethod]
-	@Id UNIQUEIDENTIFIER,
-	@UserId UNIQUEIDENTIFIER,
-	@Type NVARCHAR(50),
-	@Provider NVARCHAR(50),
-	@AccountNo NVARCHAR(50),
-	@ExpiryDate DATETIME2(7)
+    @Id UNIQUEIDENTIFIER,
+    @Type NVARCHAR(50),
+    @Provider NVARCHAR(50),
+    @CVV INT,
+    @ExpiryDate DATETIME2(7),
+    @CardholderName NVARCHAR(50),
+    @CardNumber NVARCHAR(50),
+    @WalletAddress NVARCHAR(255),
+    @CardIssuingCountry NVARCHAR(50),
+    @CardIssuingBank NVARCHAR(50),
+    @Currency NVARCHAR(50),
+    @Balance MONEY
 AS
 BEGIN
-	SET NOCOUNT, XACT_ABORT ON;
+    SET NOCOUNT, XACT_ABORT ON;
 
     BEGIN TRANSACTION
 
-	UPDATE [dbo].[PaymentMethods]
-	SET
-		[UserId] = @UserId,
-		[Type] = @Type,
-		[Provider] = @Provider,
-		[AccountNo] = @AccountNo,
-		[ExpiryDate] = @ExpiryDate
+    UPDATE [dbo].[PaymentMethods]
+    SET
+        [Type] = @Type,
+        [Provider] = @Provider,
+        [CVV] = @CVV,
+        [ExpiryDate] = @ExpiryDate,
+        [CardholderName] = @CardholderName,
+        [CardNumber] = @CardNumber,
+        [CardIssuingCountry] = @CardIssuingCountry,
+        [CardIssuingBank] = @CardIssuingBank,
+        [WalletAddress] = @WalletAddress,
+        [Currency] = @Currency,
+        [Balance] = @Balance
 
-	WHERE [Id] = @Id;
+    WHERE [Id] = @Id;
 
-	COMMIT TRANSACTION
+    COMMIT TRANSACTION
 
-	RETURN @@ERROR;
+    RETURN @@ERROR;
 END

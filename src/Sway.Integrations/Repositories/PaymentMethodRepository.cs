@@ -1,12 +1,15 @@
 ﻿namespace Sway.Integrations.Repositories;
 
 using Dapper;
+using Sway.Common;
 using Sway.Core.Models;
 using Sway.Core.Repositories;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
+
+using SpNames = Sway.Common.StoredProcedureNames;
 
 /// <summary>
 /// The repository layer for <see cref="PaymentMethod"/>.
@@ -21,7 +24,7 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
     /// <param name="connection">The database connection.</param>
     public PaymentMethodRepository(IDbConnection connection)
     {
-        this.connection = connection;
+        this.connection = Guard.ThrowIfNull(connection);
     }
 
     /// <inheritdoc/>
@@ -29,9 +32,23 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
     {
         cancellationToken.ThrowIfCancellationRequested();
 
+        var parameters = new DynamicParameters();
+        parameters.Add("UserId", paymentMethod.UserId);
+        parameters.Add("Type", paymentMethod.Type);
+        parameters.Add("Provider", paymentMethod.Provider);
+        parameters.Add("CVV", paymentMethod.CVV);
+        parameters.Add("ExpiryDate", paymentMethod.ExpiryDate);
+        parameters.Add("CardholderName", paymentMethod.CardholderName);
+        parameters.Add("CardNumber", paymentMethod.CardNumber);
+        parameters.Add("WalletAddress", paymentMethod.WalletAddress);
+        parameters.Add("CardIssuingCountry", paymentMethod.CardIssuingCountry);
+        parameters.Add("CardIssuingBank", paymentMethod.CardIssuingBank);
+        parameters.Add("Currency", paymentMethod.Currency);
+        parameters.Add("Balance", paymentMethod.Balance);
+
         var command = new CommandDefinition(
-            "EXEC [dbo].[usp_AddPaymentMethod] @UserId, @Type, @Provider, @AccountNo, @ExpiryDate;",
-            paymentMethod,
+            SpNames.AddPaymentMethod,
+            parameters,
             commandType: CommandType.StoredProcedure);
 
         return this.connection.ExecuteAsync(command);
@@ -40,8 +57,10 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
     /// <inheritdoc/>
     public Task DeleteByIdAsync(string id, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var command = new CommandDefinition(
-            "EXEC [dbo].[usp_DeletePaymentMethodById] @Id;",
+            SpNames.DeletePaymentMethodById,
             new { Id = id },
             commandType: CommandType.StoredProcedure);
 
@@ -51,6 +70,8 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
     /// <inheritdoc/>
     public Task<IEnumerable<PaymentMethod>> GetAllByUserAsync(string userId, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var query = "SELECT * FROM [dbo].[PaymentMethods] WHERE [UserId] = @UserId;";
 
         return this.connection.QueryAsync<PaymentMethod>(query, new { UserId = userId });
@@ -59,6 +80,8 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
     /// <inheritdoc/>
     public Task<PaymentMethod> GetByIdAsync(string id, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var query = "SELECT * FROM [dbo].[PaymentMethods] WHERE [Id] = @Id;";
 
         return this.connection.QueryFirstAsync<PaymentMethod>(query, new { Id = id });
@@ -67,9 +90,25 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
     /// <inheritdoc/>
     public Task UpdateAsync(PaymentMethod paymentMethod, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("Id", paymentMethod.Id);
+        parameters.Add("Type", paymentMethod.Type);
+        parameters.Add("Provider", paymentMethod.Provider);
+        parameters.Add("CVV", paymentMethod.CVV);
+        parameters.Add("ExpiryDate", paymentMethod.ExpiryDate);
+        parameters.Add("CardholderName", paymentMethod.CardholderName);
+        parameters.Add("CardNumber", paymentMethod.CardNumber);
+        parameters.Add("WalletAddress", paymentMethod.WalletAddress);
+        parameters.Add("CardIssuingCountry", paymentMethod.CardIssuingCountry);
+        parameters.Add("CardIssuingBank", paymentMethod.CardIssuingBank);
+        parameters.Add("Currency", paymentMethod.Currency);
+        parameters.Add("Balance", paymentMethod.Balance);
+
         var command = new CommandDefinition(
-            "EXEC [dbo].[usp_UpdatePaymentMethod] @Id, @UserId, @Type, @Provider, @AccountNo, @ExpiryDate;",
-            paymentMethod,
+            SpNames.UpdatePaymentMethod,
+            parameters,
             commandType: CommandType.StoredProcedure);
 
         return this.connection.ExecuteAsync(command);
