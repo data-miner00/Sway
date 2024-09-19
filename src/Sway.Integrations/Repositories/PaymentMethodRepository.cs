@@ -34,7 +34,7 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
 
         var parameters = new DynamicParameters();
         parameters.Add("UserId", paymentMethod.UserId);
-        parameters.Add("Type", paymentMethod.Type);
+        parameters.Add("Type", paymentMethod.Type.ToString());
         parameters.Add("Provider", paymentMethod.Provider);
         parameters.Add("CVV", paymentMethod.CVV);
         parameters.Add("ExpiryDate", paymentMethod.ExpiryDate);
@@ -67,6 +67,11 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
         return this.connection.ExecuteAsync(command);
     }
 
+    public Task<IEnumerable<PaymentMethod>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     /// <inheritdoc/>
     public Task<IEnumerable<PaymentMethod>> GetAllByUserAsync(string userId, CancellationToken cancellationToken)
     {
@@ -94,7 +99,7 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
 
         var parameters = new DynamicParameters();
         parameters.Add("Id", paymentMethod.Id);
-        parameters.Add("Type", paymentMethod.Type);
+        parameters.Add("Type", paymentMethod.Type.ToString());
         parameters.Add("Provider", paymentMethod.Provider);
         parameters.Add("CVV", paymentMethod.CVV);
         parameters.Add("ExpiryDate", paymentMethod.ExpiryDate);
