@@ -1,9 +1,14 @@
-﻿@model IEnumerable<Sway.Core.Models.PaymentMethod>
+﻿@using Sway.Core.Models
+@model IEnumerable<Sway.Core.Models.PaymentMethod>
 @{
     ViewData["Title"] = "Payment Methods";
+    var debitCardPaymentMethods = Model.Where(x => x.Type == PaymentType.DebitCard);
+    var creditCardPaymentMethods = Model.Where(x => x.Type == PaymentType.CreditCard);
+    var cryptoPaymentMethods = Model.Where(x => x.Type == PaymentType.Cryptocurrency);
+    var onlineBankingPaymentMethods = Model.Where(x => x.Type == PaymentType.OnlineBanking);
 }
 
-<div class="border border-solid border-gray-100 w-full">
+<div class="w-full">
     <div class="p-4 flex justify-between border-b border-solid border-gray-100 items-center">
         <div>
             <h1 class="font-bold text-2xl">My Payment Methods</h1>
@@ -11,30 +16,117 @@
         <button class="btn btn-primary block" onclick="">+ Add New Payment Method</button>
     </div>
     <div>
-        @if (Model.Count() > 0)
-        {
-            @foreach (var method in Model)
+        <div class="p-4 border border-solid border-gray-300">
+            <h2 class="text-xl font-bold">Debit Cards</h2>
+            @if (debitCardPaymentMethods.Count() > 0)
             {
-                <div class="flex" id="@method.Id">
-                    <div>
-                        <div><span class="font-bold">Firstname Lastname</span> | (+1) 234 56789</div>
-                        <div class="text-sm text-gray-600">
-                            @method.Type.ToString()
+                <div>
+                    @foreach (var method in debitCardPaymentMethods)
+                    {
+                        <div class="flex" id="@method.Id">
+                            <div>
+                                <div><span class="font-bold">@method.CardholderName</span> | @method.Currency</div>
+                                <div>@method.CardNumber</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button class="btn btn-ghost" onclick=""><i class="bi bi-pencil-fill"></i></button>
+                                <button class="btn btn-ghost" onclick="confirm('Are you sure?');"><i class="bi bi-trash-fill"></i></button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <button class="btn btn-ghost" onclick=""><i class="bi bi-pencil-fill"></i></button>
-                        <button class="btn btn-ghost" onclick="confirm('Are you sure?');"><i class="bi bi-trash-fill"></i></button>
-                    </div>
+                    }
                 </div>
             }
-        }
-        else
-        {
-            <div class="flex items-center justify-center h-full w-full">
-                <div class="text-3xl">You have no payment methods yet.</div>
-            </div>
-        }
+            else
+            {
+                <div>
+                    <div>You have no debit card methods</div>
+                </div>
+            }
+        </div>
+
+        <div class="p-4 border border-solid border-gray-300">
+            <h2 class="text-xl font-bold">Credit Cards</h2>
+            @if (creditCardPaymentMethods.Count() > 0)
+            {
+                <div>
+                    @foreach (var method in creditCardPaymentMethods)
+                    {
+                        <div class="flex" id="@method.Id">
+                            <div>
+                                <div><span class="font-bold">@method.CardholderName</span> | @method.Currency</div>
+                                <div>@method.CardNumber</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button class="btn btn-ghost" onclick=""><i class="bi bi-pencil-fill"></i></button>
+                                <button class="btn btn-ghost" onclick="confirm('Are you sure?');"><i class="bi bi-trash-fill"></i></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div>
+                    <div>You have no credit card methods</div>
+                </div>
+            }
+        </div>
+
+        <div class="p-4 border border-solid border-gray-300">
+            <h2 class="text-xl font-bold">Cryptocurrency</h2>
+            @if (cryptoPaymentMethods.Count() > 0)
+            {
+                <div>
+                    @foreach (var method in cryptoPaymentMethods)
+                    {
+                        <div class="flex" id="@method.Id">
+                            <div>
+                                <div><span class="font-bold">@method.Provider</span> | @method.Currency</div>
+                                <div>@method.WalletAddress</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button class="btn btn-ghost" onclick=""><i class="bi bi-pencil-fill"></i></button>
+                                <button class="btn btn-ghost" onclick="confirm('Are you sure?');"><i class="bi bi-trash-fill"></i></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div>
+                    <div>You have no cryptocurrency methods</div>
+                </div>
+            }
+        </div>
+
+        <div class="p-4 border border-solid border-gray-300">
+            <h2 class="text-xl font-bold">Online Banking</h2>
+            @if (onlineBankingPaymentMethods.Count() > 0)
+            {
+                <div>
+                    @foreach (var method in onlineBankingPaymentMethods)
+                    {
+                        <div class="flex" id="@method.Id">
+                            <div>
+                                <div><span class="font-bold">@method.Provider</span> | @method.Currency</div>
+                                <div>@method.Currency</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button class="btn btn-ghost" onclick=""><i class="bi bi-pencil-fill"></i></button>
+                                <button class="btn btn-ghost" onclick="confirm('Are you sure?');"><i class="bi bi-trash-fill"></i></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div>
+                    <div>You have no online banking methods</div>
+                </div>
+            }
+        </div>
     </div>
 </div>
 
