@@ -6,37 +6,40 @@ using Sway.Database.Seeder.Sinks;
 
 public sealed class ExecutorTests
 {
-    private static Mock<ISink> MockSink;
-    private static Mock<ISinkFactory> MockSinkFactory;
-    private static IExecutor Executor;
-    private static SeedingOption SeedingOption;
+    private Mock<ISink> mockSink;
+    private Mock<ISinkFactory> mockSinkFactory;
+    private IExecutor executor;
+    private SeedingOption seedingOption;
 
     [Before(Test)]
     public void Setup()
     {
-        MockSink = new Mock<ISink>();
-        MockSinkFactory = new Mock<ISinkFactory>();
+        this.mockSink = new Mock<ISink>();
+        this.mockSinkFactory = new Mock<ISinkFactory>();
 
-        MockSinkFactory
+        this.mockSinkFactory
             .Setup(x => x.CreateSink(It.IsAny<SwayEntity>(), It.IsAny<SinkType>()))
-            .Returns(MockSink.Object);
+            .Returns(this.mockSink.Object);
 
-        SeedingOption = new SeedingOption
+        this.seedingOption = new SeedingOption
         {
             Count = 1,
             Entity = SwayEntity.User,
             Destination = SinkType.Database,
         };
-        Executor = new Executor(MockSinkFactory.Object, SeedingOption);
+
+        this.executor = new Executor(
+            this.mockSinkFactory.Object,
+            this.seedingOption);
     }
 
     [Test]
     [Retry(3)]
     public async Task ExecuteAsync_InvokedProvisionAsync()
     {
-        await Executor.ExecuteAsync(default);
+        await this.executor.ExecuteAsync(default);
 
-        MockSink.Verify(
+        this.mockSink.Verify(
             x => x.ProvisionAsync(1, default),
             Times.Once());
     }
@@ -45,6 +48,6 @@ public sealed class ExecutorTests
     [DependsOn(nameof(ExecuteAsync_InvokedProvisionAsync))]
     public async Task AfterExecution_ObjectNotNull()
     {
-        await Assert.That(Executor).IsNotNull();
+        await Assert.That(this.executor).IsNotNull();
     }
 }
