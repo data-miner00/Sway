@@ -33,67 +33,68 @@ internal static class CreditCardNumberGenerator
      Source: https://kevhunter.wordpress.com/2009/08/16/creating-fake-credit-card-numbers/
     */
 
-    public static string[] AMEX_PREFIX_LIST = ["34", "37"];
+    public static readonly string[] AMEX_PREFIX_LIST = ["34", "37"];
 
-    public static string[] DINERS_PREFIX_LIST =
-                                                    [
-                                                        "300",
-                                                        "301", "302", "303", "36", "38"
-                                                    ];
+    public static readonly string[] DINERS_PREFIX_LIST =
+    [
+        "300",
+        "301", "302", "303", "36", "38"
+    ];
 
-    public static string[] DISCOVER_PREFIX_LIST = ["6011"];
+    public static readonly string[] DISCOVER_PREFIX_LIST = ["6011"];
 
-    public static string[] ENROUTE_PREFIX_LIST =
-                                                    [
-                                                        "2014",
-                                                        "2149"
-                                                    ];
+    public static readonly string[] ENROUTE_PREFIX_LIST =
+    [
+        "2014",
+        "2149"
+    ];
 
-    public static string[] JCB_15_PREFIX_LIST =
-                                                    [
-                                                        "2100",
-                                                        "1800"
-                                                    ];
+    public static readonly string[] JCB_15_PREFIX_LIST =
+    [
+        "2100",
+        "1800"
+    ];
 
-    public static string[] JCB_16_PREFIX_LIST =
-                                                    [
-                                                        "3088",
-                                                        "3096", "3112", "3158", "3337", "3528"
-                                                    ];
+    public static readonly string[] JCB_16_PREFIX_LIST =
+    [
+        "3088",
+        "3096", "3112", "3158", "3337", "3528"
+    ];
 
-    public static string[] MASTERCARD_PREFIX_LIST =
-                                                        [
-                                                            "51",
-                                                            "52", "53", "54", "55"
-                                                        ];
+    public static readonly string[] MASTERCARD_PREFIX_LIST =
+    [
+        "51",
+        "52", "53", "54", "55"
+    ];
 
-    public static string[] VISA_PREFIX_LIST =
-                                                [
-                                                    "4539",
-                                                    "4556", "4916", "4532", "4929", "40240071", "4485", "4716", "4"
-                                                ];
+    public static readonly string[] VISA_PREFIX_LIST =
+    [
+        "4539",
+        "4556", "4916", "4532", "4929", "40240071", "4485", "4716", "4"
+    ];
 
-    public static string[] VOYAGER_PREFIX_LIST = ["8699"];
+    public static readonly string[] VOYAGER_PREFIX_LIST = ["8699"];
 
     /*
-  'prefix' is the start of the  CC number as a string, any number
-    private of digits   'length' is the length of the CC number to generate.
- * Typically 13 or  16
+    * 'prefix' is the start of the  CC number as a string, any number
+    * private of digits   'length' is the length of the CC number to generate.
+    * Typically 13 or  16
     */
     private static string CreateFakeCreditCardNumber(string prefix, int length)
     {
-        string ccnumber = prefix;
+        var sb = new StringBuilder(prefix);
 
-        while (ccnumber.Length < (length - 1))
+        while (sb.Length < (length - 1))
         {
-            double rnd = (new Random().NextDouble()*1.0f - 0f);
+            double rnd = (new Random().NextDouble() * 1.0f) - 0f;
 
-            ccnumber += Math.Floor(rnd*10);
+            sb.Append(Math.Floor(rnd * 10));
 
-            //sleep so we get a different seed
-
+            // sleep so we get a different seed
             Thread.Sleep(20);
         }
+
+        var ccnumber = sb.ToString();
 
         // reverse number and convert to int
         var reversedCCnumberstring = ccnumber.ToCharArray().Reverse();
@@ -107,38 +108,43 @@ internal static class CreditCardNumberGenerator
 
         while (pos < length - 1)
         {
-            int odd = reversedCCnumber[pos]*2;
+            int odd = reversedCCnumber[pos] * 2;
 
             if (odd > 9)
+            {
                 odd -= 9;
+            }
 
             sum += odd;
 
             if (pos != (length - 2))
+            {
                 sum += reversedCCnumber[pos + 1];
+            }
 
             pos += 2;
         }
 
         // calculate check digit
-        int checkdigit =
-            Convert.ToInt32((Math.Floor((decimal) sum/10) + 1)*10 - sum)%10;
+        int checkdigit = Convert.ToInt32(((Math.Floor((decimal)sum / 10) + 1) * 10) - sum) % 10;
 
         ccnumber += checkdigit;
 
         return ccnumber;
     }
 
-    public static IEnumerable<string> GetCreditCardNumbers(string[] prefixList, int length,
-                                              int howMany)
+    public static IEnumerable<string> GetCreditCardNumbers(
+        string[] prefixList,
+        int length,
+        int howMany)
     {
         var result = new Stack<string>();
 
         for (int i = 0; i < howMany; i++)
         {
             int randomPrefix = new Random().Next(0, prefixList.Length - 1);
- 
-            if(randomPrefix>1)
+
+            if (randomPrefix > 1)
             {
                 randomPrefix--;
             }
@@ -172,19 +178,20 @@ internal static class CreditCardNumberGenerator
             {
                 int augend = Convert.ToInt32(reversedNumber.ElementAt(i).ToString());
 
-                if (((i + 1)%2) == 0)
+                if (((i + 1) % 2) == 0)
                 {
-                    string productstring = (augend*2).ToString();
+                    string productstring = (augend * 2).ToString();
                     augend = 0;
                     for (int j = 0; j < productstring.Length; j++)
                     {
                         augend += Convert.ToInt32(productstring.ElementAt(j).ToString());
                     }
                 }
+
                 mod10Count += augend;
             }
 
-            if ((mod10Count%10) == 0)
+            if ((mod10Count % 10) == 0)
             {
                 return true;
             }
@@ -193,6 +200,7 @@ internal static class CreditCardNumberGenerator
         {
             return false;
         }
+
         return false;
     }
 }
