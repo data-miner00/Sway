@@ -1,22 +1,17 @@
-﻿namespace Sway.Core.Models;
+﻿namespace Sway.Core.Dtos;
 
-public class PaymentMethod
+using Sway.Core.Models;
+using System;
+
+public class CreatePaymentMethodRequest
 {
-    public Guid Id { get; set; }
-
-    public Guid UserId { get; set; }
-
-    public PaymentType Type { get; set; }
+    public PaymentType PaymentType { get; set; }
 
     public string Provider { get; set; }
 
     public int? CVV { get; set; }
 
     public DateTime? ExpiryDate { get; set; }
-
-    public DateTime CreatedAt { get; set; }
-
-    public DateTime ModifiedAt { get; set; }
 
     public string? CardholderName { get; set; }
 

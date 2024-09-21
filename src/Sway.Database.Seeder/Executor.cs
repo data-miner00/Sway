@@ -17,7 +17,7 @@ internal sealed class Executor : IExecutor
 
     public Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        var usersToBeGenerated = this.option.Count;
-        return this.sink.ProvisionAsync(usersToBeGenerated, cancellationToken);
+        var itemsToBeGenerated = this.option.Count;
+        return this.sink.ProvisionAsync(itemsToBeGenerated, cancellationToken);
     }
 }

@@ -110,6 +110,9 @@ internal static class ContainerConfig
         builder.RegisterType<ProductRatingRepository>().As<IRepository<ProductRating>>().SingleInstance();
         builder.RegisterType<ProductRatingSeedSqlWriter>().As<ISqlWriter<ProductRating>>().SingleInstance();
 
+        builder.RegisterType<PaymentMethodRepository>().As<IRepository<PaymentMethod>>().SingleInstance();
+        builder.RegisterType<PaymentMethodSeedSqlWriter>().As<ISqlWriter<PaymentMethod>>().SingleInstance();
+
         return builder;
     }
 
@@ -124,6 +127,14 @@ internal static class ContainerConfig
                 return new ProductRatingGenerator(option.ExistingProductId, option.ExistingUserId);
             })
             .As<IGenerator<ProductRating>>().SingleInstance();
+        builder.Register(
+            ctx =>
+            {
+                var option = ctx.Resolve<SeedingOption>().PaymentMethodOption;
+
+                return new PaymentMethodGenerator(option.ExistingUserId, option.PaymentTypes);
+            })
+            .As<IGenerator<PaymentMethod>>().SingleInstance();
 
         return builder;
     }
@@ -134,6 +145,8 @@ internal static class ContainerConfig
         builder.RegisterType<SqlScriptSink<User>>().AsSelf().SingleInstance();
         builder.RegisterType<DatabaseSink<ProductRating>>().AsSelf().SingleInstance();
         builder.RegisterType<SqlScriptSink<ProductRating>>().AsSelf().SingleInstance();
+        builder.RegisterType<DatabaseSink<PaymentMethod>>().AsSelf().SingleInstance();
+        builder.RegisterType<SqlScriptSink<PaymentMethod>>().AsSelf().SingleInstance();
         builder.RegisterType<VoidSink>().AsSelf().SingleInstance();
 
         builder.RegisterType<SinkFactory>().As<ISinkFactory>().SingleInstance();

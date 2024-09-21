@@ -14,6 +14,7 @@ builder.Services.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>()
 builder.Services.AddSingleton<IProductRatingRepository, ProductRatingRepository>();
 builder.Services.AddSingleton<IFavouriteRepository, FavouriteRepository>();
 builder.Services.AddSingleton<IAddressRepository, AddressRepository>();
+builder.Services.AddSingleton<IPaymentMethodRepository, PaymentMethodRepository>();
 
 var app = builder.Build();
 

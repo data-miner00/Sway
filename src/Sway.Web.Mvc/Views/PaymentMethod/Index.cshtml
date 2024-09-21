@@ -1,0 +1,355 @@
+﻿@using Sway.Core.Models
+@model IEnumerable<Sway.Core.Models.PaymentMethod>
+@{
+    ViewData["Title"] = "Payment Methods";
+    var debitCardPaymentMethods = Model.Where(x => x.Type == PaymentType.DebitCard);
+    var creditCardPaymentMethods = Model.Where(x => x.Type == PaymentType.CreditCard);
+    var cryptoPaymentMethods = Model.Where(x => x.Type == PaymentType.Cryptocurrency);
+    var onlineBankingPaymentMethods = Model.Where(x => x.Type == PaymentType.OnlineBanking);
+}
+
+<div class="w-full">
+    <div class="p-4 flex justify-between border-b border-solid border-gray-100 items-center">
+        <div>
+            <h1 class="font-bold text-2xl">My Payment Methods</h1>
+        </div>
+        <button class="btn btn-primary block" onclick="addPaymentPopup.show()">+ Add New Payment Method</button>
+    </div>
+    <div>
+        <div class="p-4 border border-solid border-gray-300">
+            <h2 class="text-xl font-bold">Debit Cards</h2>
+            @if (debitCardPaymentMethods.Count() > 0)
+            {
+                <div>
+                    @foreach (var method in debitCardPaymentMethods)
+                    {
+                        <div class="flex" id="@method.Id">
+                            <div>
+                                <div><span class="font-bold">@method.CardholderName</span> | @method.Currency</div>
+                                <div>@method.CardNumber</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button class="btn btn-ghost" onclick="return openEditPaymentMethodPopup('@method.Id')"><i class="bi bi-pencil-fill"></i></button>
+                                <button class="btn btn-ghost" onclick="confirm('Are you sure?'); deletePaymentMethod('@method.Id')"><i class="bi bi-trash-fill"></i></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div>
+                    <div>You have no debit card methods</div>
+                </div>
+            }
+        </div>
+
+        <div class="p-4 border border-solid border-gray-300">
+            <h2 class="text-xl font-bold">Credit Cards</h2>
+            @if (creditCardPaymentMethods.Count() > 0)
+            {
+                <div>
+                    @foreach (var method in creditCardPaymentMethods)
+                    {
+                        <div class="flex" id="@method.Id">
+                            <div>
+                                <div><span class="font-bold">@method.CardholderName</span> | @method.Currency</div>
+                                <div>@method.CardNumber</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button class="btn btn-ghost" onclick="return openEditPaymentMethodPopup('@method.Id')"><i class="bi bi-pencil-fill"></i></button>
+                                <button class="btn btn-ghost" onclick="confirm('Are you sure?'); deletePaymentMethod('@method.Id')"><i class="bi bi-trash-fill"></i></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div>
+                    <div>You have no credit card methods</div>
+                </div>
+            }
+        </div>
+
+        <div class="p-4 border border-solid border-gray-300">
+            <h2 class="text-xl font-bold">Cryptocurrency</h2>
+            @if (cryptoPaymentMethods.Count() > 0)
+            {
+                <div>
+                    @foreach (var method in cryptoPaymentMethods)
+                    {
+                        <div class="flex" id="@method.Id">
+                            <div>
+                                <div><span class="font-bold">@method.Provider</span> | @method.Currency</div>
+                                <div>@method.WalletAddress</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button class="btn btn-ghost" onclick="return openEditPaymentMethodPopup('@method.Id')"><i class="bi bi-pencil-fill"></i></button>
+                                <button class="btn btn-ghost" onclick="confirm('Are you sure?'); deletePaymentMethod('@method.Id')"><i class="bi bi-trash-fill"></i></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div>
+                    <div>You have no cryptocurrency methods</div>
+                </div>
+            }
+        </div>
+
+        <div class="p-4 border border-solid border-gray-300">
+            <h2 class="text-xl font-bold">Online Banking</h2>
+            @if (onlineBankingPaymentMethods.Count() > 0)
+            {
+                <div>
+                    @foreach (var method in onlineBankingPaymentMethods)
+                    {
+                        <div class="flex" id="@method.Id">
+                            <div>
+                                <div><span class="font-bold">@method.Provider</span> | @method.Currency</div>
+                                <div>@method.Currency</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button class="btn btn-ghost" onclick="return openEditPaymentMethodPopup('@method.Id')"><i class="bi bi-pencil-fill"></i></button>
+                                <button class="btn btn-ghost" onclick="confirm('Are you sure?'); deletePaymentMethod('@method.Id')"><i class="bi bi-trash-fill"></i></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div>
+                    <div>You have no online banking methods</div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<dialog hidden id="updatePaymentPopup" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <h3 class="text-xl font-bold mb-4">Update Payment Method</h3>
+        <form onsubmit="return updatePaymentMethod(event)" autocomplete="off" spellcheck="false" class="flex flex-col gap-2">
+            <input name="id" required hidden />
+            <input name="paymentType" required hidden type="number" />
+            <div>
+                <input class="input input-bordered block w-full" name="provider" placeholder="Provider" />
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="cvv" placeholder="CVV" />
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="cardholderName" placeholder="Cardholder Name" />
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="cardNumber" placeholder="Card Number" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="walletAddress" placeholder="Wallet Address" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="cardIssuingCountry" placeholder="Card Issuing Country" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="cardIssuingBank" placeholder="Card Issuing Bank" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="currency" placeholder="Currency" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="balance" placeholder="Balance" />
+            </div>
+            <div class="flex items-center gap-4">
+                <input class="checkbox block" type="checkbox" name="isDefault" />
+                <label for="isDefault" class="block">Set as default</label>
+            </div>
+            <div class="modal-action">
+                <button type="button" class="btn btn-ghost" onclick="updatePaymentPopup.close()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+<dialog hidden id="addPaymentPopup" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <h3 class="text-xl font-bold mb-4">Add Payment Method</h3>
+        <form onsubmit="return addPaymentMethod(event)" autocomplete="off" spellcheck="false" class="flex flex-col gap-2">
+            <div>
+                <input class="input input-bordered block" name="currency" placeholder="Currency" />
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="provider" placeholder="Provider" />
+            </div>
+
+            <div>
+                @Html.DropDownList("paymentType",
+                    Html.GetEnumSelectList<PaymentType>(),
+                    "Select payment type",
+                    new { @class = "select select-bordered w-full" })
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="cvv" placeholder="CVV" />
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="cardholderName" placeholder="Cardholder Name" />
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="cardNumber" placeholder="Card Number" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="walletAddress" placeholder="Wallet Address" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="cardIssuingCountry" placeholder="Card Issuing Country" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="cardIssuingBank" placeholder="Card Issuing Bank" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="balance" placeholder="Balance" />
+            </div>
+            <div class="flex items-center gap-4">
+                <input class="checkbox block" type="checkbox" name="isDefault" />
+                <label for="isDefault" class="block">Set as default</label>
+            </div>
+            <div class="modal-action">
+                <button type="button" class="btn btn-ghost" onclick="addPaymentPopup.close()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
+
+    <script type="text/javascript">
+        function addPaymentMethod(event) {
+            event.preventDefault();
+
+            var data = new FormData(event.target);
+
+            var entries = [...data.entries()];
+            var body = {};
+
+            // Post body don't accept empty string for non-string type
+            entries.forEach((entry) => {
+                var value = 
+                    entry[1] == "on" 
+                    ? true 
+                    : entry[1] == "off" 
+                    ? false
+                    : entry[1] == ""
+                    ? null
+                    : entry[1];
+
+                // Post body don't accept stringified integer (e.g. "1") for Enum type
+                if (entry[0] === "paymentType") {
+                    body[entry[0]] = Number(value);
+                } else {
+                    body[entry[0]] = value;
+                }
+            });
+
+            console.log(body);
+            $.ajax("/Profile/PaymentMethod/Create", {
+                headers: {
+                    "content-type": "application/json",
+                },
+                method: "post",
+                data: JSON.stringify(body),
+            }).done(() => {
+                closeAddPaymentPopup();
+            });
+        }
+
+        function openEditPaymentMethodPopup(id) {
+            fetch(`/Profile/PaymentMethod/Index/${id}`)
+                .then((res) => {
+                    res.json().then((body) => {
+                        console.log(body);
+                        $("#updatePaymentPopup [name='id']").val(body["id"]);
+                        $("#updatePaymentPopup [name='paymentType']").val(body["type"]);
+                        $("#updatePaymentPopup [name='provider']").val(body["provider"]);
+                        $("#updatePaymentPopup [name='cardholderName']").val(body["cardholderName"]);
+                        $("#updatePaymentPopup [name='cardNumber']").val(body["cardNumber"]);
+                        $("#updatePaymentPopup [name='cardIssuingCountry']").val(body["cardIssuingCountry"]);
+                        $("#updatePaymentPopup [name='cardIssuingBank']").val(body["cardIssuingBank"]);
+                        $("#updatePaymentPopup [name='walletAddress']").val(body["walletAddress"]);
+                        $("#updatePaymentPopup [name='cvv']").val(body["cvv"]);
+                        $("#updatePaymentPopup [name='currency']").val(body["currency"]);
+
+                        document.getElementById("updatePaymentPopup").show();
+                    });
+                });
+        }
+
+        function closeEditPaymentPopup() {
+            var updatePaymentPopup = document.getElementById("updatePaymentPopup");
+            updatePaymentPopup.close();
+        }
+
+        function closeAddPaymentPopup() {
+            var updatePaymentPopup = document.getElementById("addPaymentPopup");
+            updatePaymentPopup.close();
+        }
+
+        function updatePaymentMethod(event) {
+            event.preventDefault();
+
+            var data = new FormData(event.target);
+
+            var entries = [...data.entries()];
+            var body = {};
+
+            // Post body don't accept empty string for non-string type
+            entries.forEach((entry) => {
+                var value = 
+                    entry[1] == "on" 
+                    ? true 
+                    : entry[1] == "off" 
+                    ? false
+                    : entry[1] == ""
+                    ? null
+                    : entry[1];
+
+                // Post body don't accept stringified integer (e.g. "1") for Enum type
+                if (entry[0] === "paymentType") {
+                    body[entry[0]] = Number(value);
+                } else {
+                    body[entry[0]] = value;
+                }
+            });
+
+            console.log(body);
+            $.ajax("/Profile/PaymentMethod/Update", {
+                headers: {
+                    "content-type": "application/json",
+                },
+                method: "post",
+                data: JSON.stringify(body),
+            }).done(() => {
+                closeEditPaymentPopup();
+            });
+        }
+
+        function deletePaymentMethod(id) {
+            $.ajax(`/Profile/PaymentMethod/Delete/${id}`, {
+                method: "delete",
+            }).done(() => {
+                $(`#${id}`).remove();
+            });
+        }
+    </script>
+}
