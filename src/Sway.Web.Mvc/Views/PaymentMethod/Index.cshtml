@@ -13,7 +13,7 @@
         <div>
             <h1 class="font-bold text-2xl">My Payment Methods</h1>
         </div>
-        <button class="btn btn-primary block" onclick="">+ Add New Payment Method</button>
+        <button class="btn btn-primary block" onclick="addPaymentPopup.show()">+ Add New Payment Method</button>
     </div>
     <div>
         <div class="p-4 border border-solid border-gray-300">
@@ -178,10 +178,102 @@
     </div>
 </dialog>
 
+<dialog hidden id="addPaymentPopup" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <h3 class="text-xl font-bold mb-4">Add Payment Method</h3>
+        <form onsubmit="return addPaymentMethod(event)" autocomplete="off" spellcheck="false" class="flex flex-col gap-2">
+            <div>
+                <input class="input input-bordered block" name="currency" placeholder="Currency" />
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="provider" placeholder="Provider" />
+            </div>
+
+            <div>
+                @Html.DropDownList("paymentType",
+                    Html.GetEnumSelectList<PaymentType>(),
+                    "Select payment type",
+                    new { @class = "select select-bordered w-full" })
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="cvv" placeholder="CVV" />
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="cardholderName" placeholder="Cardholder Name" />
+            </div>
+            <div>
+                <input class="input input-bordered block w-full" name="cardNumber" placeholder="Card Number" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="walletAddress" placeholder="Wallet Address" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="cardIssuingCountry" placeholder="Card Issuing Country" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="cardIssuingBank" placeholder="Card Issuing Bank" />
+            </div>
+            <div>
+                <input class="input input-bordered block" name="balance" placeholder="Balance" />
+            </div>
+            <div class="flex items-center gap-4">
+                <input class="checkbox block" type="checkbox" name="isDefault" />
+                <label for="isDefault" class="block">Set as default</label>
+            </div>
+            <div class="modal-action">
+                <button type="button" class="btn btn-ghost" onclick="addPaymentPopup.close()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
 
     <script type="text/javascript">
+        function addPaymentMethod(event) {
+            event.preventDefault();
+
+            var data = new FormData(event.target);
+
+            var entries = [...data.entries()];
+            var body = {};
+
+            // Post body don't accept empty string for non-string type
+            entries.forEach((entry) => {
+                var value = 
+                    entry[1] == "on" 
+                    ? true 
+                    : entry[1] == "off" 
+                    ? false
+                    : entry[1] == ""
+                    ? null
+                    : entry[1];
+
+                // Post body don't accept stringified integer (e.g. "1") for Enum type
+                if (entry[0] === "paymentType") {
+                    body[entry[0]] = Number(value);
+                } else {
+                    body[entry[0]] = value;
+                }
+            });
+
+            console.log(body);
+            $.ajax("/Profile/PaymentMethod/Create", {
+                headers: {
+                    "content-type": "application/json",
+                },
+                method: "post",
+                data: JSON.stringify(body),
+            }).done(() => {
+                closeAddPaymentPopup();
+            });
+        }
+
         function openEditPaymentMethodPopup(id) {
             fetch(`/Profile/PaymentMethod/Index/${id}`)
                 .then((res) => {
@@ -205,6 +297,11 @@
 
         function closeEditPaymentPopup() {
             var updatePaymentPopup = document.getElementById("updatePaymentPopup");
+            updatePaymentPopup.close();
+        }
+
+        function closeAddPaymentPopup() {
+            var updatePaymentPopup = document.getElementById("addPaymentPopup");
             updatePaymentPopup.close();
         }
 

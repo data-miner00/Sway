@@ -33,6 +33,35 @@ public class PaymentMethodController : Controller
     }
 
     [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreatePaymentMethodRequest request)
+    {
+        if (!Guid.TryParse(Constants.TestUserId, out var userId))
+        {
+            return this.BadRequest("The TestUserId is not a Guid.");
+        }
+
+        var entity = new PaymentMethod
+        {
+            Type = request.PaymentType,
+            Provider = request.Provider,
+            CVV = request.CVV,
+            ExpiryDate = request.ExpiryDate,
+            CardholderName = request.CardholderName,
+            CardIssuingBank = request.CardIssuingBank,
+            CardNumber = request.CardNumber,
+            CardIssuingCountry = request.CardIssuingCountry,
+            Currency = request.Currency,
+            WalletAddress = request.WalletAddress,
+            Balance = request.Balance,
+            UserId = userId,
+        };
+
+        await this.repository.CreateAsync(entity, this.CancellationToken);
+
+        return this.Ok();
+    }
+
+    [HttpPost]
     public async Task<IActionResult> Update([FromBody] UpdatePaymentMethodRequest request)
     {
         var entity = new PaymentMethod
@@ -48,6 +77,7 @@ public class PaymentMethodController : Controller
             CardIssuingCountry = request.CardIssuingCountry,
             Currency = request.Currency,
             Balance = request.Balance,
+            WalletAddress = request.WalletAddress,
         };
 
         await this.repository.UpdateAsync(entity, this.CancellationToken);
