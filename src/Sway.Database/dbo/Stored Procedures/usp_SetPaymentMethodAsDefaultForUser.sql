@@ -35,6 +35,9 @@ BEGIN
 
 			FETCH NEXT FROM PaymentMethodCursor INTO @PaymentId;
 		END
+
+		CLOSE PaymentMethodCursor;
+		DEALLOCATE PaymentMethodCursor;
 	END
 	ELSE
 	BEGIN
