@@ -17,7 +17,7 @@ BEGIN
 	IF @Verbose = 1
 	BEGIN
 		DECLARE @PaymentId UNIQUEIDENTIFIER;
-		DECLARE PaymentMethodCursor CURSOR FOR
+		DECLARE PaymentMethodCursor CURSOR STATIC FOR
 		SELECT [Id] FROM [dbo].[PaymentMethods]
 		WHERE [UserId] = @UserId;
 
