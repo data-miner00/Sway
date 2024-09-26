@@ -45,6 +45,7 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
         parameters.Add("CardIssuingBank", paymentMethod.CardIssuingBank);
         parameters.Add("Currency", paymentMethod.Currency);
         parameters.Add("Balance", paymentMethod.Balance);
+        parameters.Add("IsDefault", paymentMethod.IsDefault);
 
         var command = new CommandDefinition(
             SpNames.AddPaymentMethod,
@@ -110,6 +111,7 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
         parameters.Add("CardIssuingBank", paymentMethod.CardIssuingBank);
         parameters.Add("Currency", paymentMethod.Currency);
         parameters.Add("Balance", paymentMethod.Balance);
+        parameters.Add("IsDefault", paymentMethod.IsDefault);
 
         var command = new CommandDefinition(
             SpNames.UpdatePaymentMethod,

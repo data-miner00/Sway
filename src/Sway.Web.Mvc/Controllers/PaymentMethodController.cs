@@ -54,6 +54,7 @@ public class PaymentMethodController : Controller
             WalletAddress = request.WalletAddress,
             Balance = request.Balance,
             UserId = userId,
+            IsDefault = request.IsDefault,
         };
 
         await this.repository.CreateAsync(entity, this.CancellationToken);
@@ -78,6 +79,7 @@ public class PaymentMethodController : Controller
             Currency = request.Currency,
             Balance = request.Balance,
             WalletAddress = request.WalletAddress,
+            IsDefault = request.IsDefault,
         };
 
         await this.repository.UpdateAsync(entity, this.CancellationToken);
