@@ -173,6 +173,7 @@
     <Build Include="dbo\Stored Procedures\usp_GetSelectedUserCartItemDetails.sql" />
     <None Include="Scripts\TruncateWithConstraint.sql" />
     <None Include="Scripts\SetDefaultForFirstPaymentMethod.sql" />
+    <Build Include="dbo\Stored Procedures\usp_SetPaymentMethodAsDefaultForUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
