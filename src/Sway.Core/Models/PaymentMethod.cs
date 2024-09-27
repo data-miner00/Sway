@@ -33,4 +33,9 @@ public class PaymentMethod
     public decimal? Balance { get; set; }
 
     public bool IsDefault { get; set; }
+
+    public override string ToString()
+    {
+        return "PaymentType: " + this.Type.ToString();
+    }
 }

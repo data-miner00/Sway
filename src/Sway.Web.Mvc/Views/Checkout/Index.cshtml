@@ -6,7 +6,10 @@
     ViewData["Title"] = "Checkout";
     var cartItems = Model.CartItems.ToArray();
     var shippingAddress = Model.ShippingAddress;
-    var totalCost = cartItems.Where(x => x.IsSelected).Sum(x => x.UnitPrice * x.Quantity);
+    var paymentMethods = Model.PaymentMethods;
+
+    // Don't need to filter by x.IsSelected as at this stage, all products are selected
+    var totalCost = cartItems.Sum(x => x.UnitPrice * x.Quantity);
 }
 
 <h1 class="text-xl font-bold mb-4">Checkout</h1>
@@ -78,13 +81,57 @@
 </div>
 
 <div class="border border-solid border-gray-100 p-4 mb-4">
-    <p>Payment Method</p>
+    <div class="flex gap-1 items-center">
+        <div>Payment Methods</div>
+        <div>
+            <button onclick="selectPaymentPopup.show()">
+                <i class="bi bi-pencil-square"></i>
+            </button>
+        </div>
+    </div>
 
-    <p>Cash on Delivery</p>
+    <p id="selected-payment">@paymentMethods.First(x => x.IsDefault).ToString()</p>
 </div>
 
 <div class="flex justify-end">
     <a class="btn btn-primary">Submit Order</a>
     <a class="btn btn-ghost" asp-action="Index" asp-controller="ShoppingCart">Cancel</a>
 </div>
+
+<dialog id="selectPaymentPopup" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+
+        <ul>
+            @foreach (var method in paymentMethods)
+            {
+                <li>
+                    <button class="btn btn-accent" onclick="return selectPaymentMethod('@method.Id')">
+                        @method.ToString()
+                    </button>
+                </li>
+            }
+        </ul>
+    </div>
+</dialog>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
+
+    <script type="text/javascript">
+        var currentAddressId = "@Model.ShippingAddress.Id";
+
+        function selectPaymentMethod(id) {
+            $('#selected-payment').text(id);
+            var updatePaymentPopup = document.getElementById("selectPaymentPopup");
+            updatePaymentPopup.close();
+        }
+
+        function togglePaymentMethodDialog() {
+            $('#selectPaymentPopup').toggle();
+        }
+    </script>
+}
 
