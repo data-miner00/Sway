@@ -6,7 +6,8 @@
 CREATE PROCEDURE [dbo].[usp_UpdateUserPasswordV2]
 	@UserId UNIQUEIDENTIFIER,
 	@PurportedOldPasswordHash NVARCHAR(100),
-	@NewPasswordHash NVARCHAR(100)
+	@NewPasswordHash NVARCHAR(100),
+	@ForceUpdate BIT = 0
 AS
 BEGIN
 	DECLARE @CredentialId UNIQUEIDENTIFIER;
@@ -26,7 +27,7 @@ BEGIN
 	FROM [dbo].[Users]
 	WHERE [Id] = @UserId;
 
-	IF (@CurrentPasswordHash <> @PurportedOldPasswordHash)
+	IF (@ForceUpdate = 0 AND @CurrentPasswordHash <> @PurportedOldPasswordHash)
 	BEGIN;
 		THROW 51000, 'The current password does not match', 1;
 	END

@@ -3,7 +3,7 @@
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE usp_UpdateUserPassword
+CREATE PROCEDURE [dbo].[usp_UpdateUserPassword]
 	@Username VARCHAR(50),
 	@NewPasswordHash VARCHAR(100)
 AS
