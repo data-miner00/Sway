@@ -36,7 +36,7 @@ public class CheckoutController : Controller
         var viewModel = new CheckoutViewModel
         {
             CartItems = items,
-            ShippingAddress = addresses.First(x => x.IsDefault),
+            Addresses = addresses,
             PaymentMethods = payments,
         };
 

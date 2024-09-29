@@ -5,7 +5,7 @@
 @{
     ViewData["Title"] = "Checkout";
     var cartItems = Model.CartItems.ToArray();
-    var shippingAddress = Model.ShippingAddress;
+    var addresses = Model.Addresses;
     var paymentMethods = Model.PaymentMethods;
 
     // Don't need to filter by x.IsSelected as at this stage, all products are selected
@@ -68,9 +68,16 @@
 </div>
 
 <div class="border border-solid border-gray-100 p-4 mb-4">
-    <p>Shipping Address</p>
+    <div class="flex gap-1 items-center">
+        <div>Shipping Address</div>
+        <div>
+            <button onclick="selectAddressPopup.show()">
+                <i class="bi bi-pencil-square"></i>
+            </button>
+        </div>
+    </div>
 
-    <p>@shippingAddress.ToString()</p>
+    <p id="selected-address">@addresses.First(x => x.IsDefault).ToString()</p>
     @* <p>Billing Address</p> *@
 </div>
 
@@ -117,12 +124,29 @@
     </div>
 </dialog>
 
+<dialog id="selectAddressPopup" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+
+        <ul>
+            @foreach (var address in addresses)
+            {
+                <li>
+                    <button class="btn btn-accent" onclick="return selectAddress('@address.Id')">
+                        @address.ToString()
+                    </button>
+                </li>
+            }
+        </ul>
+    </div>
+</dialog>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
 
     <script type="text/javascript">
-        var currentAddressId = "@Model.ShippingAddress.Id";
-
         function selectPaymentMethod(id) {
             $('#selected-payment').text(id);
             var updatePaymentPopup = document.getElementById("selectPaymentPopup");
@@ -131,6 +155,16 @@
 
         function togglePaymentMethodDialog() {
             $('#selectPaymentPopup').toggle();
+        }
+
+        function selectAddress(id) {
+            $('#selected-address').text(id);
+            var updateAddressPopup = document.getElementById("selectAddressPopup");
+            updateAddressPopup.close();
+        }
+
+        function toggleAddressDialog() {
+            $('#selectAddressPopup').toggle();
         }
     </script>
 }
