@@ -18,7 +18,7 @@ BEGIN
 	BEGIN TRANSACTION;
 
 	SELECT 
-		@UserId = [Id],
+		@UserId = [UserId],
 		@OldPasswordHash = [PasswordHash]
 	FROM [dbo].[vw_UserCredentials]
 	WHERE [Username] = @Username;

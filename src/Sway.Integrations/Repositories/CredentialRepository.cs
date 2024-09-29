@@ -5,12 +5,12 @@ using Sway.Common;
 using Sway.Core.Models;
 using Sway.Core.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+
+using SpNames = Sway.Common.StoredProcedureNames;
 
 /// <summary>
 /// The credential repository.
@@ -25,7 +25,7 @@ public sealed class CredentialRepository : ICredentialRepository
     /// <param name="connection">The database connection.</param>
     public CredentialRepository(IDbConnection connection)
     {
-        this.connection = connection;
+        this.connection = Guard.ThrowIfNull(connection);
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,7 @@ public sealed class CredentialRepository : ICredentialRepository
             }
 
             var command = "EXEC [dbo].[usp_UpdateUserPassword] @Username, @PasswordHash;";
-            var hashedPassword = this.ConvertPasswordAndSaltToHash(credential.PasswordSalt, password);
+            var hashedPassword = ConvertPasswordAndSaltToHash(credential.PasswordSalt, password);
 
             await this.connection
                 .ExecuteAsync(command, new { Username = username, Password = hashedPassword })
@@ -73,12 +73,52 @@ public sealed class CredentialRepository : ICredentialRepository
         }
     }
 
-    private string GenerateRandomString()
+    /// <inheritdoc/>
+    public async Task<bool> ChangePasswordAsync(string userId, string oldPassword, string newPassword)
+    {
+        try
+        {
+            var credentialQuery = "SELECT * FROM [dbo].[vw_UserCredentials] WHERE [UserId] = @UserId;";
+            var credential = await this.connection.QueryFirstAsync<UserCredential>(
+                credentialQuery,
+                new { UserId = userId });
+
+            if (credential == null)
+            {
+                return false;
+            }
+
+            var hashedNewPassword = ConvertPasswordAndSaltToHash(credential.PasswordSalt, newPassword);
+            var hashedOldPassword = ConvertPasswordAndSaltToHash(credential.PasswordSalt, oldPassword);
+
+            var parameters = new DynamicParameters();
+            parameters.Add("UserId", userId);
+            parameters.Add("PurportedOldPasswordHash", hashedOldPassword);
+            parameters.Add("NewPasswordHash", hashedNewPassword);
+
+            var command = new CommandDefinition(
+                SpNames.UpdateUserPassword,
+                parameters,
+                commandType: CommandType.StoredProcedure);
+
+            await this.connection.ExecuteAsync(command).ConfigureAwait(false);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            await Console.Error.WriteLineAsync(ex.ToString());
+
+            return false;
+        }
+    }
+
+    private static string GenerateRandomString()
     {
         return RandomNumberGenerator.GetHexString(10 /* stub length */);
     }
 
-    private string ConvertPasswordAndSaltToHash(string salt, string password)
+    private static string ConvertPasswordAndSaltToHash(string salt, string password)
     {
         var sb = new StringBuilder();
         var mixture = salt + password;

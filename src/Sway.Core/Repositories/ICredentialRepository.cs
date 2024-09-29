@@ -22,4 +22,13 @@ public interface ICredentialRepository
     /// <param name="password">The new password.</param>
     /// <returns>A flag indicating whether the password changed successfully.</returns>
     public Task<bool> ChangePasswordAsync(string username, string password);
+
+    /// <summary>
+    /// Updates the user password by user Id.
+    /// </summary>
+    /// <param name="userId">The user Id.</param>
+    /// <param name="oldPassword">The old password.</param>
+    /// <param name="newPassword">The new password.</param>
+    /// <returns>A flag indicating whether the password changed successfully.</returns>
+    public Task<bool> ChangePasswordAsync(string userId, string oldPassword, string newPassword);
 }

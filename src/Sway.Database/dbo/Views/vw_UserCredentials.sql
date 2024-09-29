@@ -1,6 +1,6 @@
 ﻿CREATE VIEW dbo.vw_UserCredentials
 AS
-SELECT        dbo.Users.Id, dbo.Users.Username, dbo.Credentials.PasswordHash, dbo.Credentials.PasswordSalt, dbo.Credentials.HashAlgorithm, dbo.Credentials.PreviousPasswordHash, dbo.Credentials.CreatedAt, 
+SELECT        dbo.Users.Id AS UserId, dbo.Users.Username, dbo.Credentials.PasswordHash, dbo.Credentials.PasswordSalt, dbo.Credentials.HashAlgorithm, dbo.Credentials.PreviousPasswordHash, dbo.Credentials.CreatedAt, 
                          dbo.Credentials.ModifiedAt
 FROM            dbo.Users INNER JOIN
                          dbo.Credentials ON dbo.Users.CredentialId = dbo.Credentials.Id
