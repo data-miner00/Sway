@@ -16,7 +16,8 @@ CREATE PROCEDURE [dbo].[usp_UpdatePaymentMethod]
     @CardIssuingCountry NVARCHAR(50),
     @CardIssuingBank NVARCHAR(50),
     @Currency NVARCHAR(50),
-    @Balance MONEY
+    @Balance MONEY,
+    @IsDefault BIT
 AS
 BEGIN
     SET NOCOUNT, XACT_ABORT ON;
@@ -35,7 +36,8 @@ BEGIN
         [CardIssuingBank] = @CardIssuingBank,
         [WalletAddress] = @WalletAddress,
         [Currency] = @Currency,
-        [Balance] = @Balance
+        [Balance] = @Balance,
+        [IsDefault] = @IsDefault
 
     WHERE [Id] = @Id;
 

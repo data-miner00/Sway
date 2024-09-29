@@ -3,9 +3,11 @@
 using Sway.Core.Dtos;
 using Sway.Core.Models;
 
-public class CheckoutViewModel
+public sealed class CheckoutViewModel
 {
     public IEnumerable<CartItemDto> CartItems { get; set; }
 
-    public Address ShippingAddress { get; set; }
+    public IEnumerable<Address> Addresses { get; set; }
+
+    public IEnumerable<PaymentMethod> PaymentMethods { get; set; }
 }

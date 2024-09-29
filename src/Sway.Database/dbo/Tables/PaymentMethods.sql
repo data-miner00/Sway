@@ -14,6 +14,7 @@
     [CardIssuingBank] NVARCHAR(50) NULL, 
     [Currency] NVARCHAR(50) NOT NULL, 
     [Balance] MONEY NULL, 
+    [IsDefault] BIT NOT NULL DEFAULT 0, 
     CONSTRAINT [PK_PaymentMethods] PRIMARY KEY CLUSTERED ([Id] ASC), 
     CONSTRAINT [FK_PaymentMethods_Users] FOREIGN KEY ([UserId]) REFERENCES [Users]([Id])
 );

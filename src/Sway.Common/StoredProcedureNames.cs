@@ -51,4 +51,6 @@ public static class StoredProcedureNames
     public const string UpdatePaymentMethod = "usp_UpdatePaymentMethod";
 
     public const string DeletePaymentMethodById = "usp_DeletePaymentMethodById";
+
+    public const string UpdateUserPassword = "usp_UpdateUserPasswordV2";
 }

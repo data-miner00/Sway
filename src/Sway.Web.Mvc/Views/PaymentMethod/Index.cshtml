@@ -2,6 +2,7 @@
 @model IEnumerable<Sway.Core.Models.PaymentMethod>
 @{
     ViewData["Title"] = "Payment Methods";
+    Layout = "_ProfileLayout";
     var debitCardPaymentMethods = Model.Where(x => x.Type == PaymentType.DebitCard);
     var creditCardPaymentMethods = Model.Where(x => x.Type == PaymentType.CreditCard);
     var cryptoPaymentMethods = Model.Where(x => x.Type == PaymentType.Cryptocurrency);
@@ -289,6 +290,7 @@
                         $("#updatePaymentPopup [name='walletAddress']").val(body["walletAddress"]);
                         $("#updatePaymentPopup [name='cvv']").val(body["cvv"]);
                         $("#updatePaymentPopup [name='currency']").val(body["currency"]);
+                        $("#updatePaymentPopup [name='isDefault']").prop("checked", !!body["isDefault"]);
 
                         document.getElementById("updatePaymentPopup").show();
                     });

@@ -9,24 +9,35 @@ public class CheckoutController : Controller
 {
     private readonly IShoppingCartRepository cartRepository;
     private readonly IAddressRepository addressRepository;
+    private readonly IPaymentMethodRepository paymentMethodRepository;
 
-    public CheckoutController(IShoppingCartRepository cartRepository, IAddressRepository addressRepository)
+    public CheckoutController(
+        IShoppingCartRepository cartRepository,
+        IAddressRepository addressRepository,
+        IPaymentMethodRepository paymentMethodRepository)
     {
         this.cartRepository = cartRepository;
         this.addressRepository = addressRepository;
+        this.paymentMethodRepository = paymentMethodRepository;
     }
 
     public CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
     public async Task<IActionResult> Index()
     {
-        var items = await this.cartRepository.GetCartItemsByUserIdAsync(Constants.TestUserId, true, this.CancellationToken);
-        var addresses = await this.addressRepository.GetAllByUserAsync(Constants.TestUserId, this.CancellationToken);
+        var userId = Constants.TestUserId;
+
+        var items = await this.cartRepository.GetCartItemsByUserIdAsync(userId, true, this.CancellationToken);
+        var addresses = await this.addressRepository.GetAllByUserAsync(userId, this.CancellationToken);
+        var payments = await this.paymentMethodRepository
+            .GetAllByUserAsync(userId, this.CancellationToken)
+            .ConfigureAwait(false);
 
         var viewModel = new CheckoutViewModel
         {
             CartItems = items,
-            ShippingAddress = addresses.First(),
+            Addresses = addresses,
+            PaymentMethods = payments,
         };
 
         return this.View(viewModel);

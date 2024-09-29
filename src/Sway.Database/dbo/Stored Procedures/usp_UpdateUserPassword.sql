@@ -3,7 +3,7 @@
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE usp_UpdateUserPassword
+CREATE PROCEDURE [dbo].[usp_UpdateUserPassword]
 	@Username VARCHAR(50),
 	@NewPasswordHash VARCHAR(100)
 AS
@@ -18,7 +18,7 @@ BEGIN
 	BEGIN TRANSACTION;
 
 	SELECT 
-		@UserId = [Id],
+		@UserId = [UserId],
 		@OldPasswordHash = [PasswordHash]
 	FROM [dbo].[vw_UserCredentials]
 	WHERE [Username] = @Username;

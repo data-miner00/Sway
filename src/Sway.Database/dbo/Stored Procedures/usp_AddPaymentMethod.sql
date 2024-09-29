@@ -15,7 +15,8 @@ CREATE PROCEDURE [dbo].[usp_AddPaymentMethod]
     @CardIssuingCountry NVARCHAR(50),
     @CardIssuingBank NVARCHAR(50),
     @Currency NVARCHAR(50),
-    @Balance MONEY
+    @Balance MONEY,
+    @IsDefault BIT
 AS
 BEGIN
     SET NOCOUNT, XACT_ABORT ON;
@@ -35,7 +36,8 @@ BEGIN
         [CardIssuingBank],
         [WalletAddress],
         [Currency],
-        [Balance]
+        [Balance],
+        [IsDefault]
     )
     VALUES
     (
@@ -50,7 +52,8 @@ BEGIN
         @CardIssuingBank,
         @WalletAddress,
         @Currency,
-        @Balance
+        @Balance,
+        @IsDefault
     );
 
     COMMIT TRANSACTION

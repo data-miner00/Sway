@@ -165,6 +165,7 @@
                         $("#updateAddressPopup [name='state']").val(body["state"]);
                         $("#updateAddressPopup [name='postcode']").val(body["postcode"]);
                         $("#updateAddressPopup [name='country']").val(body["country"]);
+                        $("#updateAddressPopup [name='isDefault']").prop("checked", !!body["isDefault"]);
 
                         document.getElementById("updateAddressPopup").show();
                     })

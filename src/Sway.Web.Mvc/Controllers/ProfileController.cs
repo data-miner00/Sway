@@ -11,13 +11,18 @@ public sealed class ProfileController : Controller
 {
     private readonly IUserRepository userRepository;
     private readonly IAddressRepository addressRepository;
+    private readonly ICredentialRepository credentialRepository;
 
     private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
-    public ProfileController(IUserRepository userRepository, IAddressRepository addressRepository)
+    public ProfileController(
+        IUserRepository userRepository,
+        IAddressRepository addressRepository,
+        ICredentialRepository credentialRepository)
     {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
+        this.credentialRepository = credentialRepository;
     }
 
     // GET: ProfileController
@@ -57,72 +62,29 @@ public sealed class ProfileController : Controller
         return this.RedirectToAction(nameof(this.Index));
     }
 
-    // GET: ProfileController/Details/5
-    public ActionResult Details(int id)
+    public IActionResult ChangePassword()
     {
-        return View();
+        return this.View();
     }
 
-    // GET: ProfileController/Create
-    public ActionResult Create()
-    {
-        return View();
-    }
-
-    // POST: ProfileController/Create
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Create(IFormCollection collection)
+    public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
     {
-        try
-        {
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View();
-        }
-    }
+        var isUpdateSuccess = await this.credentialRepository
+            .ChangePasswordAsync(
+                request.UserId.ToString(),
+                request.OldPassword,
+                request.NewPassword);
 
-    // GET: ProfileController/Edit/5
-    public ActionResult Edit(int id)
-    {
-        return View();
-    }
+        if (isUpdateSuccess)
+        {
+            this.TempData[Constants.Success] = "Password updated successfully";
+        }
+        else
+        {
+            this.TempData[Constants.Error] = "Password update failed.";
+        }
 
-    // POST: ProfileController/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, IFormCollection collection)
-    {
-        try
-        {
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View();
-        }
-    }
-
-    // GET: ProfileController/Delete/5
-    public ActionResult Delete(int id)
-    {
-        return View();
-    }
-
-    // POST: ProfileController/Delete/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id, IFormCollection collection)
-    {
-        try
-        {
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View();
-        }
+        return this.View();
     }
 }

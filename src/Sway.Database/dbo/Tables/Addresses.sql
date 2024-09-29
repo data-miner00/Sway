@@ -1,19 +1,18 @@
 ﻿CREATE TABLE [dbo].[Addresses] (
-    [Id]         UNIQUEIDENTIFIER CONSTRAINT [DF_Addresses_Id] NOT NULL DEFAULT NEWSEQUENTIALID() ROWGUIDCOL,
-    [Type]       NVARCHAR (50)  NOT NULL,
-    [Street1]    NVARCHAR (255) NOT NULL,
-    [Street2]    NVARCHAR (255) NULL,
-    [City]       NVARCHAR (50)  NOT NULL,
-    [State]      NVARCHAR (50)  NOT NULL,
-    [Postcode]   NVARCHAR (50)  NOT NULL,
-    [Country]    NVARCHAR (50)  NOT NULL,
-    [CreatedAt]  DATETIME2 (7)  NOT NULL DEFAULT GETDATE(),
-    [ModifiedAt] DATETIME2 (7)  NOT NULL DEFAULT GETDATE(),
-    [UserId] UNIQUEIDENTIFIER NOT NULL, 
-    [IsDefault] BIT NULL DEFAULT 0, 
+    [Id]         UNIQUEIDENTIFIER CONSTRAINT [DF__Addresses__Id__408F9238] DEFAULT (newsequentialid()) ROWGUIDCOL NOT NULL,
+    [Type]       NVARCHAR (50)    NOT NULL,
+    [Street1]    NVARCHAR (255)   NOT NULL,
+    [Street2]    NVARCHAR (255)   NULL,
+    [City]       NVARCHAR (50)    NOT NULL,
+    [State]      NVARCHAR (50)    NOT NULL,
+    [Postcode]   NVARCHAR (50)    NOT NULL,
+    [Country]    NVARCHAR (50)    NOT NULL,
+    [CreatedAt]  DATETIME2 (7)    CONSTRAINT [DF__Addresses__Creat__4183B671] DEFAULT (getdate()) NOT NULL,
+    [ModifiedAt] DATETIME2 (7)    CONSTRAINT [DF__Addresses__Modif__4277DAAA] DEFAULT (getdate()) NOT NULL,
+    [UserId]     UNIQUEIDENTIFIER NOT NULL,
+    [IsDefault]  BIT              CONSTRAINT [DF__Addresses__IsDef__314D4EA8] DEFAULT ((0)) NOT NULL,
     CONSTRAINT [PK_Addresses] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_Addresses_Users] FOREIGN KEY ([UserId]) REFERENCES [Users]([Id])
-        ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT [FK_Addresses_Users] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([Id]) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
