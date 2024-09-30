@@ -6,16 +6,23 @@ using Sway.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+/// <summary>
+/// The generator class for <see cref="ProductRating"/>.
+/// </summary>
 internal sealed class ProductRatingGenerator : IGenerator<ProductRating>
 {
     private readonly Guid existingProductId;
     private readonly Guid existingUserId;
     private Faker<ProductRating> faker;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProductRatingGenerator"/> class.
+    /// </summary>
+    /// <param name="existingProductId">The existing product to be binded.</param>
+    /// <param name="existingUserId">The existing user who make the rating.</param>
     public ProductRatingGenerator(Guid existingProductId, Guid existingUserId)
     {
         this.existingProductId = Guard.ThrowIfDefault(existingProductId);
@@ -24,6 +31,7 @@ internal sealed class ProductRatingGenerator : IGenerator<ProductRating>
         this.ConfigureProductRatingFaker();
     }
 
+    /// <inheritdoc/>
     public Task<IEnumerable<ProductRating>> GenerateAsync(int count, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();

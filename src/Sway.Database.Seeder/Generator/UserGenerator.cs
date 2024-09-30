@@ -7,15 +7,22 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
+/// <summary>
+/// The generator class for <see cref="User"/>.
+/// </summary>
 internal sealed class UserGenerator : IGenerator<User>
 {
     private Faker<User> faker;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UserGenerator"/> class.
+    /// </summary>
     public UserGenerator()
     {
         this.ConfigureUserFaker();
     }
 
+    /// <inheritdoc/>
     public Task<IEnumerable<User>> GenerateAsync(int count, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
