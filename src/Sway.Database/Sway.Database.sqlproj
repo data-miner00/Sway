@@ -176,6 +176,18 @@
     <Build Include="dbo\Stored Procedures\usp_SetPaymentMethodAsDefaultForUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_SetAddressAsDefaultForUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_UpdateUserPasswordV2.sql" />
+    <Build Include="dbo\Tables\Notifications.sql" />
+    <Build Include="dbo\Stored Procedures\usp_MarkNotificationsForUserAsUnread.sql" />
+    <Build Include="dbo\Stored Procedures\usp_MarkNotificationsForUserAsRead.sql" />
+    <Build Include="dbo\Stored Procedures\usp_MarkNotificationsAsRead.sql" />
+    <Build Include="dbo\Stored Procedures\usp_MarkNotificationAsUnread.sql" />
+    <Build Include="dbo\Stored Procedures\usp_HousekeepNotifications.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetUnreadNotificationsByUserId.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetSeenNotificationsByUserId.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetNotificationsByUserId.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DeleteNotificationById.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddNotificationMultiUser.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AddNotification.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
