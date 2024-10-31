@@ -132,10 +132,10 @@ To run this template project in your local for personal use or contribution, sim
 - [ ] Add OAuth/OIDC/Okta authentication
 - [ ] Add QRCode
 - [ ] Add export history
-- [ ] Add notification
+- [x] Add notification
 - [ ] Use RabbitMQ
 - [ ] Use Grafana for telemetry tracking
-- [ ] Create GitHub CI
+- [x] Create AzurePipelines CI
 - [ ] Configure code coverage with report generator
 - [ ] Create GraphQL API
 - [ ] Create API
