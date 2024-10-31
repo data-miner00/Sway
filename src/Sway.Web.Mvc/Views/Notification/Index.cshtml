@@ -2,7 +2,10 @@
 @model IEnumerable<Notification>
 @{
     ViewData["Title"] = "Notifications";
-    var jsNotifications = string.Join(',', Model.Select(x => "{" + $"id: {x.Id}, message: '{x.Message}', date: '{x.CreatedAt}', priority: '{x.Priority}', type: '{x.Type}'" + "}"));
+    var jsNotifications = string.Join(',', Model.Select(x => {
+        var isRead = x.ReadAt == null ? "false" : "true";
+        return "{" + $"id: {x.Id}, message: '{x.Message}', date: '{x.CreatedAt}', priority: '{x.Priority}', type: '{x.Type}', read: {isRead}" + "}";
+    }));
 }
 
 <h1 class="text-2xl font-bold">Your Notifications</h1>
@@ -41,13 +44,15 @@
                     <tbody>
                         {notifications.map(noti => (
                             <tr key={noti.id} >
-                                <td></td>
+                                <td><input type="checkbox" className="checkbox" /></td>
                                 <td>{noti.type}</td>
                                 <td>{noti.message}</td>
                                 <td>{noti.date}</td>
                                 <td>{noti.priority}</td>
                                 <td>
-                                    <button onClick={() => markAsRead(noti.id)}>Mark as read</button>
+                                    {!noti.read && (
+                                        <button onClick={() => markAsRead(noti.id)}>Mark as read</button>
+                                    )}
                                 </td>
                             </tr>
                         ))}
