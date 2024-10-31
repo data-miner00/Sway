@@ -1,0 +1,63 @@
+﻿@using Sway.Core.Models
+@model IEnumerable<Notification>
+@{
+    ViewData["Title"] = "Notifications";
+    var jsNotifications = string.Join(',', Model.Select(x => "{" + $"id: {x.Id}, message: '{x.Message}', date: '{x.CreatedAt}', priority: '{x.Priority}', type: '{x.Type}'" + "}"));
+}
+
+<h1 class="text-2xl font-bold">Your Notifications</h1>
+
+<div id="notifications"></div>
+
+@section Scripts {
+    <script src="~/lib/react/react.development.js"></script>
+    <script src="~/lib/react-dom/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        const e = React.createElement;
+        const useState = React.useState;
+
+        function Notifications() {
+            const [notifications, setNotifications] = useState([
+                @Html.Raw(jsNotifications)
+            ]);
+
+            const markAsRead = (id) => {
+                fetch(`/Notification/Read/${id}`, { method: 'Post' }).then(console.log);
+            };
+
+            return (
+                <table className="table table-zebra">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Type</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                            <th>Priority</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {notifications.map(noti => (
+                            <tr key={noti.id} >
+                                <td></td>
+                                <td>{noti.type}</td>
+                                <td>{noti.message}</td>
+                                <td>{noti.date}</td>
+                                <td>{noti.priority}</td>
+                                <td>
+                                    <button onClick={() => markAsRead(noti.id)}>Mark as read</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )
+        }
+        
+        const domContainer = document.querySelector('#notifications');
+        const root = ReactDOM.createRoot(domContainer);
+        root.render(e(Notifications));
+    </script>
+}
