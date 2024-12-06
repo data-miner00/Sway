@@ -188,6 +188,7 @@
     <Build Include="dbo\Stored Procedures\usp_DeleteNotificationById.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddNotificationMultiUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddNotification.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetTopCouponsWithDelay.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

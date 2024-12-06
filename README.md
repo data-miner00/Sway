@@ -14,7 +14,7 @@
   <h3 align="center">Sway</h3>
 
   <p align="center">
-	A simple, enterprise-grade, database-first e-commerce platform.
+    A simple, enterprise-grade, database-first e-commerce platform.
     <br />
     <a href="https://github.com/data-miner00/Sway"><strong>View Demo »</strong></a>
     <br />
@@ -181,6 +181,7 @@ List of resources that are helpful and would like to give credit to.
 - [Add React in One Minute](https://legacy.reactjs.org/docs/add-react-to-a-website.html#add-react-in-one-minute)
 - [Using React for a part of your existing page](https://react.dev/learn/add-react-to-an-existing-project#using-react-for-a-part-of-your-existing-page)
 - [Babel](https://babeljs.io/docs/presets)
+- [SQL Server Tips, Articles and Training](https://www.mssqltips.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
