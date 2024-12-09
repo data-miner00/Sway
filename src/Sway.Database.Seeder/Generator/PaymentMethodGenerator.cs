@@ -6,19 +6,16 @@ using Sway.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+/// <summary>
+/// The generator class for <see cref="PaymentMethod"/>.
+/// </summary>
 internal sealed class PaymentMethodGenerator : IGenerator<PaymentMethod>
 {
     private readonly Guid existingUserId;
     private readonly IEnumerable<PaymentType> paymentTypes;
-
-    private Faker<PaymentMethod> cryptoFaker;
-    private Faker<PaymentMethod> cardFaker;
-    private Faker<PaymentMethod> onlineBankingFaker;
-    private Faker<PaymentMethod> ewalletFaker;
 
     private readonly Dictionary<string, string> crytoProviders = new()
     {
@@ -33,6 +30,16 @@ internal sealed class PaymentMethodGenerator : IGenerator<PaymentMethod>
     private readonly List<string> cardIssuingBanks = ["Public Bank", "OCBC Bank", "Hong Leong Bank", "Maybank", "CIMB Bank"];
     private readonly List<string> ewalletProviders = ["Touch N Go", "Boost", "Grab Pay", "Alipay", "Sway", "Razer Pay"];
 
+    private Faker<PaymentMethod> cryptoFaker;
+    private Faker<PaymentMethod> cardFaker;
+    private Faker<PaymentMethod> onlineBankingFaker;
+    private Faker<PaymentMethod> ewalletFaker;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PaymentMethodGenerator"/> class.
+    /// </summary>
+    /// <param name="existingUserId">The existing user to be binded with the new payment methods.</param>
+    /// <param name="paymentTypes">The payment type variants.</param>
     public PaymentMethodGenerator(Guid existingUserId, IEnumerable<PaymentType> paymentTypes)
     {
         this.existingUserId = Guard.ThrowIfDefault(existingUserId);
@@ -44,6 +51,7 @@ internal sealed class PaymentMethodGenerator : IGenerator<PaymentMethod>
         this.ConfigureEWalletPaymentMethodFaker();
     }
 
+    /// <inheritdoc/>
     public Task<IEnumerable<PaymentMethod>> GenerateAsync(int count, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
