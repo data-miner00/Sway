@@ -61,4 +61,6 @@ public static class StoredProcedureNames
     public const string MarkNotificationAsRead = "usp_MarkNotificationsAsRead";
 
     public const string AddOrder = "usp_AddOrder";
+
+    public const string ClearOrderedCartItemsForUser = "usp_ClearOrderedCartItemsForUser";
 }

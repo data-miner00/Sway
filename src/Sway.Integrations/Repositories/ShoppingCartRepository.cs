@@ -159,4 +159,14 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
             parameters,
             commandType: CommandType.StoredProcedure);
     }
+
+    public Task ClearSelectedCartItems(string userId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        return this.connection.ExecuteAsync(
+            SpNames.ClearOrderedCartItemsForUser,
+            new { UserId = userId },
+            commandType: CommandType.StoredProcedure);
+    }
 }

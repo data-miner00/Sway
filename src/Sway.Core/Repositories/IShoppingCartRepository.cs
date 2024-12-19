@@ -31,4 +31,6 @@ public interface IShoppingCartRepository
     Task SelectCartItemAsync(string cartItemId, CancellationToken cancellationToken);
 
     Task DeselectCartItemAsync(string cartItemId, CancellationToken cancellationToken);
+
+    Task ClearSelectedCartItems(string userId, CancellationToken cancellationToken);
 }
