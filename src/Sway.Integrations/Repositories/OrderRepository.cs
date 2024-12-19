@@ -1,6 +1,8 @@
 ﻿namespace Sway.Integrations.Repositories;
 
 using Dapper;
+using Sway.Common;
+using Sway.Core.Dtos;
 using Sway.Core.Models;
 using Sway.Core.Repositories;
 using System.Collections.Generic;
@@ -21,17 +23,35 @@ public sealed class OrderRepository : IOrderRepository
     /// <param name="connection">The database connection.</param>
     public OrderRepository(IDbConnection connection)
     {
-        this.connection = connection;
+        this.connection = Guard.ThrowIfNull(connection);
     }
 
     /// <inheritdoc/>
-    public Task CreateAsync(Order order, CancellationToken cancellationToken)
+    public Task CreateAsync(Order order, IEnumerable<CartItemDto> cartItems, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
+        var dataTable = new DataTable();
+        dataTable.Columns.Add("ProductId");
+        dataTable.Columns.Add("Quantity");
+        dataTable.Columns.Add("UnitPrice");
+        dataTable.Columns.Add("TotalPrice");
+
+        foreach (var cartItem in cartItems.Select(x => x.ToOrderLineDto()))
+        {
+            dataTable.Rows.Add(cartItem.ProductId, cartItem.Quantity, cartItem.UnitPrice, cartItem.TotalPrice);
+        }
+
+        var parameters = new DynamicParameters();
+        parameters.Add("UserId", order.UserId);
+        parameters.Add("Status", order.Status.ToString());
+        parameters.Add("TotalAmount", order.TotalAmount);
+        parameters.Add("Currency", order.Currency);
+        parameters.Add("OrderLines", dataTable.AsTableValuedParameter("typ_OrderLines"));
+
         var command = new CommandDefinition(
-            "EXEC [dbo].[usp_AddOrder] @UserId, @Status, @TotalAmount, @Currency, @PaymentInfoId, @ShippingAddressId, @BillingAddressId;",
-            order,
+            SpNames.AddOrder,
+            parameters,
             commandType: CommandType.StoredProcedure);
 
         return this.connection.ExecuteAsync(command);

@@ -189,6 +189,7 @@
     <Build Include="dbo\Stored Procedures\usp_AddNotificationMultiUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddNotification.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetTopCouponsWithDelay.sql" />
+    <Build Include="dbo\User Defined Types\typ_OrderLines.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
