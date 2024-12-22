@@ -188,6 +188,10 @@
     <Build Include="dbo\Stored Procedures\usp_DeleteNotificationById.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddNotificationMultiUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_AddNotification.sql" />
+    <Build Include="dbo\Views\vw_OrderItemsWithWeightage.sql" />
+    <Build Include="dbo\Stored Procedures\usp_SyncProductUnitSold.sql" />
+    <None Include="Scripts\RenameColumn.sql" />
+    <None Include="Scripts\CreateTransferSchema.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
