@@ -15,8 +15,12 @@ public class ProductController : Controller
     private readonly IProductRatingRepository ratingRepository;
     private readonly IFavouriteRepository favouriteRepository;
 
-    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
-
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProductController"/> class.
+    /// </summary>
+    /// <param name="productRepository">The product repository.</param>
+    /// <param name="ratingRepository">The rating repository.</param>
+    /// <param name="favouriteRepository">The favourite repository.</param>
     public ProductController(
         IProductRepository productRepository,
         IProductRatingRepository ratingRepository,
@@ -26,6 +30,8 @@ public class ProductController : Controller
         this.ratingRepository = Guard.ThrowIfNull(ratingRepository);
         this.favouriteRepository = Guard.ThrowIfNull(favouriteRepository);
     }
+
+    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
     public IActionResult Index()
     {

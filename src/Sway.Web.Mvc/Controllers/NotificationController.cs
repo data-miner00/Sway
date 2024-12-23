@@ -4,10 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Sway.Common;
 using Sway.Core.Repositories;
 
-public class NotificationController : Controller
+public sealed class NotificationController : Controller
 {
     private readonly INotificationRepository repository;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NotificationController"/> class.
+    /// </summary>
+    /// <param name="repository">The notification repository.</param>
     public NotificationController(INotificationRepository repository)
     {
         this.repository = Guard.ThrowIfNull(repository);

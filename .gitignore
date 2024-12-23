@@ -375,3 +375,6 @@ jquery/
 htmx/
 react/
 react-dom/
+
+# Rider
+.idea

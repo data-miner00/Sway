@@ -1,6 +1,5 @@
 ﻿namespace Sway.Web.Mvc.Controllers;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sway.Common;
 using Sway.Core.Repositories;
@@ -13,12 +12,16 @@ public sealed class ShoppingCartController : Controller
 
     private readonly IShoppingCartRepository repository;
 
-    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
-
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ShoppingCartController"/> class.
+    /// </summary>
+    /// <param name="repository">The shopping cart repository.</param>
     public ShoppingCartController(IShoppingCartRepository repository)
     {
         this.repository = Guard.ThrowIfNull(repository);
     }
+
+    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
     // GET: ShoppingCartController
     public async Task<IActionResult> Index()

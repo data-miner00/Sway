@@ -4,15 +4,10 @@ using Dapper;
 using Sway.Core.Dtos;
 using Sway.Core.Models;
 using Sway.Core.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
-using SpNames = Sway.Common.StoredProcedureNames;
 
 public sealed class ShoppingCartRepository : IShoppingCartRepository
 {
@@ -162,6 +157,16 @@ public sealed class ShoppingCartRepository : IShoppingCartRepository
         return this.connection.ExecuteAsync(
             SpNames.DeselectCartItem,
             parameters,
+            commandType: CommandType.StoredProcedure);
+    }
+
+    public Task ClearSelectedCartItems(string userId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        return this.connection.ExecuteAsync(
+            SpNames.ClearOrderedCartItemsForUser,
+            new { UserId = userId },
             commandType: CommandType.StoredProcedure);
     }
 }

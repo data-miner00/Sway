@@ -22,6 +22,6 @@ BEGIN
 		[CreatedAt],
 		[ModifiedAt],
 		[IsDefault]
-	FROM [dbo].[Addresses]
+	FROM [dbo].[Addresses] WITH (READPAST)
 	WHERE [UserId] = @UserId;
 END

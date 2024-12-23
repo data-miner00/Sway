@@ -194,6 +194,9 @@
     <None Include="Scripts\CreateTransferSchema.sql" />
     <None Include="Scripts\SelectTableInfo.sql" />
     <None Include="Scripts\RemoveDuplicateRows.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetTopCouponsWithDelay.sql" />
+    <Build Include="dbo\User Defined Types\typ_OrderLines.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ClearOrderedCartItemsForUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

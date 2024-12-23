@@ -9,8 +9,6 @@ using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
-using SpNames = Sway.Common.StoredProcedureNames;
-
 /// <summary>
 /// The repository for <see cref="User"/> resource.
 /// </summary>

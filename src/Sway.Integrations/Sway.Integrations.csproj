@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Sway.Core\Sway.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="Sway.Common.StoredProcedureNames" Alias="SpNames" />
+  </ItemGroup>
+
 </Project>

@@ -1,27 +1,38 @@
 ﻿namespace Sway.Web.Mvc.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Sway.Common;
 using Sway.Core.Models;
 using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
 
-public class CheckoutController : Controller
+public sealed class CheckoutController : Controller
 {
     private readonly IShoppingCartRepository cartRepository;
     private readonly IAddressRepository addressRepository;
     private readonly IPaymentMethodRepository paymentMethodRepository;
+    private readonly IOrderRepository orderRepository;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CheckoutController"/> class.
+    /// </summary>
+    /// <param name="cartRepository">The cart repository.</param>
+    /// <param name="addressRepository">The address repository.</param>
+    /// <param name="paymentMethodRepository">The payment repository.</param>
+    /// <param name="orderRepository">The order repository.</param>
     public CheckoutController(
         IShoppingCartRepository cartRepository,
         IAddressRepository addressRepository,
-        IPaymentMethodRepository paymentMethodRepository)
+        IPaymentMethodRepository paymentMethodRepository,
+        IOrderRepository orderRepository)
     {
-        this.cartRepository = cartRepository;
-        this.addressRepository = addressRepository;
-        this.paymentMethodRepository = paymentMethodRepository;
+        this.cartRepository = Guard.ThrowIfNull(cartRepository);
+        this.addressRepository = Guard.ThrowIfNull(addressRepository);
+        this.paymentMethodRepository = Guard.ThrowIfNull(paymentMethodRepository);
+        this.orderRepository = Guard.ThrowIfNull(orderRepository);
     }
 
-    public CancellationToken CancellationToken => this.HttpContext.RequestAborted;
+    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
     public async Task<IActionResult> Index()
     {
@@ -45,6 +56,31 @@ public class CheckoutController : Controller
 
     [HttpPost]
     public async Task<IActionResult> PlaceOrder()
+    {
+        var userId = Constants.TestUserId;
+
+        _ = Guid.TryParse(userId, out var guidUserId);
+
+        var items = await this.cartRepository.GetCartItemsByUserIdAsync(userId, true, this.CancellationToken);
+
+        var totalAmount = items.Select(x => x.UnitPrice * x.Quantity).Sum();
+
+        var order = new Order
+        {
+            UserId = guidUserId,
+            Status = OrderStatus.Pending,
+            TotalAmount = totalAmount,
+            Currency = "MYR",
+        };
+
+        await this.orderRepository.CreateAsync(order, items, this.CancellationToken);
+
+        this.TempData[Constants.Success] = "Successfully placed order!";
+
+        return this.RedirectToAction(nameof(this.OrderResult));
+    }
+
+    public async Task<IActionResult> OrderResult()
     {
         return this.View();
     }

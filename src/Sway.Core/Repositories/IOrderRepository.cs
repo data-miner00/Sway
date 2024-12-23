@@ -1,5 +1,6 @@
 ﻿namespace Sway.Core.Repositories;
 
+using Sway.Core.Dtos;
 using Sway.Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,9 +30,10 @@ public interface IOrderRepository
     /// Creates a new order.
     /// </summary>
     /// <param name="order">The order to be created.</param>
+    /// <param name="cartItems">The cart items.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The task.</returns>
-    Task CreateAsync(Order order, CancellationToken cancellationToken);
+    Task CreateAsync(Order order, IEnumerable<CartItemDto> cartItems, CancellationToken cancellationToken);
 
     /// <summary>
     /// Updates an existing order.

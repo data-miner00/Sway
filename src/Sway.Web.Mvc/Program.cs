@@ -68,6 +68,7 @@ public static class Program
         builder.Services.AddSingleton<IPaymentMethodRepository, PaymentMethodRepository>();
         builder.Services.AddSingleton<ICredentialRepository, CredentialRepository>();
         builder.Services.AddSingleton<INotificationRepository, NotificationRepository>();
+        builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
 
         return builder;
     }

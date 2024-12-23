@@ -101,7 +101,9 @@
 </div>
 
 <div class="flex justify-end">
-    <a class="btn btn-primary">Submit Order</a>
+    <form method="post" asp-action="PlaceOrder">
+        <button type="submit" class="btn btn-primary">Submit Order</button>
+    </form>
     <a class="btn btn-ghost" asp-action="Index" asp-controller="ShoppingCart">Cancel</a>
 </div>
 
