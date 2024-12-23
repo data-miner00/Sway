@@ -192,6 +192,8 @@
     <Build Include="dbo\Stored Procedures\usp_SyncProductUnitSold.sql" />
     <None Include="Scripts\RenameColumn.sql" />
     <None Include="Scripts\CreateTransferSchema.sql" />
+    <None Include="Scripts\SelectTableInfo.sql" />
+    <None Include="Scripts\RemoveDuplicateRows.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
