@@ -1,21 +1,26 @@
 ﻿namespace Sway.Web.Mvc.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Sway.Common;
 using Sway.Core.Dtos;
 using Sway.Core.Models;
 using Sway.Core.Repositories;
 
 [Route("Profile/[controller]/[action]")]
-public class PaymentMethodController : Controller
+public sealed class PaymentMethodController : Controller
 {
     private readonly IPaymentMethodRepository repository;
 
-    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
-
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PaymentMethodController"/> class.
+    /// </summary>
+    /// <param name="repository">The payment method repository.</param>
     public PaymentMethodController(IPaymentMethodRepository repository)
     {
-        this.repository = repository;
+        this.repository = Guard.ThrowIfNull(repository);
     }
+
+    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
     public async Task<IActionResult> Index()
     {

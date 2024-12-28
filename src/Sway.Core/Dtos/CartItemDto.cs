@@ -21,4 +21,15 @@ public sealed class CartItemDto
     public DateTime AddedAt { get; set; }
 
     public DateTime ModifiedAt { get; set; }
+
+    public OrderLine ToOrderLineDto()
+    {
+        return new OrderLine
+        {
+            ProductId = this.ProductId,
+            Quantity = this.Quantity,
+            UnitPrice = this.UnitPrice,
+            TotalPrice = this.Quantity * this.UnitPrice,
+        };
+    }
 }

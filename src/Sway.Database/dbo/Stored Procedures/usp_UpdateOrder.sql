@@ -30,8 +30,7 @@ BEGIN
 		UPDATE SET
 			[UserId] = S.UserId,
 			[TotalAmount] = S.TotalAmount,
-			[Currency] = S.Currency,
-			[PaymentInfoId] = S.PaymentInfoId;
+			[Currency] = S.Currency;
 
 	COMMIT TRANSACTION;
 

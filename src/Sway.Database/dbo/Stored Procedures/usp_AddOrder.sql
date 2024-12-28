@@ -8,10 +8,14 @@ CREATE PROCEDURE [dbo].[usp_AddOrder]
 	@Status NVARCHAR(50),
 	@TotalAmount MONEY,
 	@Currency NVARCHAR(50),
-	@PaymentInfoId UNIQUEIDENTIFIER
-	-- TODO: Add order address parameter here
+	@OrderLines [dbo].[typ_OrderLines] READONLY
 AS
 BEGIN
+	DECLARE @Outputs TABLE
+	(
+		[Id] UNIQUEIDENTIFIER
+	);
+
 	SET NOCOUNT, XACT_ABORT ON;
 
     BEGIN TRANSACTION;
@@ -21,17 +25,32 @@ BEGIN
 		[UserId],
 		[Status],
 		[TotalAmount],
-		[Currency],
-		[PaymentInfoId]
+		[Currency]
 	)
+	OUTPUT inserted.Id INTO @Outputs
 	VALUES
 	(
 		@UserId,
 		@Status,
 		@TotalAmount,
-		@Currency,
-		@PaymentInfoId
+		@Currency
 	);
+
+	INSERT INTO [dbo].[OrderItems]
+	(
+		[OrderId],
+		[ProductId],
+		[Quantity],
+		[UnitPrice],
+		[TotalPrice]
+	)
+	SELECT
+		(SELECT TOP 1 [Id] FROM @Outputs),
+		[ProductId],
+		[Quantity],
+		[UnitPrice],
+		[TotalPrice]
+	FROM @OrderLines;
 
 	COMMIT TRANSACTION;
 END

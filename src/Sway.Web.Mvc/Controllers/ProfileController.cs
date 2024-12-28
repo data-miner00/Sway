@@ -1,7 +1,7 @@
 ﻿namespace Sway.Web.Mvc.Controllers;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sway.Common;
 using Sway.Core.Dtos;
 using Sway.Core.Models;
 using Sway.Core.Repositories;
@@ -13,17 +13,23 @@ public sealed class ProfileController : Controller
     private readonly IAddressRepository addressRepository;
     private readonly ICredentialRepository credentialRepository;
 
-    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
-
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProfileController"/> class.
+    /// </summary>
+    /// <param name="userRepository">The user repository.</param>
+    /// <param name="addressRepository">The address repository.</param>
+    /// <param name="credentialRepository">The credential repository.</param>
     public ProfileController(
         IUserRepository userRepository,
         IAddressRepository addressRepository,
         ICredentialRepository credentialRepository)
     {
-        this.userRepository = userRepository;
-        this.addressRepository = addressRepository;
-        this.credentialRepository = credentialRepository;
+        this.userRepository = Guard.ThrowIfNull(userRepository);
+        this.addressRepository = Guard.ThrowIfNull(addressRepository);
+        this.credentialRepository = Guard.ThrowIfNull(credentialRepository);
     }
+
+    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
     // GET: ProfileController
     public async Task<IActionResult> Index()

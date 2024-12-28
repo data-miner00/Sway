@@ -4,18 +4,23 @@ using Microsoft.AspNetCore.Mvc;
 using Sway.Core.Repositories;
 using Sway.Core.Dtos;
 using Sway.Core.Models;
+using Sway.Common;
 
 [Route("Profile/[controller]/[action]")]
-public class AddressController : Controller
+public sealed class AddressController : Controller
 {
     private readonly IAddressRepository repository;
 
-    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
-
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AddressController"/> class.
+    /// </summary>
+    /// <param name="repository">The address repository.</param>
     public AddressController(IAddressRepository repository)
     {
-        this.repository = repository;
+        this.repository = Guard.ThrowIfNull(repository);
     }
+
+    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
     public async Task<IActionResult> Index()
     {
