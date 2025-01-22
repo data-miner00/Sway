@@ -21,7 +21,6 @@ public sealed class OrderController : Controller
         return this.View(orders);
     }
 
-    [Route("{id:guid}")]
     public async Task<IActionResult> Details(Guid id)
     {
         var order = await this.repository.GetByIdAsync(id.ToString(), this.CancellationToken);

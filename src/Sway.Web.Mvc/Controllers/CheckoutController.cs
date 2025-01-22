@@ -73,15 +73,12 @@ public sealed class CheckoutController : Controller
             Currency = "MYR",
         };
 
-        await this.orderRepository.CreateAsync(order, items, this.CancellationToken);
+        var id = await this.orderRepository.CreateAsync(order, items, this.CancellationToken);
+
+        // Todo: clean cart
 
         this.TempData[Constants.Success] = "Successfully placed order!";
 
-        return this.RedirectToAction(nameof(this.OrderResult));
-    }
-
-    public async Task<IActionResult> OrderResult()
-    {
-        return this.View();
+        return this.RedirectToAction(nameof(OrderController.Details), "Order", new { Id = id });
     }
 }

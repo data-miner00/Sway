@@ -27,7 +27,7 @@ public sealed class OrderRepository : IOrderRepository
     }
 
     /// <inheritdoc/>
-    public Task CreateAsync(Order order, IEnumerable<CartItemDto> cartItems, CancellationToken cancellationToken)
+    public async Task<Guid> CreateAsync(Order order, IEnumerable<CartItemDto> cartItems, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -48,13 +48,18 @@ public sealed class OrderRepository : IOrderRepository
         parameters.Add("TotalAmount", order.TotalAmount);
         parameters.Add("Currency", order.Currency);
         parameters.Add("OrderLines", dataTable.AsTableValuedParameter("typ_OrderLines"));
+        parameters.Add("Id", dbType: DbType.Guid, direction: ParameterDirection.Output, size: 5215585);
 
         var command = new CommandDefinition(
             SpNames.AddOrder,
             parameters,
             commandType: CommandType.StoredProcedure);
 
-        return this.connection.ExecuteAsync(command);
+        await this.connection.ExecuteAsync(command);
+
+        var id = parameters.Get<Guid>("Id");
+
+        return id;
     }
 
     /// <inheritdoc/>

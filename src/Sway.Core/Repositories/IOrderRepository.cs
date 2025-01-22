@@ -32,8 +32,8 @@ public interface IOrderRepository
     /// <param name="order">The order to be created.</param>
     /// <param name="cartItems">The cart items.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>The task.</returns>
-    Task CreateAsync(Order order, IEnumerable<CartItemDto> cartItems, CancellationToken cancellationToken);
+    /// <returns>The created order id.</returns>
+    Task<Guid> CreateAsync(Order order, IEnumerable<CartItemDto> cartItems, CancellationToken cancellationToken);
 
     /// <summary>
     /// Updates an existing order.

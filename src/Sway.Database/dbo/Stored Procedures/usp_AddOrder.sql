@@ -8,7 +8,8 @@ CREATE PROCEDURE [dbo].[usp_AddOrder]
 	@Status NVARCHAR(50),
 	@TotalAmount MONEY,
 	@Currency NVARCHAR(50),
-	@OrderLines [dbo].[typ_OrderLines] READONLY
+	@OrderLines [dbo].[typ_OrderLines] READONLY,
+	@Id UNIQUEIDENTIFIER = NULL OUT
 AS
 BEGIN
 	DECLARE @Outputs TABLE
@@ -35,6 +36,8 @@ BEGIN
 		@TotalAmount,
 		@Currency
 	);
+
+	SET @Id = (SELECT TOP 1 [Id] FROM @Outputs);
 
 	INSERT INTO [dbo].[OrderItems]
 	(
