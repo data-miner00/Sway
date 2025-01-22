@@ -4,6 +4,8 @@
     ViewData["Title"] = "Order";
 }
 
+<partial name="_Notification" />
+
 <div class="border border-solid border-gray-100 rounded-lg p-4 max-w-screen-sm mx-auto">
     <p class="text-sm text-gray-600">Home > Orders > ID 33847293837</p>
 
@@ -103,6 +105,6 @@
     <h1>Order ID: @Model.Id</h1>
     <p>@Model.Status</p>
     <p>@Model.TotalAmount</p>
-    <p>@Model.UpdatedAt</p>
+    <p>@Model.ModifiedAt</p>
 
 </div>
