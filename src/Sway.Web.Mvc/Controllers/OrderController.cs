@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Sway.Core.Repositories;
+using Sway.Web.Mvc.Models;
 
 public sealed class OrderController : Controller
 {
@@ -24,7 +25,14 @@ public sealed class OrderController : Controller
     public async Task<IActionResult> Details(Guid id)
     {
         var order = await this.repository.GetByIdAsync(id.ToString(), this.CancellationToken);
+        var orderLines = await this.repository.GetOrderLinesAsync(id.ToString(), this.CancellationToken);
 
-        return this.View(order);
+        var viewModel = new OrderDetailsViewModel
+        {
+            Order = order,
+            OrderLines = orderLines,
+        };
+
+        return this.View(viewModel);
     }
 }

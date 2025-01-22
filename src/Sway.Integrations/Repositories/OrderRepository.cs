@@ -94,4 +94,15 @@ public sealed class OrderRepository : IOrderRepository
 
         return this.connection.ExecuteAsync(command);
     }
+
+    /// <inheritdoc/>
+    public Task<IEnumerable<OrderLine>> GetOrderLinesAsync(string orderId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        return this.connection.QueryAsync<OrderLine>(
+            SpNames.GetOrderLinesByOrderId,
+            new { OrderId = orderId },
+            commandType: CommandType.StoredProcedure);
+    }
 }

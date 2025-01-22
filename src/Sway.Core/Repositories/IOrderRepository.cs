@@ -42,4 +42,12 @@ public interface IOrderRepository
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The task.</returns>
     Task UpdateAsync(Order order, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Gets all human-friendly order lines of an order.
+    /// </summary>
+    /// <param name="orderId">The order Id.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The list of order lines.</returns>
+    Task<IEnumerable<OrderLine>> GetOrderLinesAsync(string orderId, CancellationToken cancellationToken);
 }
