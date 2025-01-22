@@ -22,9 +22,13 @@ public sealed class CartItemDto
 
     public DateTime ModifiedAt { get; set; }
 
-    public OrderLine ToOrderLineDto()
+    /// <summary>
+    /// Converts a cart item into object that is recognized by stored procedure for insertion.
+    /// </summary>
+    /// <returns>The converted object.</returns>
+    public CartOrderLineDto ToOrderLineDto()
     {
-        return new OrderLine
+        return new CartOrderLineDto
         {
             ProductId = this.ProductId,
             Quantity = this.Quantity,

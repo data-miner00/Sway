@@ -1,6 +1,6 @@
 ﻿namespace Sway.Core.Dtos;
 
-public sealed class OrderLine
+public sealed class CartOrderLineDto
 {
     public Guid ProductId { get; set; }
 
