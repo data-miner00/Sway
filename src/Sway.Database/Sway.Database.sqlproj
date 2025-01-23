@@ -199,6 +199,7 @@
     <Build Include="dbo\Stored Procedures\usp_ClearOrderedCartItemsForUser.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetUsersWithValidEmailAddress.sql" />
     <Build Include="dbo\Stored Procedures\usp_GetOrderLinesByOrderId.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CopyAddressToOrderAddress.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

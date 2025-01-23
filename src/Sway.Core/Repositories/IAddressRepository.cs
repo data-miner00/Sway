@@ -13,5 +13,14 @@ public interface IAddressRepository : IRepository<Address>
     /// <param name="userId">The user Id.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The list of addresses.</returns>
-    public Task<IEnumerable<Address>> GetAllByUserAsync(string userId, CancellationToken cancellationToken);
+    Task<IEnumerable<Address>> GetAllByUserAsync(string userId, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Copies the address to order address.
+    /// </summary>
+    /// <param name="addressId">The address Id.</param>
+    /// <param name="orderId">The order Id.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The task.</returns>
+    Task CopyForOrderAsync(string addressId, string orderId, CancellationToken cancellationToken);
 }

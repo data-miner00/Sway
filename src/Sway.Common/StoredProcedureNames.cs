@@ -65,4 +65,6 @@ public static class StoredProcedureNames
     public const string ClearOrderedCartItemsForUser = "usp_ClearOrderedCartItemsForUser";
 
     public const string GetOrderLinesByOrderId = "usp_GetOrderLinesByOrderId";
+
+    public const string CopyAddressToOrderAddress = "usp_CopyAddressToOrderAddress";
 }

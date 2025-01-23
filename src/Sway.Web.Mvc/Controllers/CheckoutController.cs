@@ -55,7 +55,7 @@ public sealed class CheckoutController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> PlaceOrder()
+    public async Task<IActionResult> PlaceOrder(Guid addressId)
     {
         var userId = Constants.TestUserId;
 
@@ -74,6 +74,7 @@ public sealed class CheckoutController : Controller
         };
 
         var id = await this.orderRepository.CreateAsync(order, items, this.CancellationToken);
+        await this.addressRepository.CopyForOrderAsync(addressId.ToString(), id.ToString(), default);
 
         // Todo: clean cart
 

@@ -102,6 +102,7 @@
 
 <div class="flex justify-end">
     <form method="post" asp-action="PlaceOrder">
+        <input class="hidden" name="addressId" value="@paymentMethods.First(x => x.IsDefault).Id" />
         <button type="submit" class="btn btn-primary">Submit Order</button>
     </form>
     <a class="btn btn-ghost" asp-action="Index" asp-controller="ShoppingCart">Cancel</a>
@@ -161,6 +162,7 @@
 
         function selectAddress(id) {
             $('#selected-address').text(id);
+            $('[name="addressId"]').val(id);
             var updateAddressPopup = document.getElementById("selectAddressPopup");
             updateAddressPopup.close();
         }
