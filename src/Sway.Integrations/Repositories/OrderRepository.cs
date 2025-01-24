@@ -105,4 +105,14 @@ public sealed class OrderRepository : IOrderRepository
             new { OrderId = orderId },
             commandType: CommandType.StoredProcedure);
     }
+
+    /// <inheritdoc/>
+    public Task<OrderAddress> GetOrderAddressAsync(string orderId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var statement = "SELECT * FROM [dbo].[OrderAddresses] WHERE [OrderId] = @OrderId;";
+
+        return this.connection.QueryFirstAsync<OrderAddress>(statement, new { OrderId = orderId });
+    }
 }

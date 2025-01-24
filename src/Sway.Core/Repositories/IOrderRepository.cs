@@ -50,4 +50,12 @@ public interface IOrderRepository
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The list of order lines.</returns>
     Task<IEnumerable<OrderLine>> GetOrderLinesAsync(string orderId, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Gets the order address associated.
+    /// </summary>
+    /// <param name="orderId">The order Id.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The order address found.</returns>
+    Task<OrderAddress> GetOrderAddressAsync(string orderId, CancellationToken cancellationToken);
 }
