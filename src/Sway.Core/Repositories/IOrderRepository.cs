@@ -58,4 +58,6 @@ public interface IOrderRepository
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The order address found.</returns>
     Task<OrderAddress> GetOrderAddressAsync(string orderId, CancellationToken cancellationToken);
+
+    Task<OrderPaymentMethod> GetOrderPaymentMethod(string orderId, CancellationToken cancellationToken);
 }

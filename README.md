@@ -182,6 +182,7 @@ List of resources that are helpful and would like to give credit to.
 - [Using React for a part of your existing page](https://react.dev/learn/add-react-to-an-existing-project#using-react-for-a-part-of-your-existing-page)
 - [Babel](https://babeljs.io/docs/presets)
 - [SQL Server Tips, Articles and Training](https://www.mssqltips.com/)
+- [Get Return Value From Stored Procedure Using Dapper ORM In ASP.NET MVC](https://www.c-sharpcorner.com/article/get-return-value-from-stored-procedure-using-dapper-orm/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

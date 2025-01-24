@@ -47,7 +47,7 @@
     <div class="flex border-b border-solid border-gray-100 py-4">
         <div class="basis-1/2">
             <div class="font-semibold mb-1">Payment</div>
-            <div>Visa</div>
+            <div>@Model.PaymentMethod.Type <span class="text-sm text-gray-600">@Model.PaymentMethod.CardNumber</span></div>
         </div>
         <div class="basis-1/2">
             <div class="font-semibold mb-1">Delivery</div>

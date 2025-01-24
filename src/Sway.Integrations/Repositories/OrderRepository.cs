@@ -115,4 +115,14 @@ public sealed class OrderRepository : IOrderRepository
 
         return this.connection.QueryFirstAsync<OrderAddress>(statement, new { OrderId = orderId });
     }
+
+    /// <inheritdoc/>
+    public Task<OrderPaymentMethod> GetOrderPaymentMethod(string orderId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var statement = "SELECT * FROM [dbo].[OrderPaymentMethods] WHERE [OrderId] = @OrderId;";
+
+        return this.connection.QueryFirstAsync<OrderPaymentMethod>(statement, new { OrderId = orderId });
+    }
 }

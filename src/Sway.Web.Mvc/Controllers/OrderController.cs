@@ -40,11 +40,23 @@ public sealed class OrderController : Controller
             address = new OrderAddress();
         }
 
+        OrderPaymentMethod paymentMethod;
+
+        try
+        {
+            paymentMethod = await this.repository.GetOrderPaymentMethod(id.ToString(), this.CancellationToken);
+        }
+        catch (InvalidOperationException ex) when (ex.Message.Contains("Sequence contains no elements"))
+        {
+            paymentMethod = new OrderPaymentMethod();
+        }
+
         var viewModel = new OrderDetailsViewModel
         {
             Order = order,
             OrderLines = orderLines,
             OrderAddress = address,
+            PaymentMethod = paymentMethod,
         };
 
         return this.View(viewModel);

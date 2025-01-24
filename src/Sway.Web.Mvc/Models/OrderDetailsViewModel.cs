@@ -9,4 +9,6 @@ public class OrderDetailsViewModel
     public IEnumerable<OrderLine> OrderLines { get; set; }
 
     public OrderAddress OrderAddress { get; set; }
+
+    public OrderPaymentMethod PaymentMethod { get; set; }
 }
