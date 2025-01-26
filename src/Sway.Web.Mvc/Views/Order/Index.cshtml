@@ -1,0 +1,30 @@
+﻿@using Sway.Core.Models
+@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Orders page";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <td></td>
+            <td>Id</td>
+            <td>Total Amount</td>
+            <td>
+                Status
+            </td>
+            <td>Order Placed</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var (order, index) in Model.Select((e, i) => (e, i))) {
+            <tr>
+                <td>@(index + 1)</td>
+                <td><a asp-action="Details" asp-route-id="@order.Id">@order.Id</a></td>
+                <td>@order.TotalAmount</td>
+                <td>@order.Status</td>
+                <td>@order.CreatedAt</td>
+            </tr>
+        }
+    </tbody>
+</table>

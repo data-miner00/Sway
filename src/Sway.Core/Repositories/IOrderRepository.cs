@@ -32,8 +32,8 @@ public interface IOrderRepository
     /// <param name="order">The order to be created.</param>
     /// <param name="cartItems">The cart items.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>The task.</returns>
-    Task CreateAsync(Order order, IEnumerable<CartItemDto> cartItems, CancellationToken cancellationToken);
+    /// <returns>The created order id.</returns>
+    Task<Guid> CreateAsync(Order order, IEnumerable<CartItemDto> cartItems, CancellationToken cancellationToken);
 
     /// <summary>
     /// Updates an existing order.
@@ -42,4 +42,22 @@ public interface IOrderRepository
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The task.</returns>
     Task UpdateAsync(Order order, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Gets all human-friendly order lines of an order.
+    /// </summary>
+    /// <param name="orderId">The order Id.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The list of order lines.</returns>
+    Task<IEnumerable<OrderLine>> GetOrderLinesAsync(string orderId, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Gets the order address associated.
+    /// </summary>
+    /// <param name="orderId">The order Id.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The order address found.</returns>
+    Task<OrderAddress> GetOrderAddressAsync(string orderId, CancellationToken cancellationToken);
+
+    Task<OrderPaymentMethod> GetOrderPaymentMethod(string orderId, CancellationToken cancellationToken);
 }

@@ -118,4 +118,19 @@ public sealed class PaymentMethodRepository : IPaymentMethodRepository
 
         return this.connection.ExecuteAsync(command);
     }
+
+    /// <inheritdoc/>
+    public Task CopyForOrderPaymentMethodAsync(string paymentId, string orderId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("PaymentMethodId", paymentId);
+        parameters.Add("OrderId", orderId);
+
+        return this.connection.ExecuteAsync(
+            SpNames.CopyPaymentMethodsToOrderPaymentMethods,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
 }

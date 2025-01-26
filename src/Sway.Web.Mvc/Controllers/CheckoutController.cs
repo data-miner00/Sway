@@ -55,7 +55,7 @@ public sealed class CheckoutController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> PlaceOrder()
+    public async Task<IActionResult> PlaceOrder(Guid addressId, Guid paymentId)
     {
         var userId = Constants.TestUserId;
 
@@ -73,15 +73,14 @@ public sealed class CheckoutController : Controller
             Currency = "MYR",
         };
 
-        await this.orderRepository.CreateAsync(order, items, this.CancellationToken);
+        var id = await this.orderRepository.CreateAsync(order, items, this.CancellationToken);
+        await this.addressRepository.CopyForOrderAsync(addressId.ToString(), id.ToString(), default);
+        await this.paymentMethodRepository.CopyForOrderPaymentMethodAsync(paymentId.ToString(), id.ToString(), default);
+
+        // Todo: clean cart
 
         this.TempData[Constants.Success] = "Successfully placed order!";
 
-        return this.RedirectToAction(nameof(this.OrderResult));
-    }
-
-    public async Task<IActionResult> OrderResult()
-    {
-        return this.View();
+        return this.RedirectToAction(nameof(OrderController.Details), "Order", new { Id = id });
     }
 }

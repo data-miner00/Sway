@@ -1,0 +1,111 @@
+﻿@using Sway.Common
+@model Sway.Web.Mvc.Models.OrderDetailsViewModel
+@{
+    // UI design reference: https://dribbble.com/shots/17920706-Order-Info
+    ViewData["Title"] = $"Order {Model.Order.Id}";
+}
+
+<partial name="_Notification" />
+
+<div class="border border-solid border-gray-100 rounded-lg p-4 max-w-screen-sm mx-auto">
+    <p class="text-sm text-gray-600">Home > Orders > ID 33847293837</p>
+
+    <div class="flex items-center justify-between">
+        <div class="text-2xl font-semibold my-3">Order ID: 33847293837</div>
+        <div class="flex gap-1 items-center">
+            <button class="block border-gray-500 border-solid border rounded-lg px-2 py-1 text-xs">Invoice</button>
+            <button class="block bg-gray-900 text-white text-xs px-2 py-1 rounded-lg">Track order</button>
+        </div>
+    </div>
+    <div class="flex gap-1 text-sm mb-2">
+        <div class="border-r border-solid border-gray-100 pr-2 mr-2"><span class="text-gray-600">Order date:</span> @Model.Order.CreatedAt</div>
+        <div class="text-green-600 font-semibold"><i class="bi bi-airplane-fill"></i> Estimated delivery: May 14, 2022</div>
+    </div>
+
+
+    <!-- Orderlines -->
+    <div class="border-t border-b border-solid border-gray-100 py-1 my-4">
+
+        @foreach (var orderLine in Model.OrderLines) {
+            <div class="flex items-center justify-between my-2">
+                <div class="flex items-center">
+                    <div class="border border-solid border-gray-300 rounded-lg bg-gray-100 w-16 h-16 mr-4">
+                    </div>
+                    <div>
+                        <div class="">@orderLine.ProductName</div> 
+                        <div class="text-sm text-gray-500">Space gray | 32GB | 1TB</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-bold">@orderLine.TotalPrice.ToMoney("RM")</div>
+                    <div class="text-sm text-gray-500 text-right">Qty: @orderLine.Quantity</div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="flex border-b border-solid border-gray-100 py-4">
+        <div class="basis-1/2">
+            <div class="font-semibold mb-1">Payment</div>
+            <div>@Model.PaymentMethod.Type <span class="text-sm text-gray-600">@Model.PaymentMethod.CardNumber</span></div>
+        </div>
+        <div class="basis-1/2">
+            <div class="font-semibold mb-1">Delivery</div>
+            <div>
+                <div class="text-xs text-gray-400">Address</div>
+                <div>
+                    <div>
+                        @Model.OrderAddress.ToString()
+                    </div>
+                    <div>231-5234 4234</div>
+                </div>
+            </div>
+            <div>
+                <div class="text-xs text-gray-400">Delivery method</div>
+                <div>Cash on delivery</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex border-b border-solid border-gray-100 py-4">
+        <div class="basis-1/2">
+            <div class="font-semibold mb-1">Need help?</div>
+            <div>
+                <div><i class="bi bi-question-square-fill text-gray-500"></i> Order issues</div>
+                <div><i class="bi bi-car-front-fill text-gray-500"></i> Delivery info</div>
+                <div><i class="bi bi-credit-card-2-back-fill text-gray-500"></i> Returns</div>
+            </div>
+        </div>
+        <div class="basis-1/2">
+            <div class="font-semibold mb-1">Order Summary</div>
+            <div class="py-2 border-b border-dashed border-gray-300 mb-2">
+                <div class="flex justify-between">
+                    <div>Subtotal</div>
+                    <div>@Model.Order.TotalAmount.ToMoney("RM")</div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-400">
+                    <div>Discount</div>
+                    <div>(20%) - @Model.Order.TotalAmount.ToMoney("RM")</div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-400">
+                    <div>Delivery <i class="bi bi-info-circle-fill text-xs"></i></div>
+                    <div>RM 0.00</div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-400">
+                    <div>Tax <i class="bi bi-info-circle-fill text-xs"></i></div>
+                    <div>@Model.Order.TotalAmount.ToMoney("RM")</div>
+                </div>
+            </div>
+            <div class="flex justify-between">
+                <div>Total</div>
+                <div class="font-bold">@Model.Order.TotalAmount.ToMoney("RM")</div>
+            </div>
+        </div>
+    </div>
+
+    <h1>Order ID: @Model.Order.Id</h1>
+    <p>@Model.Order.Status</p>
+    <p>@Model.Order.TotalAmount</p>
+    <p>@Model.Order.ModifiedAt</p>
+
+</div>

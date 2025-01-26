@@ -118,4 +118,19 @@ public sealed class AddressRepository : IAddressRepository
             parameters,
             commandType: CommandType.StoredProcedure);
     }
+
+    /// <inheritdoc/>
+    public Task CopyForOrderAsync(string addressId, string orderId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("AddressId", addressId);
+        parameters.Add("OrderId", orderId);
+
+        return this.connection.ExecuteAsync(
+            SpNames.CopyAddressToOrderAddress,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
 }
