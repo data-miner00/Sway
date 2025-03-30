@@ -11,7 +11,7 @@ BEGIN
 	WITH cte AS (
 		SELECT
 			p.Id Id,
-			SUM(ol.Quantity) QuantitySold
+			QuantitySold = SUM(ol.Quantity)
 		FROM
 			[Products] p
 			LEFT JOIN [OrderItems] ol
