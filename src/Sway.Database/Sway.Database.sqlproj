@@ -190,7 +190,7 @@
     <Build Include="dbo\Stored Procedures\usp_AddNotification.sql" />
     <Build Include="dbo\Views\vw_OrderItemsWithWeightage.sql" />
     <Build Include="dbo\Stored Procedures\usp_SyncProductUnitSold.sql" />
-    <None Include="Scripts\RenameColumn.sql" />
+    <None Include="Scripts\RenameDatabaseObject.sql" />
     <None Include="Scripts\CreateTransferSchema.sql" />
     <None Include="Scripts\SelectTableInfo.sql" />
     <None Include="Scripts\RemoveDuplicateRows.sql" />
@@ -201,6 +201,7 @@
     <Build Include="dbo\Stored Procedures\usp_GetOrderLinesByOrderId.sql" />
     <Build Include="dbo\Stored Procedures\usp_CopyAddressToOrderAddress.sql" />
     <Build Include="dbo\Stored Procedures\usp_CopyPaymentMethodToOrderPaymentMethods.sql" />
+    <Build Include="dbo\Stored Procedures\usp_SearchProducts.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />

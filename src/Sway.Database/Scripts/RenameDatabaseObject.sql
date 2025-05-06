@@ -2,7 +2,7 @@
 
 IF @Execute = 1
 BEGIN
-	-- Rename Table
+	-- Rename Table, Stored Procedure, and Trigger
 	EXEC sp_rename 'dbo.OrderItems', 'OrderLines';
 
 	-- Rename Column

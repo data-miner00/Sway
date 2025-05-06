@@ -84,4 +84,15 @@ public sealed class ProductRepository : IProductRepository
 
         return this.connection.ExecuteAsync(command);
     }
+
+    /// <inheritdoc/>
+    public Task<IEnumerable<Product>> SearchAsync(string query, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        var command = new CommandDefinition(
+            "EXEC [dbo].[usp_SearchProducts] @Query;",
+            new { Query = query });
+
+        return this.connection.QueryAsync<Product>(command);
+    }
 }
