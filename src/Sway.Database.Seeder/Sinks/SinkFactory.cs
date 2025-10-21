@@ -13,6 +13,8 @@ internal sealed class SinkFactory : ISinkFactory
     private readonly SqlScriptSink<ProductRating> productRatingSqlScriptSink;
     private readonly DatabaseSink<PaymentMethod> paymentDatabaseSink;
     private readonly SqlScriptSink<PaymentMethod> paymentSqlScriptSink;
+    private readonly DatabaseSink<Coupon> couponDatabaseSink;
+    private readonly SqlScriptSink<Coupon> couponSqlScriptSink;
     private readonly VoidSink voidSink;
 
     /// <summary>
@@ -24,6 +26,8 @@ internal sealed class SinkFactory : ISinkFactory
     /// <param name="productRatingSqlScriptSink">The product rating sql script sink.</param>
     /// <param name="paymentDatabaseSink">The payment method database sink.</param>
     /// <param name="paymentSqlScriptSink">The payment method sql script sink.</param>
+    /// <param name="couponDatabaseSink">The coupon database sink.</param>
+    /// <param name="couponSqlScriptSink">The coupon sql script sink.</param>
     /// <param name="voidSink">The void sink.</param>
     public SinkFactory(
         DatabaseSink<User> userDatabaseSink,
@@ -32,6 +36,8 @@ internal sealed class SinkFactory : ISinkFactory
         SqlScriptSink<ProductRating> productRatingSqlScriptSink,
         DatabaseSink<PaymentMethod> paymentDatabaseSink,
         SqlScriptSink<PaymentMethod> paymentSqlScriptSink,
+        DatabaseSink<Coupon> couponDatabaseSink,
+        SqlScriptSink<Coupon> couponSqlScriptSink,
         VoidSink voidSink)
     {
         this.userDatabaseSink = userDatabaseSink;
@@ -40,6 +46,8 @@ internal sealed class SinkFactory : ISinkFactory
         this.productRatingSqlScriptSink = productRatingSqlScriptSink;
         this.paymentDatabaseSink = paymentDatabaseSink;
         this.paymentSqlScriptSink = paymentSqlScriptSink;
+        this.couponDatabaseSink = couponDatabaseSink;
+        this.couponSqlScriptSink = couponSqlScriptSink;
         this.voidSink = voidSink;
     }
 
@@ -54,6 +62,8 @@ internal sealed class SinkFactory : ISinkFactory
             (SwayEntity.ProductRating, SinkType.SqlScript) => this.productRatingSqlScriptSink,
             (SwayEntity.PaymentMethod, SinkType.Database) => this.paymentDatabaseSink,
             (SwayEntity.PaymentMethod, SinkType.SqlScript) => this.paymentSqlScriptSink,
+            (SwayEntity.Coupon, SinkType.Database) => this.couponDatabaseSink,
+            (SwayEntity.Coupon, SinkType.SqlScript) => this.couponSqlScriptSink,
             _ => this.voidSink,
         };
     }

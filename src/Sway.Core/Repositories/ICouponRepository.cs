@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// The contract for <see cref="Coupon"/> repository.
 /// </summary>
-public interface ICouponRepository
+public interface ICouponRepository : IRepository<Coupon>
 {
     /// <summary>
     /// Retrieves all coupons.

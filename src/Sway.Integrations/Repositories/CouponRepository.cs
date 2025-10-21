@@ -29,12 +29,18 @@ public sealed class CouponRepository : ICouponRepository
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var command = new CommandDefinition(
-            "EXEC [dbo].[usp_AddCoupon] @Code, @Description, @DiscountAmount, @DiscountUnit, @ApplicableForBrand;",
-            coupon,
-            commandType: CommandType.StoredProcedure);
+        var parameters = new DynamicParameters();
+        parameters.Add("UserId", coupon.OwnerId);
+        parameters.Add("Code", coupon.Code);
+        parameters.Add("Description", coupon.Description);
+        parameters.Add("DiscountAmount", coupon.DiscountAmount);
+        parameters.Add("DiscountUnit", coupon.Type);
+        parameters.Add("ApplicableForBrand", coupon.ApplicableFor);
 
-        return this.connection.ExecuteAsync(command);
+        return this.connection.ExecuteAsync(
+            SpNames.AddCouponForUser,
+            parameters,
+            commandType: CommandType.StoredProcedure);
     }
 
     /// <inheritdoc/>

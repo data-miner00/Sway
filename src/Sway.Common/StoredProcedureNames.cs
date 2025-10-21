@@ -73,4 +73,6 @@ public static class StoredProcedureNames
     public const string GetCouponsForUser = "usp_GetCouponsForUser";
 
     public const string DeleteCouponById = "usp_DeleteCouponById";
+
+    public const string AddCouponForUser = "usp_AddCouponForUser";
 }

@@ -28,4 +28,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="Sway.Common.StoredProcedureNames" Alias="SpNames" />
+  </ItemGroup>
+
 </Project>
