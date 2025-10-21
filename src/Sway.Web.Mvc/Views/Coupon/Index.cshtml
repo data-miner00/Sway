@@ -1,0 +1,31 @@
+﻿@using Sway.Core.Models
+@model IEnumerable<Coupon>
+@{
+    ViewData["Title"] = "Coupons";
+    Layout = "_ProfileLayout";
+}
+
+<h1 class="text-2xl font-bold mb-4">Coupons</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td></td>
+            <td>Code</td>
+            <td>Description</td>
+            <td>Amount</td>
+            <td>Expiry Date</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var (coupon, index) in Model.Select((e, i) => (e, i))) {
+            <tr>
+                <td>@(index + 1)</td>
+                <td>@coupon.Code</td>
+                <td>@coupon.Description</td>
+                <td>@coupon.DiscountAmount + @coupon.Type</td>
+                <td>@coupon.ExpiryDate</td>
+            </tr>
+        }
+    </tbody>
+</table>

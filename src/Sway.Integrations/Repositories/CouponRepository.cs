@@ -78,4 +78,18 @@ public sealed class CouponRepository : ICouponRepository
 
         return this.connection.ExecuteAsync(command);
     }
+
+    /// <inheritdoc/>
+    public Task<IEnumerable<Coupon>> GetByUserAsync(string userId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("UserId", userId);
+
+        return this.connection.QueryAsync<Coupon>(
+            SpNames.GetCouponsForUser,
+            parameters,
+            commandType: CommandType.StoredProcedure);
+    }
 }

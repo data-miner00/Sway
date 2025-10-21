@@ -204,6 +204,7 @@
     <Build Include="dbo\Stored Procedures\usp_SearchProducts.sql" />
     <None Include="Seeds\SeedBrandsCsv.sql" />
     <None Include="Seeds\Brands.csv" />
+    <Build Include="dbo\Stored Procedures\usp_GetCouponsForUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\LastExecutedStatement.sql" />
