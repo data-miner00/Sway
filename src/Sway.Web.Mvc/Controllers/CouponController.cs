@@ -21,13 +21,31 @@ public class CouponController : Controller
     }
 
     /// <summary>
+    /// Gets the cancellation token.
+    /// </summary>
+    public CancellationToken CancellationToken => this.HttpContext.RequestAborted;
+
+    /// <summary>
     /// The coupon home page.
     /// </summary>
     /// <returns>The action result.</returns>
     public async Task<IActionResult> Index()
     {
-        var coupons = await this.repository.GetByUserAsync(Constants.TestUserId, default);
+        var coupons = await this.repository.GetByUserAsync(Constants.TestUserId, this.CancellationToken);
 
         return this.View(coupons);
+    }
+
+    /// <summary>
+    /// Deletes a coupon by Id.
+    /// </summary>
+    /// <param name="couponId">The coupon id.</param>
+    /// <returns>The action result.</returns>
+    [HttpDelete("[controller]/{couponId}")]
+    public async Task<IActionResult> Delete(string couponId)
+    {
+        await this.repository.DeleteByIdAsync(couponId, this.CancellationToken);
+
+        return this.NoContent();
     }
 }

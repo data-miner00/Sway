@@ -42,12 +42,13 @@ public sealed class CouponRepository : ICouponRepository
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var command = new CommandDefinition(
-            "EXEC [dbo].[usp_DeleteCouponById] @Id;",
-            new { Id = id },
-            commandType: CommandType.StoredProcedure);
+        var parameters = new DynamicParameters();
+        parameters.Add("CouponId", id);
 
-        return this.connection.ExecuteAsync(command);
+        return this.connection.ExecuteAsync(
+            SpNames.DeleteCouponById,
+            parameters,
+            commandType: CommandType.StoredProcedure);
     }
 
     /// <inheritdoc/>

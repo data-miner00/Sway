@@ -71,4 +71,6 @@ public static class StoredProcedureNames
     public const string CopyPaymentMethodsToOrderPaymentMethods = "usp_CopyPaymentMethodToOrderPaymentMethods";
 
     public const string GetCouponsForUser = "usp_GetCouponsForUser";
+
+    public const string DeleteCouponById = "usp_DeleteCouponById";
 }
