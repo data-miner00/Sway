@@ -6,12 +6,12 @@
     "watch:css": "tailwindcss -i ./wwwroot/lib/tailwindcss/index.css -o ./wwwroot/lib/tailwindcss/dist/styles.css --watch",
     "build:css": "tailwindcss -i ./wwwroot/lib/tailwindcss/index.css -o ./wwwroot/lib/tailwindcss/dist/styles.css",
     "release:css": "tailwindcss -i ./wwwroot/lib/tailwindcss/index.css -o ./wwwroot/lib/tailwindcss/dist/styles.css --minify",
-    "copy:bicon": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/bootstrap-icons/font/* -DestinationFolder ./wwwroot/lib/bootstrap-icon/",
-    "copy:jquery": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/jquery/dist/* -DestinationFolder ./wwwroot/lib/jquery/",
-    "copy:htmx": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/htmx.org/dist/* -DestinationFolder ./wwwroot/lib/htmx/",
-    "copy:react": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/react/umd/* -DestinationFolder ./wwwroot/lib/react/",
-    "copy:react-dom": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ./node_modules/react-dom/umd/* -DestinationFolder ./wwwroot/lib/react-dom/",
-    "copy": "pnpm copy:bicon && pnpm copy:jquery && pnpm copy:htmx && pnpm copy:react && pnpm copy:react-dom"
+    "copy:bicon": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ../node_modules/bootstrap-icons/font/* -DestinationFolder ./wwwroot/lib/bootstrap-icon/",
+    "copy:jquery": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ../node_modules/jquery/dist/* -DestinationFolder ./wwwroot/lib/jquery/",
+    "copy:htmx": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ../node_modules/htmx.org/dist/* -DestinationFolder ./wwwroot/lib/htmx/",
+    "copy:react": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ../node_modules/react/umd/* -DestinationFolder ./wwwroot/lib/react/",
+    "copy:react-dom": "powershell ./Scripts/Copy-FolderItems.ps1 -SourceFolder ../node_modules/react-dom/umd/* -DestinationFolder ./wwwroot/lib/react-dom/",
+    "copy": "npm run copy:bicon && npm run copy:jquery && npm run copy:htmx && npm run copy:react && npm run copy:react-dom"
   },
   "keywords": [],
   "author": "shaun chong <mumk0313@gmail.com>",

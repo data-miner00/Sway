@@ -20,6 +20,6 @@
   </ItemGroup>
 
   <Target Name="Tailwind" BeforeTargets="Build">
-    <Exec Command="pnpm build:css" />
+    <Exec Command="npm run build:css" />
   </Target>
 </Project>
