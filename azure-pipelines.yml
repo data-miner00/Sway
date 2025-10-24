@@ -44,3 +44,13 @@ steps:
     inputs:
       platform: '$(buildPlatform)'
       configuration: '$(buildConfiguration)'
+
+  - task: BuildQualityChecks@7
+    displayName: 'Run code coverage analysis'
+    inputs:
+      checkWarnings: false
+      checkCoverage: true
+      coverageThreshold: 1
+      coverageType: blocks
+      buildPlatform: '$(buildPlatform)'
+      buildConfiguration: '$(buildConfiguration)'
