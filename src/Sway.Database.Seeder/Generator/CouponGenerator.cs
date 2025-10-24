@@ -43,8 +43,8 @@ internal class CouponGenerator : IGenerator<Coupon>
             .RuleFor(c => c.Code, f => f.Random.AlphaNumeric(10).ToUpper())
             .RuleFor(c => c.Description, f => f.Lorem.Text())
             .RuleFor(c => c.DiscountAmount, f => f.Random.Int(5, 50))
-            .RuleFor(c => c.Type, f => f.PickRandom<DiscountType>())
-            .RuleFor(c => c.ExpiryDate, f => f.Date.FutureOffset(30).DateTime)
+            .RuleFor(c => c.DiscountUnit, f => f.PickRandom(DiscountType.Flat, DiscountType.Percentage))
+            .RuleFor(c => c.ExpireAt, f => f.Date.FutureOffset(30).DateTime)
             .RuleFor(c => c.OwnerId, f => this.existingUserId)
             .RuleFor(c => c.CreatedAt, f => f.Date.RecentOffset(30).DateTime)
             .RuleFor(c => c.ModifiedAt, (f, c) => f.Date.BetweenOffset(c.CreatedAt.Date, DateTimeOffset.Now).DateTime);

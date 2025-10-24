@@ -40,7 +40,7 @@ internal class CouponSeedSqlWriter : ISqlWriter<Coupon>
             sb.AppendLine($"    @Code = '{user.Code}',");
             sb.AppendLine($"    @Description = '{user.Description}',");
             sb.AppendLine($"    @DiscountAmount = {user.DiscountAmount},");
-            sb.AppendLine($"    @DiscountUnit = '{user.Type}',");
+            sb.AppendLine($"    @DiscountUnit = '{user.DiscountUnit}',");
             sb.AppendLine($"    @ApplicableForBrand = NULL;");
 
             sb.AppendLine();

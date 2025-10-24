@@ -24,8 +24,8 @@
                 <td>@(index + 1)</td>
                 <td>@coupon.Code</td>
                 <td>@coupon.Description</td>
-                <td>@coupon.DiscountAmount + @coupon.Type</td>
-                <td>@coupon.ExpiryDate</td>
+                <td>@coupon.DiscountAmount + @coupon.DiscountUnit</td>
+                <td>@coupon.ExpireAt</td>
                 <td>
                     <form action="javascript:deleteCoupon('@coupon.Id.ToString()')">
                         <button type="submit" class="btn btn-ghost" onclick="return confirm('Are you sure?')">

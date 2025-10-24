@@ -34,8 +34,8 @@ public sealed class CouponRepository : ICouponRepository
         parameters.Add("Code", coupon.Code);
         parameters.Add("Description", coupon.Description);
         parameters.Add("DiscountAmount", coupon.DiscountAmount);
-        parameters.Add("DiscountUnit", coupon.Type);
-        parameters.Add("ApplicableForBrand", coupon.ApplicableFor);
+        parameters.Add("DiscountUnit", coupon.DiscountUnit);
+        parameters.Add("ApplicableForBrand", coupon.ApplicableForBrand);
 
         return this.connection.ExecuteAsync(
             SpNames.AddCouponForUser,
