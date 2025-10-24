@@ -45,7 +45,7 @@ steps:
       platform: '$(buildPlatform)'
       configuration: '$(buildConfiguration)'
 
-  - task: BuildQualityChecks@7
+  - task: BuildQualityChecks@9
     displayName: 'Run code coverage analysis'
     inputs:
       checkWarnings: false
