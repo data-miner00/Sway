@@ -113,6 +113,9 @@ internal static class ContainerConfig
         builder.RegisterType<PaymentMethodRepository>().As<IRepository<PaymentMethod>>().SingleInstance();
         builder.RegisterType<PaymentMethodSeedSqlWriter>().As<ISqlWriter<PaymentMethod>>().SingleInstance();
 
+        builder.RegisterType<CouponRepository>().As<IRepository<Coupon>>().SingleInstance();
+        builder.RegisterType<CouponSeedSqlWriter>().As<ISqlWriter<Coupon>>().SingleInstance();
+
         return builder;
     }
 
@@ -136,6 +139,15 @@ internal static class ContainerConfig
             })
             .As<IGenerator<PaymentMethod>>().SingleInstance();
 
+        builder.Register(
+            ctx =>
+            {
+                var option = ctx.Resolve<SeedingOption>();
+
+                return new CouponGenerator(option.CouponOption.ExistingUserId);
+            })
+            .As<IGenerator<Coupon>>().SingleInstance();
+
         return builder;
     }
 
@@ -147,6 +159,9 @@ internal static class ContainerConfig
         builder.RegisterType<SqlScriptSink<ProductRating>>().AsSelf().SingleInstance();
         builder.RegisterType<DatabaseSink<PaymentMethod>>().AsSelf().SingleInstance();
         builder.RegisterType<SqlScriptSink<PaymentMethod>>().AsSelf().SingleInstance();
+        builder.RegisterType<DatabaseSink<Coupon>>().AsSelf().SingleInstance();
+        builder.RegisterType<SqlScriptSink<Coupon>>().AsSelf().SingleInstance();
+
         builder.RegisterType<VoidSink>().AsSelf().SingleInstance();
 
         builder.RegisterType<SinkFactory>().As<ISinkFactory>().SingleInstance();

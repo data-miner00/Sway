@@ -69,6 +69,7 @@ public static class Program
         builder.Services.AddSingleton<ICredentialRepository, CredentialRepository>();
         builder.Services.AddSingleton<INotificationRepository, NotificationRepository>();
         builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
+        builder.Services.AddSingleton<ICouponRepository, CouponRepository>();
 
         return builder;
     }

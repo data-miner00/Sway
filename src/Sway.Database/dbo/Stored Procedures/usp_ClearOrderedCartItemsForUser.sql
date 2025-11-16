@@ -13,7 +13,7 @@ BEGIN
 
     BEGIN TRAN
 
-	SELECT @CartId = [CartId] FROM [dbo].[Users]
+	SELECT @CartId = [CartId] FROM [dbo].[Users] WITH (HOLDLOCK)
 	WHERE [Id] = @UserId
 
 	DELETE FROM [dbo].[CartItems]

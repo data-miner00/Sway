@@ -84,4 +84,16 @@ public class ProductController : Controller
 
         return this.RedirectToAction(nameof(this.Details), new { id });
     }
+
+    public async Task<IActionResult> Search([FromQuery] string q)
+    {
+        var products = await this.productRepository.SearchAsync(q, this.CancellationToken);
+        var viewModel = new ProductSearchViewModel
+        {
+            Results = products,
+            SearchTerm = q,
+        };
+
+        return this.View(viewModel);
+    }
 }

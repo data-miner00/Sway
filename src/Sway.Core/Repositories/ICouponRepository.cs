@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// The contract for <see cref="Coupon"/> repository.
 /// </summary>
-public interface ICouponRepository
+public interface ICouponRepository : IRepository<Coupon>
 {
     /// <summary>
     /// Retrieves all coupons.
@@ -47,4 +47,12 @@ public interface ICouponRepository
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The task.</returns>
     Task DeleteByIdAsync(string id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Retrieves all coupons for a specific user.
+    /// </summary>
+    /// <param name="userId">The user Id.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The coupons that belong to the user.</returns>
+    Task<IEnumerable<Coupon>> GetByUserAsync(string userId, CancellationToken cancellationToken);
 }

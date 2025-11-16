@@ -28,7 +28,8 @@
     <a asp-action="Index" asp-controller="Home" class="btn btn-ghost text-xl">Sway</a>
   </div>
   <div class="navbar-end">
-    <button class="btn btn-ghost btn-circle">
+    <input placeholder="Search..." class="input input-bordered" />
+    <button class="btn btn-ghost btn-circle" onclick="return onSearchButtonClicked(event)">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-5 w-5"
@@ -73,3 +74,24 @@
     </a>
   </div>
 </div>
+
+  @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
+
+  <script type="text/javascript">
+      console.log('Navbar loaded!');
+
+      function onSearchButtonClicked(event) {
+          event.preventDefault();
+          console.log(event);
+          const searchInput = document.querySelector('input[placeholder="Search..."]');
+          const searchValue = searchInput.value;
+          console.log('Search value:', searchValue);
+
+          if (!searchValue) {
+              alert('Please enter a search term!')
+              return;
+          }
+
+          window.location.href = "/Product/Search?q=" + searchValue;
+      }
+  </script>

@@ -47,4 +47,12 @@ public interface IProductRepository
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The task.</returns>
     Task DeleteByIdAsync(string id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Searches for products based on a query string.
+    /// </summary>
+    /// <param name="query">The query string.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The list of matched products.</returns>
+    Task<IEnumerable<Product>> SearchAsync(string query, CancellationToken cancellationToken);
 }

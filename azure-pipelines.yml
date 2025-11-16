@@ -12,7 +12,6 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  pnpm_config_cache: $(Pipeline.Workspace)/.pnpm-store
 
 steps:
   - task: CmdLine@2
@@ -23,24 +22,10 @@ steps:
         dir src
     displayName: Show working directory
 
-  - task: Cache@2
-    inputs:
-      key: 'pnpm | "$(Agent.OS)" | $(System.DefaultWorkingDirectory)/src/pnpm-lock.yaml'
-      path: $(pnpm_config_cache)
-    displayName: Cache pnpm
-
   - script: |
-      corepack enable
-      corepack prepare pnpm@latest-9 --activate
-    displayName: "Setup pnpm"
-
-  - script: pnpm config set store-dir $(pnpm_config_cache)
-    displayName: "Set pnpm store directory"
-
-  - script: |
-      pnpm install
+      npm install
     workingDirectory: $(System.DefaultWorkingDirectory)/src
-    displayName: "pnpm install"
+    displayName: "npm install"
 
   - task: NuGetToolInstaller@1
 
@@ -59,3 +44,14 @@ steps:
     inputs:
       platform: '$(buildPlatform)'
       configuration: '$(buildConfiguration)'
+      codeCoverageEnabled: true
+
+  - task: BuildQualityChecks@10
+    displayName: 'Run code coverage analysis'
+    inputs:
+      checkWarnings: false
+      checkCoverage: true
+      coverageThreshold: 1
+      coverageType: blocks
+      buildPlatform: '$(buildPlatform)'
+      buildConfiguration: '$(buildConfiguration)'

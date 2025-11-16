@@ -44,7 +44,6 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -183,6 +182,7 @@ List of resources that are helpful and would like to give credit to.
 - [Babel](https://babeljs.io/docs/presets)
 - [SQL Server Tips, Articles and Training](https://www.mssqltips.com/)
 - [Get Return Value From Stored Procedure Using Dapper ORM In ASP.NET MVC](https://www.c-sharpcorner.com/article/get-return-value-from-stored-procedure-using-dapper-orm/)
+- [Table hints (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/queries/hints-transact-sql-table)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

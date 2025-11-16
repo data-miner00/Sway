@@ -20,7 +20,7 @@ BEGIN
     SELECT
 		[ShoppingCartId],
 		[ProductId],
-		SUM([Quantity]) AS Quantity
+		Quantity = SUM([Quantity])
 	FROM [dbo].[CartItems]
 	GROUP BY [ShoppingCartId], [ProductId];
 

@@ -29,12 +29,18 @@ public sealed class CouponRepository : ICouponRepository
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var command = new CommandDefinition(
-            "EXEC [dbo].[usp_AddCoupon] @Code, @Description, @DiscountAmount, @DiscountUnit, @ApplicableForBrand;",
-            coupon,
-            commandType: CommandType.StoredProcedure);
+        var parameters = new DynamicParameters();
+        parameters.Add("UserId", coupon.OwnerId);
+        parameters.Add("Code", coupon.Code);
+        parameters.Add("Description", coupon.Description);
+        parameters.Add("DiscountAmount", coupon.DiscountAmount);
+        parameters.Add("DiscountUnit", coupon.DiscountUnit);
+        parameters.Add("ApplicableForBrand", coupon.ApplicableForBrand);
 
-        return this.connection.ExecuteAsync(command);
+        return this.connection.ExecuteAsync(
+            SpNames.AddCouponForUser,
+            parameters,
+            commandType: CommandType.StoredProcedure);
     }
 
     /// <inheritdoc/>
@@ -42,12 +48,13 @@ public sealed class CouponRepository : ICouponRepository
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var command = new CommandDefinition(
-            "EXEC [dbo].[usp_DeleteCouponById] @Id;",
-            new { Id = id },
-            commandType: CommandType.StoredProcedure);
+        var parameters = new DynamicParameters();
+        parameters.Add("CouponId", id);
 
-        return this.connection.ExecuteAsync(command);
+        return this.connection.ExecuteAsync(
+            SpNames.DeleteCouponById,
+            parameters,
+            commandType: CommandType.StoredProcedure);
     }
 
     /// <inheritdoc/>
@@ -77,5 +84,19 @@ public sealed class CouponRepository : ICouponRepository
             commandType: CommandType.StoredProcedure);
 
         return this.connection.ExecuteAsync(command);
+    }
+
+    /// <inheritdoc/>
+    public Task<IEnumerable<Coupon>> GetByUserAsync(string userId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var parameters = new DynamicParameters();
+        parameters.Add("UserId", userId);
+
+        return this.connection.QueryAsync<Coupon>(
+            SpNames.GetCouponsForUser,
+            parameters,
+            commandType: CommandType.StoredProcedure);
     }
 }

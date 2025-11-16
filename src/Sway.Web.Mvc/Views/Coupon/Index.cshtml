@@ -1,0 +1,58 @@
+﻿@using Sway.Core.Models
+@model IEnumerable<Coupon>
+@{
+    ViewData["Title"] = "Coupons";
+    Layout = "_ProfileLayout";
+}
+
+<h1 class="text-2xl font-bold mb-4">Coupons</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td></td>
+            <td>Code</td>
+            <td>Description</td>
+            <td>Amount</td>
+            <td>Expiry Date</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var (coupon, index) in Model.Select((e, i) => (e, i))) {
+            <tr id="@("container-" + coupon.Id.ToString())">
+                <td>@(index + 1)</td>
+                <td>@coupon.Code</td>
+                <td>@coupon.Description</td>
+                <td>@coupon.DiscountAmount + @coupon.DiscountUnit</td>
+                <td>@coupon.ExpireAt</td>
+                <td>
+                    <form action="javascript:deleteCoupon('@coupon.Id.ToString()')">
+                        <button type="submit" class="btn btn-ghost" onclick="return confirm('Are you sure?')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_LibraryScriptsPartial");}
+
+    <script type="text/javascript">
+        function deleteCouponFromUi(couponId) {
+            var container = $(`#container-${couponId}`);
+            if (container) {
+                container.remove();
+            }
+        }
+
+        function deleteCoupon(couponId) {
+            fetch(`/Coupon/${couponId}`, { method: "DELETE" })
+                .then(() => deleteCouponFromUi(couponId))
+                .catch(console.error);
+        }
+    </script>
+}

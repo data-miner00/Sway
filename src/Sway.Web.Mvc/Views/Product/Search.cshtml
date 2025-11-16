@@ -1,0 +1,34 @@
+﻿@model Sway.Web.Mvc.Models.ProductSearchViewModel
+@{
+    ViewData["Title"] = "Search results for " + Model.SearchTerm;
+}
+
+<h1 class="text-3xl mb-12">Search result for <span class="font-bold">@Model.SearchTerm</span> (@Model.Results.Count())</h1>
+
+<div class="flex gap-4 flex-wrap">
+    @foreach (var product in Model.Results)
+    {
+        <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id">
+            <article class="card bg-base-100 w-96 shadow-xl">
+                <figure>
+                    <img
+                        src="@Constants.TestItemPhotoUrl"
+                        alt="Shoes"
+                    />
+                </figure>
+                <div class="card-body">
+                    <h2 class="card-title">
+                        @product.Name
+                        <span class="badge badge-secondary">NEW</span>
+                    </h2>
+                    <p>@product.Description</p>
+                    <div class="card-actions justify-end">
+                        <div class="badge badge-outline">Fashion</div>
+                        <div class="badge badge-outline">Products</div>
+                    </div>
+                </div>
+            </article>
+        </a>
+    }
+</div>
+

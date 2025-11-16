@@ -2,9 +2,17 @@
 
 using Autofac;
 
+/// <summary>
+/// The database seeder.
+/// </summary>
 internal static class Program
 {
-    public static void Main(string[] args)
+    /// <summary>
+    /// The entry point for the program.
+    /// </summary>
+    /// <param name="args">The command line arguments.</param>
+    /// <returns>The task.</returns>
+    public static Task Main(string[] args)
     {
         using var tokenSource = new CancellationTokenSource();
 
@@ -12,6 +20,6 @@ internal static class Program
 
         var executor = container.Resolve<IExecutor>();
 
-        executor.ExecuteAsync(tokenSource.Token).GetAwaiter().GetResult();
+        return executor.ExecuteAsync(tokenSource.Token);
     }
 }

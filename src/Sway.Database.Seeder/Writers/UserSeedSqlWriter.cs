@@ -8,8 +8,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using SpNames = Sway.Common.StoredProcedureNames;
-
 internal sealed class UserSeedSqlWriter : ISqlWriter<User>
 {
     private readonly SqlFileNameBuilder fileNameBuilder;
