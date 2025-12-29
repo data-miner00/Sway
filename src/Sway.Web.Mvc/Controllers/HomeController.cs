@@ -6,6 +6,9 @@ using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
 using System.Diagnostics;
 
+/// <summary>
+/// The home controller.
+/// </summary>
 public sealed class HomeController : Controller
 {
     private readonly IProductRepository productRepository;

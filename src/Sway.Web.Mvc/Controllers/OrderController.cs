@@ -1,20 +1,29 @@
 ﻿namespace Sway.Web.Mvc.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Sway.Common;
 using Sway.Core.Models;
 using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
 
+/// <summary>
+/// The order controller.
+/// </summary>
+[Route("[controller]/[action]")]
 public sealed class OrderController : Controller
 {
     private readonly IOrderRepository repository;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OrderController"/> class.
+    /// </summary>
+    /// <param name="repository">The order repository.</param>
     public OrderController(IOrderRepository repository)
     {
-        this.repository = repository;
+        this.repository = Guard.ThrowIfNull(repository);
     }
 
-    public CancellationToken CancellationToken => this.HttpContext.RequestAborted;
+    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
     public async Task<IActionResult> Index()
     {

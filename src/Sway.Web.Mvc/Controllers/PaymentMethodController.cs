@@ -6,6 +6,9 @@ using Sway.Core.Dtos;
 using Sway.Core.Models;
 using Sway.Core.Repositories;
 
+/// <summary>
+/// The payment method page controller.
+/// </summary>
 [Route("Profile/[controller]/[action]")]
 public sealed class PaymentMethodController : Controller
 {

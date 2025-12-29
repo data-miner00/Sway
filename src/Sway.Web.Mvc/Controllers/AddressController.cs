@@ -6,6 +6,9 @@ using Sway.Core.Dtos;
 using Sway.Core.Models;
 using Sway.Common;
 
+/// <summary>
+/// The address controller.
+/// </summary>
 [Route("Profile/[controller]/[action]")]
 public sealed class AddressController : Controller
 {
@@ -85,7 +88,7 @@ public sealed class AddressController : Controller
 
         await this.repository.CreateAsync(address, this.CancellationToken);
 
-        return this.NoContent();
+        return this.Redirect(string.Empty);
     }
 
     [HttpDelete("{id:guid}")]

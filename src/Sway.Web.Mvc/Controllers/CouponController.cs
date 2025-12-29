@@ -7,6 +7,7 @@ using Sway.Core.Repositories;
 /// <summary>
 /// The coupon controller.
 /// </summary>
+[Route("[controller]")]
 public class CouponController : Controller
 {
     private readonly ICouponRepository repository;
@@ -41,7 +42,7 @@ public class CouponController : Controller
     /// </summary>
     /// <param name="couponId">The coupon id.</param>
     /// <returns>The action result.</returns>
-    [HttpDelete("[controller]/{couponId}")]
+    [HttpDelete("{couponId}")]
     public async Task<IActionResult> Delete(string couponId)
     {
         await this.repository.DeleteByIdAsync(couponId, this.CancellationToken);

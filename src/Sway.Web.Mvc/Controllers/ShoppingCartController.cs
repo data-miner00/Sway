@@ -6,6 +6,9 @@ using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
 using System.ComponentModel.DataAnnotations;
 
+/// <summary>
+/// The shopping cart controller.
+/// </summary>
 public sealed class ShoppingCartController : Controller
 {
     public const string ControllerName = "ShoppingCart";
