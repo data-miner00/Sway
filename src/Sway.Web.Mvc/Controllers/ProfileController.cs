@@ -7,6 +7,9 @@ using Sway.Core.Models;
 using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
 
+/// <summary>
+/// The user profile controller.
+/// </summary>
 public sealed class ProfileController : Controller
 {
     private readonly IUserRepository userRepository;

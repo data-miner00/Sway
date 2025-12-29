@@ -6,6 +6,10 @@ using Sway.Core.Models;
 using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
 
+/// <summary>
+/// The checkout page controller.
+/// </summary>
+[Route("[controller]")]
 public sealed class CheckoutController : Controller
 {
     private readonly IShoppingCartRepository cartRepository;

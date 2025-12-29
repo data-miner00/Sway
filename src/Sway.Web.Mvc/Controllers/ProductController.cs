@@ -7,7 +7,10 @@ using Sway.Core.Models;
 using Sway.Core.Repositories;
 using Sway.Web.Mvc.Models;
 
-public class ProductController : Controller
+/// <summary>
+/// The product controller.
+/// </summary>
+public sealed class ProductController : Controller
 {
     public static readonly string ControllerName = "Product";
 

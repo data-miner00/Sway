@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Sway.Common;
 using Sway.Core.Repositories;
 
+/// <summary>
+/// The notification controller.
+/// </summary>
+[Route("[controller]/[action]")]
 public sealed class NotificationController : Controller
 {
     private readonly INotificationRepository repository;
@@ -17,7 +21,7 @@ public sealed class NotificationController : Controller
         this.repository = Guard.ThrowIfNull(repository);
     }
 
-    public CancellationToken CancellationToken => this.HttpContext.RequestAborted;
+    private CancellationToken CancellationToken => this.HttpContext.RequestAborted;
 
     public async Task<IActionResult> Index()
     {
@@ -26,7 +30,7 @@ public sealed class NotificationController : Controller
         return this.View(notifications);
     }
 
-    [HttpPost("[controller]/[action]/{notificationId}")]
+    [HttpPost("{notificationId}")]
     public async Task Read(int notificationId)
     {
         try
