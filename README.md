@@ -14,12 +14,12 @@
   <h3 align="center">Sway</h3>
 
   <p align="center">
-    A simple, enterprise-grade, database-first e-commerce platform.
+    A simple, experimental, database-first e-commerce platform.
     <br />
-    <a href="https://github.com/data-miner00/Sway"><strong>View Demo »</strong></a>
+    <a href="https://github.com/data-miner00/Sway"><strong>View Repo »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/data-miner00/Sway">Explore the docs</a>
+    <a href="https://github.com/data-miner00/Sway/tree/master/docs">Explore the docs</a>
     ·
     <a href="https://github.com/data-miner00/Sway/issues">Report Bug</a>
     ·
@@ -32,7 +32,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#about">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
       </ul>
@@ -55,7 +55,7 @@
 
 ## About
 
-An experimental e-Commerce platform written in C# and TSQL. This project is for education purpose only as I intentionally shift as much logics to the database as possible. For the entities and database design, please refer to the [drawio document](/docs/Sway.drawio).
+An experimental e-commerce platform written in C# and TSQL. This project is for education purpose only as I intentionally shift as much logics to the database as possible.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -64,14 +64,13 @@ An experimental e-Commerce platform written in C# and TSQL. This project is for 
 The technologies and tools used within this project.
 
 - .NET Core
-- .NET MVC
-- Pnpm
+- Mvc.NET
+- Npm
 - TailwindCSS/DaisyUI
 - JavaScript
 - jQuery
 - React
 - TSQL/SQL Server
-- Powershell
 - xUnit
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -89,10 +88,6 @@ The list of tools that is used when development.
   ```sh
   npm install npm@latest -g
   ```
-- Pnpm
-  ```sh
-  npm i -g pnpm
-  ```
 - [Git](https://git-scm.com/downloads)
 - [.NET CLI](https://learn.microsoft.com/en-us/dotnet/core/tools/)
 
@@ -106,7 +101,7 @@ To run this template project in your local for personal use or contribution, sim
    ```
 2. Install Node dependencies
    ```sh
-   pnpm i
+   npm i
    ```
 3. Restore Nuget
    ```sh
