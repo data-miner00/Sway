@@ -1,7 +1,7 @@
 ﻿namespace Sway.Database.Seeder.Generator;
 
 using Bogus;
-using Sway.Common;
+using Sway.Core;
 using Sway.Core.Models;
 using System;
 using System.Collections.Generic;

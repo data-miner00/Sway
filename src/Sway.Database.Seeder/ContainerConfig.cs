@@ -9,7 +9,6 @@ using Sway.Database.Seeder.Generator;
 using Sway.Database.Seeder.Options;
 using Sway.Database.Seeder.Sinks;
 using Sway.Database.Seeder.Writers;
-using Sway.Integrations.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;

@@ -1,8 +1,7 @@
-﻿namespace Sway.Integrations.Repositories;
+﻿namespace Sway.Core.Repositories;
 
 using Dapper;
 using Sway.Core.Models;
-using Sway.Core.Repositories;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading;

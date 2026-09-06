@@ -3,7 +3,6 @@ namespace Sway.Web.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 using Sway.Core.Repositories;
-using Sway.Integrations.Repositories;
 
 /// <summary>
 /// The main program.

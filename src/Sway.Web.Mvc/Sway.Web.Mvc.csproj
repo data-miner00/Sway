@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sway.Core\Sway.Core.csproj" />
-    <ProjectReference Include="..\Sway.Integrations\Sway.Integrations.csproj" />
   </ItemGroup>
 
   <ItemGroup>

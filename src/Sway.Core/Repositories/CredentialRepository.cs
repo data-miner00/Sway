@@ -1,9 +1,7 @@
-﻿namespace Sway.Integrations.Repositories;
+﻿namespace Sway.Core.Repositories;
 
 using Dapper;
-using Sway.Common;
 using Sway.Core.Models;
-using Sway.Core.Repositories;
 using System;
 using System.Data;
 using System.Security.Cryptography;

@@ -1,7 +1,7 @@
 ﻿namespace Sway.Database.Seeder.Writers;
 
 using Sway.Core.Models;
-using Sway.Common;
+using Sway.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
