@@ -1,7 +1,7 @@
 ﻿namespace Sway.Web.Mvc.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using Sway.Common;
+using Sway.Core;
 using Sway.Core.Repositories;
 
 /// <summary>

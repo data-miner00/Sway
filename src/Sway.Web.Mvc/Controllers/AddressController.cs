@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sway.Core.Repositories;
 using Sway.Core.Dtos;
 using Sway.Core.Models;
-using Sway.Common;
+using Sway.Core;
 
 /// <summary>
 /// The address controller.

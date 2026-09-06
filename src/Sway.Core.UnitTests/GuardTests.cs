@@ -1,8 +1,7 @@
-namespace Sway.Common.UnitTests;
+namespace Sway.Core.UnitTests;
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using Sway.Common;
 using Xunit;
 
 public sealed class GuardTests

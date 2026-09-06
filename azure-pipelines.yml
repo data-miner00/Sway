@@ -23,10 +23,15 @@ steps:
         dir src
     displayName: Show working directory
 
+  - task: UseNode@1
+    inputs:
+      version: "22.x"
+    displayName: "Install Node.js"
+
   - script: |
-      npm install
+      npm ci
     workingDirectory: $(System.DefaultWorkingDirectory)/src
-    displayName: "npm install"
+    displayName: "Install Npm dependencies"
 
   - task: NuGetToolInstaller@1
 
@@ -41,7 +46,7 @@ steps:
       platform: '$(buildPlatform)'
       configuration: '$(buildConfiguration)'
 
-  - task: VSTest@2
+  - task: VSTest@3
     inputs:
       platform: '$(buildPlatform)'
       configuration: '$(buildConfiguration)'

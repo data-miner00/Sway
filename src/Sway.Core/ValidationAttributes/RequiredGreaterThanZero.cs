@@ -1,4 +1,4 @@
-﻿namespace Sway.Common.ValidationAttributes;
+﻿namespace Sway.Core.ValidationAttributes;
 
 using System.ComponentModel.DataAnnotations;
 

@@ -1,4 +1,4 @@
-﻿namespace Sway.Common;
+﻿namespace Sway.Core;
 
 using System;
 using System.ComponentModel.DataAnnotations;

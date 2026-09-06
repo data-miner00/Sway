@@ -1,4 +1,4 @@
-﻿namespace Sway.Common;
+﻿namespace Sway.Core;
 
 public static class DecimalExtensions
 {

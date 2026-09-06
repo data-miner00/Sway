@@ -1,6 +1,6 @@
 ﻿namespace Sway.Database.Seeder;
 
-using Sway.Common;
+using Sway.Core;
 using System;
 
 internal sealed class SqlFileNameBuilder
