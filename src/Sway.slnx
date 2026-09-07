@@ -8,6 +8,7 @@
     <File Path="../typos.toml" />
     <File Path=".editorconfig" />
     <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
     <File Path="package-lock.json" />
     <File Path="package.json" />
   </Folder>
