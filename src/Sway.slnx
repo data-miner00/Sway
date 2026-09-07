@@ -1,0 +1,25 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../.gitattributes" />
+    <File Path="../.gitignore" />
+    <File Path="../azure-pipelines.yml" />
+    <File Path="../LICENSE" />
+    <File Path="../README.md" />
+    <File Path="../typos.toml" />
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="package-lock.json" />
+    <File Path="package.json" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Sway.Core.UnitTests/Sway.Core.UnitTests.csproj" />
+  </Folder>
+  <Project Path="Sway.Core/Sway.Core.csproj" />
+  <Project Path="Sway.Database.Seeder/Sway.Database.Seeder.csproj" />
+  <Project Path="Sway.Database/Sway.Database.sqlproj" Id="cc606291-0ce7-45a0-b4cc-92979c6b540c">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="Sway.Web.Mvc/Sway.Web.Mvc.csproj" />
+  <Project Path="Sway.WebApi/Sway.WebApi.csproj" />
+</Solution>

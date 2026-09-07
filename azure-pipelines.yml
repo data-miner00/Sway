@@ -10,7 +10,7 @@ trigger:
 pool: 'default'
 
 variables:
-  solution: '**/*.sln'
+  solution: '**/*.slnx'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -35,9 +35,10 @@ steps:
 
   - task: NuGetToolInstaller@1
 
-  - task: NuGetCommand@2
+  - task: DotNetCoreCLI@2
     inputs:
-      restoreSolution: '$(solution)'
+      command: 'restore'
+      projects: '$(solution)'
 
   - task: VSBuild@1
     inputs:
